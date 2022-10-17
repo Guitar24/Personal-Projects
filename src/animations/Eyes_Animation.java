@@ -191,7 +191,7 @@ public class Eyes_Animation {
 				+ "		       ▀████████▀		▀████████▀\n");
 		
 		//Look Left and Up
-		Thread.sleep(60);
+		Thread.sleep(101);
 		System.out.print(Colour.BLACK +  "\r\n"
 				+ "\r\n"
 				+ "\r\n"
