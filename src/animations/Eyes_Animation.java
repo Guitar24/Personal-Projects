@@ -234,7 +234,7 @@ public class Eyes_Animation {
 				+ "\r\n"
 				+  "      		       ▄████████▄		▄████████▄\r\n");
 
-		System.out.print(Colour.WHITE + "                       ██████████               ██████████\n" + "                       ██████" + Colour.BLACK + "█" + Colour.RED + Colour.BLACK_BACKGROUND + "▄" + Colour.WHITE + "██               ██" + Colour.RED + Colour.BLACK_BACKGROUND +  "▄" + Colour.BLACK + "█" + Colour.WHITE + "██████\n");
+		System.out.print(Colour.WHITE + "                       ██████████               ██████████\n" + "                       ███████" + Colour.CYAN + Colour.WHITE_BACKGROUND + "▄" + Colour.WHITE + "██               ██" + Colour.CYAN + Colour.WHITE_BACKGROUND +  "▄" + Colour.WHITE + "███████\n");
 
 		System.out.print(Colour.WHITE
 				+ "		               ▀████████▀               ▀████████▀\n");
