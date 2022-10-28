@@ -6,7 +6,20 @@ public class Tic_Tac_Toe {
 		//Open scanners
 		public static Scanner P1Input = new Scanner(System.in);
 		public static Scanner P2Input = new Scanner(System.in);
-	
+		
+		//Define Variables
+		public static String menuInput;
+		
+		public static String P1Symbol;
+		public static String P2Symbol; 
+
+		public static int headsOrTails;
+		public static int coinFlip;
+		public static int startingPlayer = 0;
+		public static int slotInput;
+		public static int randSlot;
+		public static int numOfSlotsUsed;
+		
 		public static boolean slotOne = false;
 		public static boolean slotTwo = false;
 		public static boolean slotThree = false;
@@ -17,16 +30,13 @@ public class Tic_Tac_Toe {
 		public static boolean slotEight = false;
 		public static boolean slotNine = false;
 		
-		public static ArrayList<Integer> numsUsed = new ArrayList<Integer>();
+		public static String[] slotsUsed = {" ", " ", " ", " ", " ", " ", " ", " ", " "};
 			
 	public static void main(String[] args) throws InterruptedException 
 	{
 		//Define variables
-		String menuInput;
-
-		int headsOrTails;
-		int coinFlip;
-		int startingPlayer = 0;
+		
+		
 		
 
 		
@@ -39,11 +49,11 @@ public class Tic_Tac_Toe {
 		{
 			//Print out menu
 			System.out.println("█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█\n"
-					+ "█  S - Single Player  █\n"
-					+ "█  T - Two Players    █\n"
-					+ "█  R - Rules of Game  █\n"
-					+ "█  Q - Quit Game      █\n"
-					+ "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
+							 + "█  S - Single Player  █\n"
+							 + "█  T - Two Players    █\n"
+							 + "█  R - Rules of Game  █\n"
+							 + "█  Q - Quit Game      █\n"
+							 + "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
 			menuInput = P1Input.next();
 
 			//If user selects single player
@@ -109,25 +119,52 @@ public class Tic_Tac_Toe {
 					}
 
 					//Start playing game
-					if(startingPlayer == 1) 
-					{
-						System.out.println("       █       █\n"
-										 + "   1   █   2   █   3\n"
-										 + "       █       █\n"
-										 + "▀▀▀▀▀▀▀█▀▀▀▀▀▀▀█▀▀▀▀▀▀▀\n"
-										 + "       █       █\r\n"
-										 + "   4   █   5   █   6\n"
-										 + "       █       █\n"
-										 + "▄▄▄▄▄▄▄█▄▄▄▄▄▄▄█▄▄▄▄▄▄▄\n"
-										 + "       █       █\n"
-										 + "   7   █   8   █   9\n"
-										 + "       █       █\n");
-						System.out.print("Input where you would like to start:");
-						InputSlot(P1Input.nextInt());
-						
-						
+					while(true) {
+						if(startingPlayer == 1) 
+						{
+							System.out.println("       █       █\n"
+											 + "   1   █   2   █   3\n"
+											 + "       █       █\n"
+											 + "▀▀▀▀▀▀▀█▀▀▀▀▀▀▀█▀▀▀▀▀▀▀\n"
+											 + "       █       █\r\n"
+											 + "   4   █   5   █   6\n"
+											 + "       █       █\n"
+											 + "▄▄▄▄▄▄▄█▄▄▄▄▄▄▄█▄▄▄▄▄▄▄\n"
+											 + "       █       █\n"
+											 + "   7   █   8   █   9\n"
+											 + "       █       █\n");
+							System.out.print("Input where you would like to start: ");
+							slotInput = P1Input.nextInt();
+							
+							if(slotInput >= 1 && slotInput <= 9)
+							{
+								InputSlot(slotInput);
+								break;
+							}
+							else
+							{
+								System.err.println("Invalid input");
+							}
+						}
 					}
-
+					
+					numOfSlotsUsed = 0;
+					
+					while(numOfSlotsUsed < 10)
+					{
+						while(true)
+						{
+							randSlot = (int) (Math.random() * 9 + 1);
+							if(slotsUsed[randSlot] != " ")
+							{
+								break;
+							}
+						}
+						PrintBoard();
+						numOfSlotsUsed ++;
+					}
+					
+					
 
 
 					
@@ -158,86 +195,91 @@ public class Tic_Tac_Toe {
 				Thread.sleep(50); 
 			}
 			
-			P1Input.close();
-			P2Input.close();
+			
 		}
 
 
-
-		//Prints out blank board
-		/*System.out.println("       █       █\n"
-						 + "       █       █\n"
-						 + "       █       █\n"
-						 + "▀▀▀▀▀▀▀█▀▀▀▀▀▀▀█▀▀▀▀▀▀▀\n"
-						 + "       █       █\n"
-						 + "       █       █\n"
-						 + "       █       █\n"
-						 + "▄▄▄▄▄▄▄█▄▄▄▄▄▄▄█▄▄▄▄▄▄▄\n"
-						 + "       █       █\n"
-						 + "       █       █\n"
-						 + "       █       █");
-		 */
-
-		//Close scanner
 		
 	}
 	
 	public static void InputSlot(int slot)
 	{
+		if(startingPlayer == 1)
+		{
+			P1Symbol = "x";
+			P2Symbol = "O";
+		}
+		else if(startingPlayer == 3)
+		{
+			P1Symbol = "O";
+			P2Symbol = "x";
+		}
+		
 		if(slot == 1)
 		{
 			slotOne = true;
 			
-			numsUsed.add(1);
+			slotsUsed[0] = P1Symbol;
 		}
 		else if(slot == 2)
 		{
 			slotOne = true;
 			
-			numsUsed.add(2);
+			slotsUsed[1] = P1Symbol;
 		}
 		else if(slot == 3)
 		{
 			slotOne = true;
 			
-			numsUsed.add(3);
+			slotsUsed[2] = P1Symbol;
 		}
 		else if(slot == 4)
 		{
 			slotOne = true;
 			
-			numsUsed.add(4);
+			slotsUsed[3] = P1Symbol;
 		}
 		else if(slot == 5)
 		{
 			slotOne = true;
 			
-			numsUsed.add(5);
+			slotsUsed[4] = P1Symbol;
 		}
 		else if(slot == 6)
 		{
 			slotOne = true;
 			
-			numsUsed.add(6);
+			slotsUsed[5] = P1Symbol;
 		}
 		else if(slot == 7)
 		{
 			slotOne = true;
 			
-			numsUsed.add(7);
+			slotsUsed[6] = P1Symbol;
 		}
 		else if(slot == 8)
 		{
 			slotOne = true;
 			
-			numsUsed.add(8);
+			slotsUsed[7] = P1Symbol;
 		}
 		else if(slot == 9)
 		{
 			slotOne = true;
 			
-			numsUsed.add(9);
+			slotsUsed[8] = P1Symbol;
 		}
+	}
+	
+	public static void PrintBoard()
+	{
+		System.out.println("       █       █");
+		System.out.println("   " + slotsUsed[0] + "   █   " + slotsUsed[1] + "   █   " + slotsUsed[2]);
+		System.out.println("       █       █\n▀▀▀▀▀▀▀█▀▀▀▀▀▀▀█▀▀▀▀▀▀▀\n       █       █");
+		System.out.println("   " + slotsUsed[3] + "   █   " + slotsUsed[4] + "   █   " + slotsUsed[5]);
+		System.out.println("       █       █\n▄▄▄▄▄▄▄█▄▄▄▄▄▄▄█▄▄▄▄▄▄▄\n       █       █");
+		System.out.println("   " + slotsUsed[6] + "   █   " + slotsUsed[7] + "   █   " + slotsUsed[8]);
+		System.out.println("       █       █");
 	}
 		
 	

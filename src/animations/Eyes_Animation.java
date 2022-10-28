@@ -192,11 +192,11 @@ public class Eyes_Animation {
 				+ "		       ▀████████▀		▀████████▀\n");
 
 		//Look Left and Up
-<<<<<<< HEAD
+
 		Thread.sleep(100);
-=======
+
 		Thread.sleep(101);
->>>>>>> branch 'master' of https://github.com/Guitar24/Personal-Projects.git
+
 		System.out.print(Colour.BLACK +  "\r\n"
 				+ "\r\n"
 				+ "\r\n"
