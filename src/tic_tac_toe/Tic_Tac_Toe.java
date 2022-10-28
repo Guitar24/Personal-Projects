@@ -123,8 +123,7 @@ public class Tic_Tac_Toe {
 										 + "   7   █   8   █   9\n"
 										 + "       █       █\n");
 						System.out.print("Input where you would like to start:");
-						int slotInput = Player1Input.nextInt();
-						InputSlot(Player1Input.nextInt());
+						InputSlot(P1Input.nextInt());
 						
 						
 					}
@@ -158,6 +157,9 @@ public class Tic_Tac_Toe {
 				System.err.println("Invalid Input");
 				Thread.sleep(50);
 			}
+			
+			P1Input.close();
+			P2Input.close();
 		}
 
 
@@ -177,8 +179,7 @@ public class Tic_Tac_Toe {
 		 */
 
 		//Close scanner
-		P1Input.close();
-		P2Input.close();
+		
 	}
 	
 	public static void InputSlot(int slot)
