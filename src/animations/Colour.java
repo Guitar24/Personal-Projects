@@ -6,7 +6,7 @@ public class Colour {
 
     public static final String ERASE = "\033[H\033[2J";
     
-    public static final String HIDDEN = "\033[8;30m";
+    public static final String HIDDEN = "\033[8;30m"; //Hidden
     
     //Creates a black box around the word
     public static final String BOXING = "\033[0;51m";   // BLACK
