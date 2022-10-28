@@ -3,6 +3,10 @@ import java.util.*;
 
 public class Tic_Tac_Toe {
 	
+		//Open scanners
+		public static Scanner P1Input = new Scanner(System.in);
+		public static Scanner P2Input = new Scanner(System.in);
+	
 		public static boolean slotOne = false;
 		public static boolean slotTwo = false;
 		public static boolean slotThree = false;
@@ -25,9 +29,7 @@ public class Tic_Tac_Toe {
 		int startingPlayer = 0;
 		
 
-		//Open scanners
-		Scanner P1Input = new Scanner(System.in);
-		Scanner P2Input = new Scanner(System.in);
+		
 
 		//Introduce game
 		System.out.println("Welcome to Tic-Tac-Toe!\nInput one of the following");
@@ -121,6 +123,7 @@ public class Tic_Tac_Toe {
 										 + "   7   █   8   █   9\n"
 										 + "       █       █\n");
 						System.out.print("Input where you would like to start:");
+						int slotInput = Player1Input.nextInt();
 						InputSlot(Player1Input.nextInt());
 						
 						
