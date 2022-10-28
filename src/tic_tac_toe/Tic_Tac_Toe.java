@@ -155,7 +155,7 @@ public class Tic_Tac_Toe {
 			else
 			{
 				System.err.println("Invalid Input");
-				Thread.sleep(50);
+				Thread.sleep(50); 
 			}
 			
 			P1Input.close();
