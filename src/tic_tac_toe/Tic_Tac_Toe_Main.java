@@ -10,9 +10,13 @@ public class Tic_Tac_Toe_Main {
 		//Define Variables
 		public static String menuInput;
 		
+		public static String P1Colour = Colour.WHITE_BOLD_BRIGHT;
+		public static String P2Colour = Colour.WHITE_BOLD_BRIGHT;
+		
 		public static String P1Symbol;
 		public static String P2Symbol; 
 
+		public static int colourInput;
 		public static int headsOrTails;
 		public static int coinFlip;
 		public static int startingPlayer = 0;
@@ -41,11 +45,12 @@ public class Tic_Tac_Toe_Main {
 		while(true)
 		{
 			//Print out menu
-			System.out.println("█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█\n"
-							 + "█  S - Single Player  █\n"
-							 + "█  T - Two Players    █\n"
-							 + "█  R - Rules of Game  █\n"
-							 + "█  Q - Quit Game      █\n"
+			System.out.println("█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█\r\n"
+							 + "█  S - Single Player  █\r\n"
+							 + "█  T - Two Players    █\r\n"
+							 + "█  O - Options        █\r\n"
+							 + "█  R - Rules of Game  █\r\n"
+							 + "█  Q - Quit Game      █\r\n"
 							 + "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
 			menuInput = P1Input.next();
 
@@ -153,6 +158,55 @@ public class Tic_Tac_Toe_Main {
 			{
 				System.exit(0);
 			}
+			else if(menuInput.equalsIgnoreCase("o"))
+			{
+				System.out.println("\n"
+						+ "     1     2     3     4     5     6     7     8     9\n"
+						+ "    " + Colour.RED_BOLD + "███   " + Colour.ORANGE + "███   " + Colour.YELLOW_BOLD_BRIGHT + "███   " + Colour.GREEN_BOLD_BRIGHT + "███   " + Colour.CYAN_BOLD_BRIGHT + "███   " + Colour.BLUE_BOLD_BRIGHT + "███   " + Colour.ROSY_PINK + "███   " + Colour.BROWN + "███   " + Colour.WHITE_BOLD_BRIGHT + "███\n");
+				System.out.print("Input player 1 colour: ");
+				
+				colourInput = P1Input.nextInt();
+				if(colourInput == 1)
+					P1Colour = Colour.RED_BOLD;
+				else if (colourInput == 2)
+					P1Colour = Colour.ORANGE;
+				else if (colourInput == 3)
+					P1Colour = Colour.YELLOW_BOLD_BRIGHT;
+				else if (colourInput == 4)
+					P1Colour = Colour.GREEN_BOLD_BRIGHT;
+				else if (colourInput == 5)
+					P1Colour = Colour.CYAN_BOLD_BRIGHT;
+				else if (colourInput == 6)
+					P1Colour = Colour.BLUE_BOLD_BRIGHT;
+				else if (colourInput == 7)
+					P1Colour = Colour.ROSY_PINK;
+				else if (colourInput == 8)
+					P1Colour = Colour.BROWN;
+				else if (colourInput == 2)
+					P1Colour = Colour.WHITE_BOLD_BRIGHT;
+				
+				System.out.print("Input player 1 colour: ");
+				
+				colourInput = P1Input.nextInt();
+				if(colourInput == 1)
+					P2Colour = Colour.RED_BOLD;
+				else if (colourInput == 2)
+					P2Colour = Colour.ORANGE;
+				else if (colourInput == 3)
+					P2Colour = Colour.YELLOW_BOLD_BRIGHT;
+				else if (colourInput == 4)
+					P2Colour = Colour.GREEN_BOLD_BRIGHT;
+				else if (colourInput == 5)
+					P2Colour = Colour.CYAN_BOLD_BRIGHT;
+				else if (colourInput == 6)
+					P2Colour = Colour.BLUE_BOLD_BRIGHT;
+				else if (colourInput == 7)
+					P2Colour = Colour.ROSY_PINK;
+				else if (colourInput == 8)
+					P2Colour = Colour.BROWN;
+				else if (colourInput == 2)
+					P2Colour = Colour.WHITE_BOLD_BRIGHT;
+			}
 			//If user selects Rules of the game
 			else if(menuInput.equalsIgnoreCase("r"))
 			{
@@ -183,13 +237,13 @@ public class Tic_Tac_Toe_Main {
 	{
 		if(startingPlayer == 1)
 		{
-			P1Symbol = Colour.GREEN_BOLD_BRIGHT + "X" + Colour.RESET;
-			P2Symbol = Colour.BLUE_BOLD_BRIGHT +  "O" + Colour.RESET;
+			P1Symbol = P1Colour + "X" + Colour.RESET;
+			P2Symbol = P2Colour +  "O" + Colour.RESET;
 		}
 		else if(startingPlayer == 2)
 		{
-			P1Symbol = Colour.GREEN_BOLD_BRIGHT + "O" + Colour.RESET;
-			P2Symbol = Colour.BLUE_BOLD_BRIGHT + "X" + Colour.RESET;
+			P1Symbol = P1Colour + "O" + Colour.RESET;
+			P2Symbol = P2Colour + "X" + Colour.RESET;
 		}
 		
 		
@@ -288,6 +342,23 @@ public class Tic_Tac_Toe_Main {
 	
 	public static void checkIfThreeInRow()
 	{
+		
+		System.out.println("Check if three in row");
+		
+		if(startingPlayer == 1)
+		{
+			P1Symbol = P1Colour + "X" + Colour.RESET;
+			P2Symbol = P2Colour +  "O" + Colour.RESET;
+		}
+		else if(startingPlayer == 2)
+		{
+			P1Symbol = P1Colour + "O" + Colour.RESET;
+			P2Symbol = P2Colour + "X" + Colour.RESET;
+		}
+		
+		System.out.println(P1Symbol + "\n" + P2Symbol);
+		System.out.println(Arrays.toString(slotsUsed));
+		
 		//If Player 1 wins
 		if(slotsUsed[0] == P1Symbol && slotsUsed[1] == P1Symbol && slotsUsed[2] == P1Symbol)
 		{
@@ -443,16 +514,21 @@ public class Tic_Tac_Toe_Main {
 				
 				if(startingPlayer == 1)
 				{
-					P1Symbol = Colour.GREEN_BOLD_BRIGHT + "X" + Colour.RESET;
-					P2Symbol = Colour.BLUE_BOLD_BRIGHT +  "O" + Colour.RESET;
+					P1Symbol = P1Colour + "X" + Colour.RESET;
+					P2Symbol = P2Colour +  "O" + Colour.RESET;
 				}
 				else if(startingPlayer == 2)
 				{
-					P1Symbol = Colour.GREEN_BOLD_BRIGHT + "O" + Colour.RESET;
-					P2Symbol = Colour.BLUE_BOLD_BRIGHT + "X" + Colour.RESET;
+					P1Symbol = P1Colour + "O" + Colour.RESET;
+					P2Symbol = P2Colour + "X" + Colour.RESET;
 				}
 				
-				System.out.println("You guessed: HEADS\nThe coin landed on: HEADS\nYou start as: " + P1Symbol);
+				System.out.println("You guessed: " + Colour.CYAN_BOLD_BRIGHT + "HEADS" + Colour.RESET);
+				Thread.sleep(1500);
+				System.out.println("The coin flipped: " + Colour.CYAN_BOLD_BRIGHT + "HEADS" + Colour.RESET);
+				Thread.sleep(1500);
+				System.out.println("You start as: " + P1Symbol);
+				
 				
 			}
 			if(coinFlip != headsOrTails)
@@ -470,7 +546,13 @@ public class Tic_Tac_Toe_Main {
 					P2Symbol = Colour.BLUE_BOLD_BRIGHT + "X" + Colour.RESET;
 				}
 				
-				System.out.println("You guessed: TAILS\nThe coin landed on: HEADS\nComputer starts\nYou play as: " + P1Symbol);
+				System.out.println("You guessed: " + Colour.CYAN_BOLD_BRIGHT + "TAILS" + Colour.RESET);
+				Thread.sleep(1500);
+				System.out.println("The coin flipped: " + Colour.CYAN_BOLD_BRIGHT + "HEADS" + Colour.RESET);
+				Thread.sleep(1500);
+				System.out.println("The computer starts");
+				Thread.sleep(1500);
+				System.out.println("You play as: " + P1Symbol);
 			}
 		}
 		else if(coinFlip == 2)
@@ -490,7 +572,11 @@ public class Tic_Tac_Toe_Main {
 					P2Symbol = Colour.BLUE_BOLD_BRIGHT + "X" + Colour.RESET;
 				}
 				
-				System.out.println("You guessed: TAILS\nThe coin landed on: TAILS\nYou start as: " + P1Symbol);
+				System.out.println("You guessed: " + Colour.CYAN_BOLD_BRIGHT + "TAILS" + Colour.RESET);
+				Thread.sleep(1500);
+				System.out.println("The coin flipped: " + Colour.CYAN_BOLD_BRIGHT + "TAILS" + Colour.RESET);
+				Thread.sleep(1500);
+				System.out.println("You start as: " + P1Symbol);
 			}
 			if(coinFlip != headsOrTails)
 			{
@@ -507,7 +593,13 @@ public class Tic_Tac_Toe_Main {
 					P2Symbol = Colour.BLUE_BOLD_BRIGHT + "X" + Colour.RESET;
 				}
 				
-				System.out.println("You guessed: HEADS\nThe coin landed on: TAILS\nComputer starts\nYou play as: " + P1Symbol);
+				System.out.println("You guessed: " + Colour.CYAN_BOLD_BRIGHT + "HEADS" + Colour.RESET);
+				Thread.sleep(1500);
+				System.out.println("The coin flipped: " + Colour.CYAN_BOLD_BRIGHT + "TAILS" + Colour.RESET);
+				Thread.sleep(1500);
+				System.out.println("The computer starts");
+				Thread.sleep(1500);
+				System.out.println("You play as: " + P1Symbol);
 			}
 		}
 	}
