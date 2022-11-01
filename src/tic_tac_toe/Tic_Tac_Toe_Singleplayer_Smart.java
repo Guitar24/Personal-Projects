@@ -13,6 +13,8 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 	public static String menuInput;
 
 	public static String Reset = Colour.RESET;
+	
+	public static final String GOLD = "\033[38;2;212;175;55m";
 
 	public static String P1Colour = Colour.CYAN_BOLD_BRIGHT;
 	public static String P2Colour = Colour.GREEN_BOLD_BRIGHT;
@@ -474,11 +476,27 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 
 	public static void SmartComputer() throws InterruptedException
 	{
+		
+		if(startingPlayer == 1)
+		{
+			P1Symbol = "X";
+			P2Symbol = "O";
+		}
+		else if(startingPlayer == 2)
+		{
+			P1Symbol =  "O";
+			P2Symbol = "X";
+		}
+		
+		
 		//if 0 & 1
-		if(slotsUsed[0] == P1Symbol || slotsUsed[1] == P1Symbol)
+		if(slotsUsed[0] == P1Symbol && slotsUsed[1] == P1Symbol)
 		{
 			if(slotsUsed[2] == " ")
+			{
+				System.out.println(Colour.RED + "Smart Input" + Reset);
 				InputSlot(2, 2);
+			}
 			else
 			{
 				while(true)
@@ -509,7 +527,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			Thread.sleep(150);
 		}
 		
-		else if(slotsUsed[1] == P1Symbol || slotsUsed[2] == P1Symbol)
+		else if(slotsUsed[1] == P1Symbol && slotsUsed[2] == P1Symbol)
 		{
 			if(slotsUsed[0] == " ")
 				InputSlot(0, 2);
@@ -542,7 +560,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[3] == P1Symbol || slotsUsed[4] == P1Symbol)
+		else if(slotsUsed[3] == P1Symbol && slotsUsed[4] == P1Symbol)
 		{
 			if(slotsUsed[5] == " ")
 				InputSlot(5, 2);
@@ -576,7 +594,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			Thread.sleep(150);
 		}
 		
-		else if(slotsUsed[4] == P1Symbol || slotsUsed[5] == P1Symbol)
+		else if(slotsUsed[4] == P1Symbol && slotsUsed[5] == P1Symbol)
 		{
 			if(slotsUsed[3] == " ")
 				InputSlot(3, 2);
@@ -609,7 +627,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[6] == P1Symbol || slotsUsed[7] == P1Symbol)
+		else if(slotsUsed[6] == P1Symbol && slotsUsed[7] == P1Symbol)
 		{
 			if(slotsUsed[8] == " ")
 				InputSlot(8, 2);
@@ -642,7 +660,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[7] == P1Symbol || slotsUsed[8] == P1Symbol)
+		else if(slotsUsed[7] == P1Symbol && slotsUsed[8] == P1Symbol)
 		{
 			if(slotsUsed[6] == " ")
 				InputSlot(6, 2);
@@ -675,7 +693,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[0] == P1Symbol || slotsUsed[3] == P1Symbol)
+		else if(slotsUsed[0] == P1Symbol && slotsUsed[3] == P1Symbol)
 		{
 			if(slotsUsed[6] == " ")
 				InputSlot(6, 2);
@@ -708,7 +726,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[3] == P1Symbol || slotsUsed[4] == P1Symbol)
+		else if(slotsUsed[3] == P1Symbol && slotsUsed[4] == P1Symbol)
 		{
 			if(slotsUsed[0] == " ")
 				InputSlot(0, 2);
@@ -741,7 +759,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[1] == P1Symbol || slotsUsed[4] == P1Symbol)
+		else if(slotsUsed[1] == P1Symbol && slotsUsed[4] == P1Symbol)
 		{
 			if(slotsUsed[7] == " ")
 				InputSlot(7, 2);
@@ -774,7 +792,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[4] == P1Symbol || slotsUsed[7] == P1Symbol)
+		else if(slotsUsed[4] == P1Symbol && slotsUsed[7] == P1Symbol)
 		{
 			if(slotsUsed[1] == " ")
 				InputSlot(1, 2);
@@ -807,7 +825,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[2] == P1Symbol || slotsUsed[6] == P1Symbol)
+		else if(slotsUsed[2] == P1Symbol && slotsUsed[6] == P1Symbol)
 		{
 			if(slotsUsed[8] == " ")
 				InputSlot(8, 2);
@@ -840,7 +858,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[0] == P1Symbol || slotsUsed[2] == P1Symbol)
+		else if(slotsUsed[0] == P1Symbol && slotsUsed[2] == P1Symbol)
 		{
 			if(slotsUsed[1] == " ")
 				InputSlot(1, 2);
@@ -873,7 +891,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[3] == P1Symbol || slotsUsed[5] == P1Symbol)
+		else if(slotsUsed[3] == P1Symbol && slotsUsed[5] == P1Symbol)
 		{
 			if(slotsUsed[4] == " ")
 				InputSlot(4, 2);
@@ -906,7 +924,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[6] == P1Symbol || slotsUsed[8] == P1Symbol)
+		else if(slotsUsed[6] == P1Symbol && slotsUsed[8] == P1Symbol)
 		{
 			if(slotsUsed[7] == " ")
 				InputSlot(7, 2);
@@ -939,7 +957,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[0] == P1Symbol || slotsUsed[6] == P1Symbol)
+		else if(slotsUsed[0] == P1Symbol && slotsUsed[6] == P1Symbol)
 		{
 			if(slotsUsed[3] == " ")
 				InputSlot(3, 2);
@@ -972,7 +990,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[1] == P1Symbol || slotsUsed[7] == P1Symbol)
+		else if(slotsUsed[1] == P1Symbol && slotsUsed[7] == P1Symbol)
 		{
 			if(slotsUsed[4] == " ")
 				InputSlot(4, 2);
@@ -1004,7 +1022,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			PrintBoard();
 			checkIfThreeInRow();
 			Thread.sleep(150);
-		}else if(slotsUsed[2] == P1Symbol || slotsUsed[8] == P1Symbol)
+		}else if(slotsUsed[2] == P1Symbol && slotsUsed[8] == P1Symbol)
 		{
 			if(slotsUsed[5] == " ")
 				InputSlot(5, 2);
@@ -1037,7 +1055,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[0] == P1Symbol || slotsUsed[4] == P1Symbol)
+		else if(slotsUsed[0] == P1Symbol && slotsUsed[4] == P1Symbol)
 		{
 			if(slotsUsed[8] == " ")
 				InputSlot(8, 2);
@@ -1070,7 +1088,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[4] == P1Symbol || slotsUsed[8] == P1Symbol)
+		else if(slotsUsed[4] == P1Symbol && slotsUsed[8] == P1Symbol)
 		{
 			if(slotsUsed[0] == " ")
 				InputSlot(0, 2);
@@ -1103,7 +1121,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[0] == P1Symbol || slotsUsed[8] == P1Symbol)
+		else if(slotsUsed[0] == P1Symbol && slotsUsed[8] == P1Symbol)
 		{
 			if(slotsUsed[4] == " ")
 				InputSlot(4, 2);
@@ -1136,7 +1154,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[2] == P1Symbol || slotsUsed[4] == P1Symbol)
+		else if(slotsUsed[2] == P1Symbol && slotsUsed[4] == P1Symbol)
 		{
 			if(slotsUsed[6] == " ")
 				InputSlot(6, 2);
@@ -1169,7 +1187,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[4] == P1Symbol || slotsUsed[6] == P1Symbol)
+		else if(slotsUsed[4] == P1Symbol && slotsUsed[6] == P1Symbol)
 		{
 			if(slotsUsed[2] == " ")
 				InputSlot(2, 2);
@@ -1202,7 +1220,773 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			checkIfThreeInRow();
 			Thread.sleep(150);
 		}
-		else if(slotsUsed[2] == P1Symbol || slotsUsed[6] == P1Symbol)
+		else if(slotsUsed[2] == P1Symbol && slotsUsed[6] == P1Symbol)
+		{
+			if(slotsUsed[4] == " ")
+				InputSlot(4, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		
+		
+		
+		else if(slotsUsed[0] == P2Symbol && slotsUsed[1] == P2Symbol)
+		{
+			if(slotsUsed[2] == " ")
+			{
+				System.out.println(Colour.RED + "Smart Input" + Reset);
+				InputSlot(2, 2);
+			}
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		
+		else if(slotsUsed[1] == P2Symbol && slotsUsed[2] == P2Symbol)
+		{
+			if(slotsUsed[0] == " ")
+				InputSlot(0, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[3] == P2Symbol && slotsUsed[4] == P2Symbol)
+		{
+			if(slotsUsed[5] == " ")
+				InputSlot(5, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		
+		else if(slotsUsed[4] == P2Symbol && slotsUsed[5] == P2Symbol)
+		{
+			if(slotsUsed[3] == " ")
+				InputSlot(3, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[6] == P2Symbol && slotsUsed[7] == P2Symbol)
+		{
+			if(slotsUsed[8] == " ")
+				InputSlot(8, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[7] == P2Symbol && slotsUsed[8] == P2Symbol)
+		{
+			if(slotsUsed[6] == " ")
+				InputSlot(6, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[0] == P2Symbol && slotsUsed[3] == P2Symbol)
+		{
+			if(slotsUsed[6] == " ")
+				InputSlot(6, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[3] == P2Symbol && slotsUsed[4] == P2Symbol)
+		{
+			if(slotsUsed[0] == " ")
+				InputSlot(0, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[1] == P2Symbol && slotsUsed[4] == P2Symbol)
+		{
+			if(slotsUsed[7] == " ")
+				InputSlot(7, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[4] == P2Symbol && slotsUsed[7] == P2Symbol)
+		{
+			if(slotsUsed[1] == " ")
+				InputSlot(1, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[2] == P2Symbol && slotsUsed[6] == P2Symbol)
+		{
+			if(slotsUsed[8] == " ")
+				InputSlot(8, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[0] == P2Symbol && slotsUsed[2] == P2Symbol)
+		{
+			if(slotsUsed[1] == " ")
+				InputSlot(1, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[3] == P2Symbol && slotsUsed[5] == P2Symbol)
+		{
+			if(slotsUsed[4] == " ")
+				InputSlot(4, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[6] == P2Symbol && slotsUsed[8] == P2Symbol)
+		{
+			if(slotsUsed[7] == " ")
+				InputSlot(7, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[0] == P2Symbol && slotsUsed[6] == P2Symbol)
+		{
+			if(slotsUsed[3] == " ")
+				InputSlot(3, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[1] == P2Symbol && slotsUsed[7] == P2Symbol)
+		{
+			if(slotsUsed[4] == " ")
+				InputSlot(4, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}else if(slotsUsed[2] == P2Symbol && slotsUsed[8] == P2Symbol)
+		{
+			if(slotsUsed[5] == " ")
+				InputSlot(5, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[0] == P2Symbol && slotsUsed[4] == P2Symbol)
+		{
+			if(slotsUsed[8] == " ")
+				InputSlot(8, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[4] == P2Symbol && slotsUsed[8] == P2Symbol)
+		{
+			if(slotsUsed[0] == " ")
+				InputSlot(0, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[0] == P2Symbol && slotsUsed[8] == P2Symbol)
+		{
+			if(slotsUsed[4] == " ")
+				InputSlot(4, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[2] == P2Symbol && slotsUsed[4] == P2Symbol)
+		{
+			if(slotsUsed[6] == " ")
+				InputSlot(6, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[4] == P2Symbol && slotsUsed[6] == P2Symbol)
+		{
+			if(slotsUsed[2] == " ")
+				InputSlot(2, 2);
+			else
+			{
+				while(true)
+				{
+					randSlot = (int) (Math.random() * 8 + 0);
+					if(slotsUsed[randSlot] != " ") 
+					{
+
+					}
+					else 
+					{
+						InputSlot(randSlot, 2);
+						//System.out.println(Arrays.toString(slotsUsed));
+						System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+						Thread.sleep(500);
+						PrintBoard();
+						checkIfThreeInRow();
+						Thread.sleep(150);
+						break;
+					}
+				}
+			}
+			//System.out.println(Arrays.toString(slotsUsed));
+			System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
+			Thread.sleep(500);
+			PrintBoard();
+			checkIfThreeInRow();
+			Thread.sleep(150);
+		}
+		else if(slotsUsed[2] == P2Symbol && slotsUsed[6] == P2Symbol)
 		{
 			if(slotsUsed[4] == " ")
 				InputSlot(4, 2);
@@ -1249,7 +2033,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 				{
 					InputSlot(randSlot, 2);
 					//System.out.println(Arrays.toString(slotsUsed));
-					System.out.println(Colour.RED + "Smart Input" + Reset);
+					//System.out.println(Colour.RED + "Smart Input" + Reset);
 					System.out.print("Thinking "); Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(". ");Thread.sleep(500); System.out.print(".\n\n");
 					Thread.sleep(500);
 					PrintBoard();
@@ -1486,12 +2270,12 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 		while(true)
 		{
 			//Print out menu
-			System.out.println(Colour. + "█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█\n"
-					+ "█ " + Colour.CYAN_BOLD_BRIGHT + " S " + Reset + "-" + Colour.GREEN_BOLD_BRIGHT + " Single Player " + Colour.GOLD + " █\n"
-					+ "█ " + Colour.CYAN_BOLD_BRIGHT + " T " + Reset + "-" + Colour.GREEN_BOLD_BRIGHT + " Two Players   " + Colour.GOLD + " █\n"
-					+ "█ " + Colour.CYAN_BOLD_BRIGHT + " O " + Reset + "-" + Colour.GREEN_BOLD_BRIGHT + " Options       " + Colour.GOLD + " █\n"
-					+ "█ " + Colour.CYAN_BOLD_BRIGHT + " R " + Reset + "-" + Colour.GREEN_BOLD_BRIGHT + " Rules of Game " + Colour.GOLD + " █\n"
-					+ "█ " + Colour.CYAN_BOLD_BRIGHT + " Q " + Reset + "-" + Colour.GREEN_BOLD_BRIGHT + " Quit Game     " + Colour.GOLD + " █\n"
+			System.out.println(GOLD + "█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█\n"
+					+ "█ " + Colour.CYAN_BOLD_BRIGHT + " S " + Reset + "-" + Colour.GREEN_BOLD_BRIGHT + " Single Player " + GOLD + " █\n"
+					+ "█ " + Colour.CYAN_BOLD_BRIGHT + " T " + Reset + "-" + Colour.GREEN_BOLD_BRIGHT + " Two Players   " + GOLD + " █\n"
+					+ "█ " + Colour.CYAN_BOLD_BRIGHT + " O " + Reset + "-" + Colour.GREEN_BOLD_BRIGHT + " Options       " + GOLD + " █\n"
+					+ "█ " + Colour.CYAN_BOLD_BRIGHT + " R " + Reset + "-" + Colour.GREEN_BOLD_BRIGHT + " Rules of Game " + GOLD + " █\n"
+					+ "█ " + Colour.CYAN_BOLD_BRIGHT + " Q " + Reset + "-" + Colour.GREEN_BOLD_BRIGHT + " Quit Game     " + GOLD + " █\n"
 					+ "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█" + Colour.RESET);
 			System.out.print(Colour.RESET + "Input one of the options above: ");
 			menuInput = P1Input.next();
