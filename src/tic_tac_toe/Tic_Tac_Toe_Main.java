@@ -687,7 +687,7 @@ public class Tic_Tac_Toe_Main {
 					+ "█ " + Colour.CYAN_BOLD_BRIGHT + " R " + Reset + "-" + Colour.GREEN_BOLD_BRIGHT + " Rules of Game " + Colour.GOLD + " █\n"
 					+ "█ " + Colour.CYAN_BOLD_BRIGHT + " Q " + Reset + "-" + Colour.GREEN_BOLD_BRIGHT + " Quit Game     " + Colour.GOLD + " █\n"
 					+ "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█" + Colour.RESET);
-			System.out.print(Colour.RESET + "Input one of the options above: " + Colour.GREEN);
+			System.out.print(Colour.RESET + "Input one of the options above: ");
 			menuInput = P1Input.next();
 			System.out.print(Reset);
 
