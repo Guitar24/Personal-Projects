@@ -37,6 +37,7 @@ public class Colour {
     public static final String DARK_RED = "\033[38;2;145;40;16m"; //DARK RED
     public static final String LIGHT_PINK = "\033[38;2;255;153;240m"; //LIGHT PINK
     public static final String ROYAL_PURPLE = "\033[38;2;101;1;137m"; // ROYAL PURPLE
+    public static final String GOLD = "\033[38;2;212;175;55m"; // ROYAL PURPLE
         
     // StrikeOut
     public static final String BLACK_STRIKE = "\033[9;30m";   // BLACK
