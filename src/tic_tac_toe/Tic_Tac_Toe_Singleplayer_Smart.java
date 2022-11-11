@@ -1225,7 +1225,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 			if(slotsUsed[4] == " ")
 				InputSlot(4, 2);
 			else
-			{
+			{ 
 				while(true)
 				{
 					randSlot = (int) (Math.random() * 8 + 0);
@@ -2097,7 +2097,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 				//System.out.println(randSlot);
 				if(compSmart == 11)
 				{
-					System.out.println(Colour.RED + "Dumb Input" + Reset);
+					//System.out.println(Colour.RED + "Dumb Input" + Reset);
 					while(true)
 					{
 						randSlot = (int) (Math.random() * 8 + 0);
