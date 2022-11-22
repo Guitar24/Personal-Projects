@@ -1,6 +1,6 @@
 package animations;
 
-public class Colour {
+public class Colours {
 
 	public static final String RESET = "\033[0m";  // Text Reset
 
