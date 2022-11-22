@@ -7,43 +7,39 @@ import java.util.*;
 public class Euchre_Singleplayer 
 {
 	
-	public static ArrayList<String> cards = new ArrayList<String>(Arrays.asList("9♥", "10♥", "J♥", "Q♥", "K♥", "A♥", 
-		    																	   "9♦", "10♦", "J♦", "Q♦", "K♦", "A♦", 
-		    																	   "9♣", "10♣", "J♣", "Q♣", "K♣", "A♣", 
-		    																	   "9♠", "10♠", "J♠", "Q♠", "K♠", "A♠"));
+	public static ArrayList<String> cards = new ArrayList<String>(Arrays.asList("9♥", "10♥", "J♥", "Q♥", "K♥", "A♥", "9♦", "10♦", "J♦", "Q♦", "K♦", "A♦",  "9♣", "10♣", "J♣", "Q♣", "K♣", "A♣", "9♠", "10♠", "J♠", "Q♠", "K♠", "A♠"));
 	
 	public static ArrayList<String> player1Cards = new ArrayList<String>();
-	public static ArrayList<String> player1Suits = new ArrayList<String>();
-	
 	public static ArrayList<String> player2Cards = new ArrayList<String>();
-	public static ArrayList<String> player2Suits = new ArrayList<String>();
-	public static int[] player2TrumpNum = {0, 0, 0, 0};
-	public static String player2Suit;
-	
 	public static ArrayList<String> player3Cards = new ArrayList<String>();
-	public static ArrayList<String> player3Suits = new ArrayList<String>();
-	public static int[] player3TrumpNum = {0, 0, 0, 0};
-	public static String player3Suit;
-	
 	public static ArrayList<String> player4Cards = new ArrayList<String>();
+	
+	
+	public static ArrayList<String> player1Suits = new ArrayList<String>();
+	public static ArrayList<String> player2Suits = new ArrayList<String>();
+	public static ArrayList<String> player3Suits = new ArrayList<String>();
 	public static ArrayList<String> player4Suits = new ArrayList<String>();
-	public static int[] player4TrumpNum = {0, 0, 0, 0};
-	public static String player4Suit;
-	
-	
-	
+
 	public static ArrayList<String> kitty = new ArrayList<String>();
 	
-	public static String proposedTrump;
+	public static int[] player2TrumpNum = {0, 0, 0, 0};
+	public static int[] player3TrumpNum = {0, 0, 0, 0};
+	public static int[] player4TrumpNum = {0, 0, 0, 0};
 	
+	public static int play;
+	public static int dealer = 4;
+	
+	public static String player2Suit;
+	public static String player3Suit;
+	public static String player4Suit;
+	public static String topCard;
+	public static String proposedTrump;
 	public static String Trump;
 	
 	
 	public static Scanner Input = new Scanner(System.in);
 	
-	public static int dealer = 4;
-	
-	public static String topCard;
+	//Colours
 	
 	public static final String ESC = "\033[";
 	
