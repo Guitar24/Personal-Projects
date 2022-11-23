@@ -29,6 +29,11 @@ public class Euchre_Singleplayer
 	public static int play;
 	public static int dealer = 4;
 	
+	public static int player1Partner = 3;
+	public static int player2Partner = 4;
+	public static int player3Partner = 1;
+	public static int player4Partner = 2;
+	
 	public static int p2Max;
 	public static int p3Max;
 	public static int p4Max;
@@ -162,6 +167,7 @@ public class Euchre_Singleplayer
 		
 		printTable();
 		
+		/*
 		System.out.print("\nPlayer 2 cards: " + player2Cards);
 		System.out.println("Player 2 suit: " + player2Suit  + Arrays.toString(player2TrumpNum));
 		
@@ -171,13 +177,15 @@ public class Euchre_Singleplayer
 		System.out.print("Player 4 cards: " + player4Cards);
 		System.out.println("Player 4 suit: " + player4Suit + Arrays.toString(player4TrumpNum));
 		
-		System.out.println("Tell Dealer to PICK IT UP, or PASS");
+		;
 		
 		System.out.println(proposedTrump);
+		*/
 		
 		while(true)
 		{
-			System.out.print("\"PICK\" or \"PASS\": ");
+			System.out.println("\n\nTell Dealer to PICK IT UP, or PASS");
+			System.out.print("\n\"PICK\" or \"PASS\": ");
 			
 			play = 1;
 			
@@ -190,25 +198,28 @@ public class Euchre_Singleplayer
 				{
 					if(player2Suit == proposedTrump && p2Max >= 4)
 					{
+						System.out.println("Player 2 tells dealer to PICK IT UP");
 						pickUpCard(2);
 					}
 					else 
 					{
 						System.out.println("Player 2 Passes");
-						if(player3Suit == proposedTrump && p3Max >= 3)
+						if(player3Suit == proposedTrump && p3Max >= 2)
 						{
+							System.out.println("Player 3 tells dealer to PICK IT UP");
 							pickUpCard(3);
 						}
 						else 
 						{
 							System.out.println("Player 3 Passes");
-							if(player4Suit == proposedTrump && p4Max >= 3)
+							if(player4Suit == proposedTrump && p4Max >= 2)
 							{
+								System.out.println("Player 4 tells dealer to PICK IT UP");
 								pickUpCard(4);
 							}
 							else 
 							{
-								
+								System.out.println("Player 4 passes");
 							}
 						}
 					}
@@ -321,12 +332,6 @@ public class Euchre_Singleplayer
 			}
 		}
 		
-		
-		
-		
-		
-		
-		
 		for(int i = 0; i < 5; i++)
 		{
 			if(player2Suits.get(i) == "♥")
@@ -386,17 +391,6 @@ public class Euchre_Singleplayer
 				player4TrumpNum[3] ++;
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		player2Suit = player2Suits.get(0);
 		
@@ -480,12 +474,6 @@ public class Euchre_Singleplayer
 	    	  p4Suit = i;
 	      }
 	    }
-	    
-	 
-		
-		
-		
-		
 	}
 	
 	public static void pickUpCard(int player)
@@ -536,9 +524,15 @@ public class Euchre_Singleplayer
 		}
 	}
 	
-	public static void printPlayerCards(int playerNum)
+	public static void gameLoop() 
 	{
-		System.out.print("\n        ");
+		
+	}
+	
+	public static void printPlayerCards(int player)
+	{
+		System.out.print("\n        "); 
+		
 		
 		for(int i = 0; i < player1Cards.size(); i++)
 		{
@@ -579,5 +573,21 @@ public class Euchre_Singleplayer
 													"9♦", "10♦", "J♦", "Q♦", "K♦", "A♦", 
 													"9♣", "10♣", "J♣", "Q♣", "K♣", "A♣", 
 													"9♠", "10♠", "J♠", "Q♠", "K♠", "A♠"));
+	}
+	
+	public static void debug()
+	{
+		
+		System.out.print("\nPlayer 2 cards: " + player2Cards);
+		System.out.println("Player 2 suit: " + player2Suit  + Arrays.toString(player2TrumpNum));
+		
+		System.out.print("Player 3 cards: " + player3Cards);
+		System.out.println("Player 3 suit: " + player3Suit + Arrays.toString(player3TrumpNum));
+		
+		System.out.print("Player 4 cards: " + player4Cards);
+		System.out.println("Player 4 suit: " + player4Suit + Arrays.toString(player4TrumpNum));
+		
+		System.out.println(proposedTrump);
+		
 	}
 }
