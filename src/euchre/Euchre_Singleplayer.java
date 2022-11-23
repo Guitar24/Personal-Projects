@@ -29,12 +29,25 @@ public class Euchre_Singleplayer
 	public static int play;
 	public static int dealer = 4;
 	
+	public static int p2Max;
+	public static int p3Max;
+	public static int p4Max;
+	
+	public static int p2Suit;
+	public static int p3Suit;
+	public static int p4Suit;
+	
 	public static String player2Suit;
 	public static String player3Suit;
 	public static String player4Suit;
 	public static String topCard;
 	public static String proposedTrump;
 	public static String Trump;
+	
+	public static boolean player1SoloStatus;
+	public static boolean player2SoloStatus;
+	public static boolean player3SoloStatus;
+	public static boolean player4SoloStatus;
 	
 	
 	public static Scanner Input = new Scanner(System.in);
@@ -160,20 +173,52 @@ public class Euchre_Singleplayer
 		
 		System.out.println("Tell Dealer to PICK IT UP, or PASS");
 		
+		System.out.println(proposedTrump);
 		
 		while(true)
 		{
 			System.out.print("\"PICK\" or \"PASS\": ");
 			
+			play = 1;
+			
 			String trumpChoice = Input.next();
+			
 			if(trumpChoice.equalsIgnoreCase("pass"))
 			{
+				play = 2;
+				if(dealer == 4)
+				{
+					if(player2Suit == proposedTrump && p2Max >= 4)
+					{
+						pickUpCard(2);
+					}
+					else 
+					{
+						System.out.println("Player 2 Passes");
+						if(player3Suit == proposedTrump && p3Max >= 3)
+						{
+							pickUpCard(3);
+						}
+						else 
+						{
+							System.out.println("Player 3 Passes");
+							if(player4Suit == proposedTrump && p4Max >= 3)
+							{
+								pickUpCard(4);
+							}
+							else 
+							{
+								
+							}
+						}
+					}
+				}
 				
 				break;
 			}
 			else if(trumpChoice.equalsIgnoreCase("pick"))
 			{
-				//Trump = 
+				pickUpCard(1); 
 				break;
 			}
 			else
@@ -401,11 +446,94 @@ public class Euchre_Singleplayer
 	        }
 	    }
 	    
+	    
+	    
+	    p2Max = player2TrumpNum[0];
+	    p2Suit = 0;
+	    for (int i = 0; i < player2TrumpNum.length; i++) 
+	    {
+	      if (p2Max < player2TrumpNum[i]) 
+	      {
+	    	  p2Max = player2TrumpNum[i];
+	    	  p2Suit = i;
+	      }
+	    }
+	    
+	    p3Max = player3TrumpNum[0];
+	    p3Suit = 0;
+	    for (int i = 0; i < player3TrumpNum.length; i++) 
+	    {
+	      if (p3Max < player3TrumpNum[i]) 
+	      {
+	    	  p3Max = player3TrumpNum[i];
+	    	  p3Suit = i;
+	      }
+	    }
+	    
+	    p4Max = player3TrumpNum[0];
+	    p4Suit = 0;
+	    for (int i = 0; i < player3TrumpNum.length; i++) 
+	    {
+	      if (p4Max < player3TrumpNum[i]) 
+	      {
+	    	  p4Max = player3TrumpNum[i];
+	    	  p4Suit = i;
+	      }
+	    }
+	    
 	 
 		
 		
 		
 		
+	}
+	
+	public static void pickUpCard(int player)
+	{
+		if(dealer == 4)
+		{
+			if(player == 2)
+			{
+				player2SoloStatus = true;
+				Trump = proposedTrump;
+				System.out.println("Player 2 is going alone!");
+			}
+			else
+			{
+				Trump = proposedTrump;
+				player4Cards.add(kitty.get(0));
+				int worstCard = 0;
+				for(int i = 0; i < player4Cards.size(); i++)
+				{
+					if(player4Cards.get(i).contains(Trump))
+					{}
+					else
+					{
+						if(player4Cards.get(i).contains("9") || player4Cards.get(i).contains("10"))
+						{
+							worstCard = i;
+						}
+						else {}
+					}
+				}
+				//System.out.println();
+				player4Cards.remove(worstCard);
+				System.out.println(player4Cards);
+				
+			}
+		}
+		else if(dealer == 1)
+		{
+			
+		}
+		else if(dealer == 2)
+		{
+			
+		}
+		else if(dealer == 3)
+		{
+			
+		}
 	}
 	
 	public static void printPlayerCards(int playerNum)
