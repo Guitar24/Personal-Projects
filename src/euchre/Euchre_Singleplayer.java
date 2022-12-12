@@ -169,16 +169,74 @@ public class Euchre_Singleplayer
 		
 		printTable();
 		
+<<<<<<< HEAD
 
 		for(int i = 1; i <= 4; i++)
+=======
+		/*
+		System.out.print("\nPlayer 2 cards: " + player2Cards);
+		System.out.println("Player 2 suit: " + player2Suit  + Arrays.toString(player2TrumpNum));
+		
+		System.out.print("Player 3 cards: " + player3Cards);
+		System.out.println("Player 3 suit: " + player3Suit + Arrays.toString(player3TrumpNum));
+		
+		System.out.print("Player 4 cards: " + player4Cards);
+		System.out.println("Player 4 suit: " + player4Suit + Arrays.toString(player4TrumpNum));
+		
+		;
+		
+		System.out.println(proposedTrump);
+		*/
+		
+		while(true)
+>>>>>>> branch 'master' of https://github.com/Guitar24/Personal-Projects.git
 		{
+<<<<<<< HEAD
 			if(play > 4) {play = 1;}
+=======
+			System.out.println("\n\nTell Dealer to PICK IT UP, or PASS");
+			System.out.print("\n\"PICK\" or \"PASS\": ");
+>>>>>>> branch 'master' of https://github.com/Guitar24/Personal-Projects.git
 			
 			if(play == 1)
 			{
+<<<<<<< HEAD
 				System.out.println("\n\nThe top card is: " + topCard);
 				System.out.println("\nTell Dealer to PICK IT UP, or PASS");
 				System.out.print("\n\"PICK\" or \"PASS\": ");
+=======
+				play = 2;
+				if(dealer == 4)
+				{
+					if(player2Suit == proposedTrump && p2Max >= 4)
+					{
+						System.out.println("Player 2 tells dealer to PICK IT UP");
+						pickUpCard(2);
+					}
+					else 
+					{
+						System.out.println("Player 2 Passes");
+						if(player3Suit == proposedTrump && p3Max >= 2)
+						{
+							System.out.println("Player 3 tells dealer to PICK IT UP");
+							pickUpCard(3);
+						}
+						else 
+						{
+							System.out.println("Player 3 Passes");
+							if(player4Suit == proposedTrump && p4Max >= 2)
+							{
+								System.out.println("Player 4 tells dealer to PICK IT UP");
+								pickUpCard(4);
+							}
+							else 
+							{
+								System.out.println("Player 4 passes");
+							}
+						}
+					}
+				}
+>>>>>>> branch 'master' of https://github.com/Guitar24/Personal-Projects.git
 				
 				String trumpChoice = Input.next();
 				if(trumpChoice.equalsIgnoreCase("pass"))
@@ -495,9 +553,12 @@ public class Euchre_Singleplayer
 	
 	public static void printPlayerCards(int player)
 	{
+<<<<<<< HEAD
 		
 		
 		
+=======
+>>>>>>> branch 'master' of https://github.com/Guitar24/Personal-Projects.git
 		System.out.print("\n        "); 
 		
 		

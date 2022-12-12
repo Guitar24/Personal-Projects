@@ -1,13 +1,31 @@
 package euchre;
 
+<<<<<<< HEAD
 import javax.swing.*;
+=======
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+>>>>>>> branch 'master' of https://github.com/Guitar24/Personal-Projects.git
 
 public class Euchre_2D {
 
-	public static void main(String[] args) 
+	public static void main(String[] args) throws IOException 
 	{
 		JFrame window = new JFrame();
+<<<<<<< HEAD
 		JButton button = new JButton("See if this works");  
+=======
+		
+		BufferedImage image = ImageIO.read(new File(" Aceofspades.png"));
+		JLabel label = new JLabel(new ImageIcon(image));
+		window.add(label);
+>>>>>>> branch 'master' of https://github.com/Guitar24/Personal-Projects.git
 		
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    window.setSize(400, 400);
