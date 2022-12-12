@@ -25,9 +25,16 @@ public class Euchre_Singleplayer
 	public static int[] player2TrumpNum = {0, 0, 0, 0};
 	public static int[] player3TrumpNum = {0, 0, 0, 0};
 	public static int[] player4TrumpNum = {0, 0, 0, 0};
+
+	public static String[] cardsOnTable = {"    ", "    ", "    ", "    "};
 	
 	public static int play;
 	public static int dealer = 4;
+	
+	public static int player1Partner = 3;
+	public static int player2Partner = 4;
+	public static int player3Partner = 1;
+	public static int player4Partner = 2;
 	
 	public static int p2Max;
 	public static int p3Max;
@@ -74,7 +81,7 @@ public class Euchre_Singleplayer
 	public static void main(String[] args) throws InterruptedException 
 	{
 		//Turns on caps lock
-		Toolkit.getDefaultToolkit().setLockingKeyState(KeyEvent.VK_CAPS_LOCK, true);
+		//Toolkit.getDefaultToolkit().setLockingKeyState(KeyEvent.VK_CAPS_LOCK, true);
 		
 		//Prints out welcome message
 		System.out.println("Welcome to Euchre!");
@@ -162,68 +169,36 @@ public class Euchre_Singleplayer
 		
 		printTable();
 		
-		System.out.print("\nPlayer 2 cards: " + player2Cards);
-		System.out.println("Player 2 suit: " + player2Suit  + Arrays.toString(player2TrumpNum));
-		
-		System.out.print("Player 3 cards: " + player3Cards);
-		System.out.println("Player 3 suit: " + player3Suit + Arrays.toString(player3TrumpNum));
-		
-		System.out.print("Player 4 cards: " + player4Cards);
-		System.out.println("Player 4 suit: " + player4Suit + Arrays.toString(player4TrumpNum));
-		
-		System.out.println("Tell Dealer to PICK IT UP, or PASS");
-		
-		System.out.println(proposedTrump);
-		
-		while(true)
+
+		for(int i = 1; i <= 4; i++)
 		{
-			System.out.print("\"PICK\" or \"PASS\": ");
+			if(play > 4) {play = 1;}
 			
-			play = 1;
-			
-			String trumpChoice = Input.next();
-			
-			if(trumpChoice.equalsIgnoreCase("pass"))
+			if(play == 1)
 			{
-				play = 2;
-				if(dealer == 4)
-				{
-					if(player2Suit == proposedTrump && p2Max >= 4)
-					{
-						pickUpCard(2);
-					}
-					else 
-					{
-						System.out.println("Player 2 Passes");
-						if(player3Suit == proposedTrump && p3Max >= 3)
-						{
-							pickUpCard(3);
-						}
-						else 
-						{
-							System.out.println("Player 3 Passes");
-							if(player4Suit == proposedTrump && p4Max >= 3)
-							{
-								pickUpCard(4);
-							}
-							else 
-							{
-								
-							}
-						}
-					}
-				}
+				System.out.println("\n\nThe top card is: " + topCard);
+				System.out.println("\nTell Dealer to PICK IT UP, or PASS");
+				System.out.print("\n\"PICK\" or \"PASS\": ");
 				
-				break;
+				String trumpChoice = Input.next();
+				if(trumpChoice.equalsIgnoreCase("pass"))
+				{
+					play ++;
+				}
 			}
-			else if(trumpChoice.equalsIgnoreCase("pick"))
+			
+		}
+		
+
+		System.out.println("Trump is: " + Trump);
+
+		if(player1SoloStatus == false && player2SoloStatus == false && player3SoloStatus == false && player4SoloStatus == false)
+		{
+			play = 1;
+
+			for(int i = 0; i < 5; i++)
 			{
-				pickUpCard(1); 
-				break;
-			}
-			else
-			{
-				System.out.println("Invalid input");
+				
 			}
 		}
 		
@@ -321,12 +296,6 @@ public class Euchre_Singleplayer
 			}
 		}
 		
-		
-		
-		
-		
-		
-		
 		for(int i = 0; i < 5; i++)
 		{
 			if(player2Suits.get(i) == "♥")
@@ -386,17 +355,6 @@ public class Euchre_Singleplayer
 				player4TrumpNum[3] ++;
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		player2Suit = player2Suits.get(0);
 		
@@ -480,12 +438,6 @@ public class Euchre_Singleplayer
 	    	  p4Suit = i;
 	      }
 	    }
-	    
-	 
-		
-		
-		
-		
 	}
 	
 	public static void pickUpCard(int player)
@@ -518,7 +470,7 @@ public class Euchre_Singleplayer
 				}
 				//System.out.println();
 				player4Cards.remove(worstCard);
-				System.out.println(player4Cards);
+				//System.out.println(player4Cards);
 				
 			}
 		}
@@ -536,9 +488,18 @@ public class Euchre_Singleplayer
 		}
 	}
 	
-	public static void printPlayerCards(int playerNum)
+	public static void gameLoop() 
 	{
-		System.out.print("\n        ");
+		
+	}
+	
+	public static void printPlayerCards(int player)
+	{
+		
+		
+		
+		System.out.print("\n        "); 
+		
 		
 		for(int i = 0; i < player1Cards.size(); i++)
 		{
@@ -555,16 +516,21 @@ public class Euchre_Singleplayer
 	
 	public static void printTable()
 	{
+		//cardsOnTable[0] = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  player1Cards.get(0) + " " +  RESET + " ";
+		//cardsOnTable[1] = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  player2Cards.get(0) + " " +  RESET + " ";
+		//cardsOnTable[2] = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  player3Cards.get(0) + " " +  RESET + " ";
+		//cardsOnTable[3] = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  player4Cards.get(0) + " " +  RESET + " ";
+		
 		if(dealer == 4)
 		{
 			System.out.println("\n                Player 3\n"
 							 + "\n"
+							 + "\n                  " + cardsOnTable[2] 
 							 + "\n"
-							 + "\n"
-							 + " Player 4         " + topCard + "         Player 2\n"
-							 + "  " + GREEN_BOLD_BRIGHT + "DEALER\n" + RESET
-							 + "\n"
-							 + "\n"
+							 + " Player 4     " + cardsOnTable[3] + "   " + cardsOnTable[1] +  "      Player 2\n"
+							 + "  " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
+							 + "          " + cardsOnTable[0]
+							 + "\n\n\n"
 							 + "\n"
 							 + "                Player 1");
 		}
@@ -579,5 +545,21 @@ public class Euchre_Singleplayer
 													"9♦", "10♦", "J♦", "Q♦", "K♦", "A♦", 
 													"9♣", "10♣", "J♣", "Q♣", "K♣", "A♣", 
 													"9♠", "10♠", "J♠", "Q♠", "K♠", "A♠"));
+	}
+	
+	public static void debug()
+	{
+		
+		System.out.print("\nPlayer 2 cards: " + player2Cards);
+		System.out.println("Player 2 suit: " + player2Suit  + Arrays.toString(player2TrumpNum));
+		
+		System.out.print("Player 3 cards: " + player3Cards);
+		System.out.println("Player 3 suit: " + player3Suit + Arrays.toString(player3TrumpNum));
+		
+		System.out.print("Player 4 cards: " + player4Cards);
+		System.out.println("Player 4 suit: " + player4Suit + Arrays.toString(player4TrumpNum));
+		
+		System.out.println(proposedTrump);
+		
 	}
 }
