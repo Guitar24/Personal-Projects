@@ -124,7 +124,7 @@ public class Euchre_Singleplayer
 			
 			if(menuInput.equalsIgnoreCase("s"))
 			{
-				return 1;
+				return 1; 
 			}
 			else if(menuInput.equalsIgnoreCase("h"))
 			{
