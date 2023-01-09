@@ -491,28 +491,29 @@ public class Euchre_Singleplayer
 			proposedTrump = "♠";
 		}
 		
-		printTable();
+		printStartTable();
 		
 		int i;
 		for(i = 0; i < 5; i++)
 		{
 			choosingTrump = true;
+			
 			if(play == 1)
 			{
 				while(true)
 				{
-					System.out.print("\"PASS\" or \"PICK\"  : ");
+					System.out.print("\n\"PASS\" or \"PICK\"  : ");
 					String input = Input.next();
 					
 					if(input.equalsIgnoreCase("pass"))
 					{
 						play = 2;
-						i = 6;
 						break;
 					}
 					else if(input.equalsIgnoreCase("pick"))
 					{
 						Trump = proposedTrump;
+						System.out.println("Trump is now " + Trump);
 					}
 					
 					else
@@ -523,7 +524,7 @@ public class Euchre_Singleplayer
 				}
 			}
 			
-			if(play == 2)
+			else if(play == 2)
 			{
 				if(player2Partner == dealer)
 				{
@@ -537,7 +538,7 @@ public class Euchre_Singleplayer
 					{
 						System.out.println("Player 2 passes");
 						play = 3;
-						continue;
+						//continue;
 					}
 				}
 				else
@@ -559,7 +560,89 @@ public class Euchre_Singleplayer
 					{
 						System.out.println("Player 2 passes");
 						play = 3;
-						continue;
+						//continue;
+					}
+				}
+			}
+			
+			else if(play == 3)
+			{
+				if(player3Partner == dealer)
+				{
+					if(player3Suit == proposedTrump && p3Max >= 4)
+					{
+						System.out.println("Player 3 tells dealer to pick it up and will go alone");
+						choosingTrump = false;
+						break;
+					}
+					else 
+					{
+						System.out.println("Player 3 passes");
+						play = 3;
+						//continue;
+					}
+				}
+				else
+				{
+					if(player3Suit == proposedTrump && p3Max >= 3)
+					{
+						if(player3Suit == proposedTrump && p3Max >= 4)
+						{
+							System.out.println("Player 3 tells dealer to pick it up and will go alone");
+						}
+						else 
+						{
+							System.out.println("Player 3 tells dealer to pick it up");
+							choosingTrump = false;
+							break;
+						}
+					}
+					else 
+					{
+						System.out.println("Player 3 passes");
+						play = 4;
+						//continue;
+					}
+				}
+			}
+			
+			else if(play == 4)
+			{
+				if(player4Partner == dealer)
+				{
+					if(player4Suit == proposedTrump && p4Max >= 4)
+					{
+						System.out.println("Player 17 tells dealer to pick it up and will go alone");
+						choosingTrump = false;
+						break;
+					}
+					else 
+					{
+						System.out.println("Player 4 passes");
+						play = 1;
+						//continue;
+					}
+				}
+				else
+				{
+					if(player4Suit == proposedTrump && p4Max >= 3)
+					{
+						if(player4Suit == proposedTrump && p4Max >= 4)
+						{
+							System.out.println("Player 4 tells dealer to pick it up and will go alone");
+						}
+						else 
+						{
+							System.out.println("Player 4 tells dealer to pick it up");
+							choosingTrump = false;
+							break;
+						}
+					}
+					else 
+					{
+						System.out.println("Player 4 passes");
+						play = 1;
+						//continue;
 					}
 				}
 			}
@@ -582,6 +665,24 @@ public class Euchre_Singleplayer
 				System.out.print(WHITE_BACKGROUND_BRIGHT + BLACK_BOLD + " " + player1Cards.get(i) + " " + RESET + " ");
 			}
 		}
+	}
+	
+	public static void printStartTable()
+	{
+		if(dealer == 4)
+		{
+			System.out.println("\n                Player 3\n"
+							 + "\n"
+							 + "\n                  " + cardsOnTable[2] 
+							 + "\n"
+							 + " Player 4     " + cardsOnTable[3] + kitty.get(0) + cardsOnTable[1] +  "      Player 2\n"
+							 + "  " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
+							 + "          " + cardsOnTable[0]
+							 + "\n\n\n"
+							 + "\n"
+							 + "                Player 1");
+		}
+		printPlayerCards(1);
 	}
 	
 	public static void printTable()
