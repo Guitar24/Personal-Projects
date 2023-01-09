@@ -19,7 +19,7 @@ public class Euchre_Singleplayer
 	public static ArrayList<String> player2Suits = new ArrayList<String>();
 	public static ArrayList<String> player3Suits = new ArrayList<String>();
 	public static ArrayList<String> player4Suits = new ArrayList<String>();
-
+	
 	public static ArrayList<String> kitty = new ArrayList<String>();
 	
 	public static int[] player2TrumpNum = {0, 0, 0, 0};
@@ -30,6 +30,7 @@ public class Euchre_Singleplayer
 	
 	public static int play;
 	public static int dealer = 4;
+	public static int numOfGames = 0;
 	
 	public static int player1Partner = 3;
 	public static int player2Partner = 4;
@@ -55,6 +56,8 @@ public class Euchre_Singleplayer
 	public static boolean player2SoloStatus;
 	public static boolean player3SoloStatus;
 	public static boolean player4SoloStatus;
+	
+	public static boolean choosingTrump;
 	
 	
 	public static Scanner Input = new Scanner(System.in);
@@ -150,106 +153,32 @@ public class Euchre_Singleplayer
 			topCard = WHITE_BACKGROUND_BRIGHT + BLACK_BOLD + " " + kitty.get(0) + " " + RESET + " ";
 		}
 		
-		if(topCard.contains("♥"))
-		{
-			proposedTrump = "♥";
-		}
-		else if(topCard.contains("♦"))
-		{
-			proposedTrump = "♦";
-		}
-		if(topCard.contains("♣"))
-		{
-			proposedTrump = "♣";
-		}
-		else if(topCard.contains("♠"))
-		{
-			proposedTrump = "♠";
-		}
-		
-		printTable();
-		
-
-		for(int i = 1; i <= 4; i++)
-		/*
-		System.out.print("\nPlayer 2 cards: " + player2Cards);
-		System.out.println("Player 2 suit: " + player2Suit  + Arrays.toString(player2TrumpNum));
-		
-		System.out.print("Player 3 cards: " + player3Cards);
-		System.out.println("Player 3 suit: " + player3Suit + Arrays.toString(player3TrumpNum));
-		
-		System.out.print("Player 4 cards: " + player4Cards);
-		System.out.println("Player 4 suit: " + player4Suit + Arrays.toString(player4TrumpNum));
-		
-		;
-		
-		System.out.println(proposedTrump);
-		*/
-		
-		while(true)
-		{
-			if(play > 4) {play = 1;}
-			System.out.println("\n\nTell Dealer to PICK IT UP, or PASS");
-			System.out.print("\n\"PICK\" or \"PASS\": ");
-			
-			if(play == 1)
-			{
-				System.out.println("\n\nThe top card is: " + topCard);
-				System.out.println("\nTell Dealer to PICK IT UP, or PASS");
-				System.out.print("\n\"PICK\" or \"PASS\": ");
-				play = 2;
-				if(dealer == 4)
-				{
-					if(player2Suit == proposedTrump && p2Max >= 4)
-					{
-						System.out.println("Player 2 tells dealer to PICK IT UP");
-						pickUpCard(2);
-					}
-					else 
-					{
-						System.out.println("Player 2 Passes");
-						if(player3Suit == proposedTrump && p3Max >= 2)
-						{
-							System.out.println("Player 3 tells dealer to PICK IT UP");
-							pickUpCard(3);
-						}
-						else 
-						{
-							System.out.println("Player 3 Passes");
-							if(player4Suit == proposedTrump && p4Max >= 2)
-							{
-								System.out.println("Player 4 tells dealer to PICK IT UP");
-								pickUpCard(4);
-							}
-							else 
-							{
-								System.out.println("Player 4 passes");
-							}
-						}
-					}
-				}
-				
-				String trumpChoice = Input.next();
-				if(trumpChoice.equalsIgnoreCase("pass"))
-				{
-					play ++;
-				}
-			}
-			
-		}
-		
-
-		System.out.println("Trump is: " + Trump);
-
-		if(player1SoloStatus == false && player2SoloStatus == false && player3SoloStatus == false && player4SoloStatus == false)
+		if((numOfGames % 4) == 0) 
 		{
 			play = 1;
-
-			for(int i = 0; i < 5; i++)
-			{
-				
-			}
+			dealer = 4;
 		}
+
+		else if((numOfGames % 4) == 1)
+		{
+			play = 2;
+			dealer = 1;
+		}
+			
+		else if((numOfGames % 4) == 2)
+		{
+			play = 3;
+			dealer = 2;
+		}
+
+		else if((numOfGames % 4) == 3)
+		{
+			play = 4;
+			dealer = 3;
+		}
+		
+		gameLoop();
+
 		
 	}
 
@@ -539,9 +468,104 @@ public class Euchre_Singleplayer
 	
 	public static void gameLoop() 
 	{
+		chooseTrump();
 		
 	}
 	
+	private static void chooseTrump() 
+	{
+		if(topCard.contains("♥"))
+		{
+			proposedTrump = "♥";
+		}
+		else if(topCard.contains("♦"))
+		{
+			proposedTrump = "♦";
+		}
+		if(topCard.contains("♣"))
+		{
+			proposedTrump = "♣";
+		}
+		else if(topCard.contains("♠"))
+		{
+			proposedTrump = "♠";
+		}
+		
+		printTable();
+		
+		int i;
+		for(i = 0; i < 5; i++)
+		{
+			choosingTrump = true;
+			if(play == 1)
+			{
+				while(true)
+				{
+					System.out.print("\"PASS\" or \"PICK\"  : ");
+					String input = Input.next();
+					
+					if(input.equalsIgnoreCase("pass"))
+					{
+						play = 2;
+						i = 6;
+						break;
+					}
+					else if(input.equalsIgnoreCase("pick"))
+					{
+						Trump = proposedTrump;
+					}
+					
+					else
+					{
+						System.out.println("Error code: ID-10-T");
+						System.out.print("Try again. Type ");
+					}
+				}
+			}
+			
+			if(play == 2)
+			{
+				if(player2Partner == dealer)
+				{
+					if(player2Suit == proposedTrump && p2Max >= 4)
+					{
+						System.out.println("Player 2 tells dealer to pick it up and will go alone");
+						choosingTrump = false;
+						break;
+					}
+					else 
+					{
+						System.out.println("Player 2 passes");
+						play = 3;
+						continue;
+					}
+				}
+				else
+				{
+					if(player2Suit == proposedTrump && p2Max >= 3)
+					{
+						if(player2Suit == proposedTrump && p2Max >= 4)
+						{
+							System.out.println("Player 2 tells dealer to pick it up and will go alone");
+						}
+						else 
+						{
+							System.out.println("Player 2 tells dealer to pick it up");
+							choosingTrump = false;
+							break;
+						}
+					}
+					else 
+					{
+						System.out.println("Player 2 passes");
+						play = 3;
+						continue;
+					}
+				}
+			}
+		}
+	}
+
 	public static void printPlayerCards(int player)
 	{
 		System.out.print("\n        "); 
