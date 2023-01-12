@@ -21,7 +21,7 @@ public class Euchre_Singleplayer
 	public static ArrayList<String> player4Suits = new ArrayList<String>();
 
 	public static ArrayList<String> kitty = new ArrayList<String>();
-	
+
 	public static ArrayList<Integer> player2CardScores  = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
 	public static ArrayList<Integer> player3CardScores  = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
 	public static ArrayList<Integer> player4CardScores  = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
@@ -52,6 +52,7 @@ public class Euchre_Singleplayer
 	public static String player2Suit;
 	public static String player3Suit;
 	public static String player4Suit;
+
 	public static String topCard;
 	public static String proposedTrump;
 	public static String Trump;
@@ -61,7 +62,8 @@ public class Euchre_Singleplayer
 	public static boolean player3SoloStatus;
 	public static boolean player4SoloStatus;
 
-	public static boolean choosingTrump;
+	public static boolean choosingTrump1 = true;
+	public static boolean choosingTrump2 = false;
 
 
 	public static Scanner Input = new Scanner(System.in);
@@ -69,21 +71,20 @@ public class Euchre_Singleplayer
 	//Colours
 	public static final String ESC = "\033[";
 
-	public static final String RESET = "\033[0m";  // Text Reset
+	public static final String RESET = "\033[0m";  // RESET TEXT
 
-	public static final String BOXING = "\033[0;51m";   // BLACK
+	public static final String BOXING = "\033[0;51m";   // BLACK BOXING
 
 	public static final String BLACK = "\033[0;30m";   // BLACK
 
-	public static final String BLACK_BOLD = "\033[1;30m";  // BLACK
-
+	public static final String BLACK_BOLD = "\033[1;30m";  // BLACK BOLD
 	public static final String WHITE_BOLD = "\033[1;97m";  // WHITE
 
 	public static final String RED_BOLD_BRIGHT = "\033[1;91m";   // RED
-	public static final String BLACK_BOLD_BRIGHT = "\033[1;90m"; // BLACK
+	public static final String BLACK_BOLD_BRIGHT = "\033[1;90m"; // BLACK BOLD BRIGHT
 	public static final String GREEN_BOLD_BRIGHT = "\033[1;92m"; // GREEN
 
-	public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";   // WHITE
+	public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";   // WHITE BACKGROUND
 
 
 	public static void main(String[] args) throws InterruptedException 
@@ -91,32 +92,33 @@ public class Euchre_Singleplayer
 		//Turns on caps lock
 		//Toolkit.getDefaultToolkit().setLockingKeyState(KeyEvent.VK_CAPS_LOCK, true);
 
-		//Prints out welcome message
+		//Welcomes the user and shows the menu
 		System.out.println("Welcome to Euchre!");
 
-		//Runs the menu method
 		menu();
 	}
 
 	public static void menu() throws InterruptedException 
 	{
+		//Prints out the menu and asks the user for input
 		while(true)
 		{
 			System.out.println("\n"
 					+ "█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█\r\n"
 					+ "█  S - Start Game   █\r\n"
 					+ "█  R - Rules        █\r\n"
-					+ "█  O - Options      █\r\n"
+					+ "█  P - Preferences  █\r\n"
 					+ "█  Q - Quit         █\r\n"
 					+ "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
 			System.out.print("Input one of the options above: ");
 			String menuInput = Input.next();
 
-			if(menuInput.equalsIgnoreCase("s"))
+
+			if(menuInput.equalsIgnoreCase("s")) //If the user wishes to start the game
 			{
 				startGame();
 			}
-			else if(menuInput.equalsIgnoreCase("h"))
+			else if(menuInput.equalsIgnoreCase("r")) //If the user needs to see the rules
 			{
 				System.out.println(RED_BOLD_BRIGHT + "\n**Object of the Game**\r\n" + RESET
 						+ "The goal is to win at least three tricks. \r\n"
@@ -163,11 +165,11 @@ public class Euchre_Singleplayer
 
 				menu();
 			}
-			else if(menuInput.equalsIgnoreCase("o"))
+			else if(menuInput.equalsIgnoreCase("o")) // allows the user to select how many points in a game
 			{
 
 			}
-			else if(menuInput.equalsIgnoreCase("q"))
+			else if(menuInput.equalsIgnoreCase("q")) // exits the program
 			{
 				//Prints out goodbye message
 				System.out.println("Come again soon!");
@@ -455,6 +457,341 @@ public class Euchre_Singleplayer
 				p4Suit = i;
 			}
 		}
+
+		cardScores(5);
+	}
+
+	public static void cardScores(int cardsInHand)
+	{
+		//Player 2 Card Score
+		for(int i = 0; i < cardsInHand; i++)
+		{
+
+			if(choosingTrump1 == true)
+			{
+
+				if(player2Cards.get(i).contains("9"))
+				{
+					player2CardScores.set(i, 1);
+				}
+				else if(player2Cards.get(i).contains("10"))
+				{
+					player2CardScores.set(i, 2);
+				}
+				else if(player2Cards.get(i).contains("Q"))
+				{
+					player2CardScores.set(i, 4);
+				}
+				else if(player2Cards.get(i).contains("K"))
+				{
+					player2CardScores.set(i, 5);
+				}
+				else if(player2Cards.get(i).contains("A"))
+				{
+					player2CardScores.set(i, 6);
+				}
+
+				else if(player2Cards.get(i).contains("J"))
+				{
+					//test for right bower
+					if(player2Cards.get(i).contains(proposedTrump))
+					{
+						player2CardScores.set(i, 8);
+					}
+
+					//test for left bower
+					if(proposedTrump.contains("♠") && player2Cards.get(i).contains("♣"))
+					{
+						player2CardScores.set(i, 7);
+					}
+					else if(proposedTrump.contains("♣") && player2Cards.get(i).contains("♠"))
+					{
+						player2CardScores.set(i, 7);
+					}
+					else if(proposedTrump.contains("♦") && player2Cards.get(i).contains("♥"))
+					{
+						player2CardScores.set(i, 7);
+					}
+					else if(proposedTrump.contains("♥") && player2Cards.get(i).contains("♦"))
+					{
+						player2CardScores.set(i, 7);
+					}
+				}
+			}
+
+			else if(choosingTrump2 == true)
+			{
+
+				if(player2Cards.get(i).contains("9"))
+				{
+					player2CardScores.set(i, 1);
+				}
+				else if(player2Cards.get(i).contains("10"))
+				{
+					player2CardScores.set(i, 2);
+				}
+				else if(player2Cards.get(i).contains("Q"))
+				{
+					player2CardScores.set(i, 4);
+				}
+				else if(player2Cards.get(i).contains("K"))
+				{
+					player2CardScores.set(i, 5);
+				}
+				else if(player2Cards.get(i).contains("A"))
+				{
+					player2CardScores.set(i, 6);
+				}
+				else if(player2Cards.get(i).contains("J"))
+				{
+					player2CardScores.set(i, 8);
+				}
+			}
+
+			else if(choosingTrump1 == false && choosingTrump2 == false)
+			{
+				if(player2Cards.get(i).contains(Trump))
+				{
+
+					if(player2Cards.get(i).contains("9"))
+					{
+						player2CardScores.set(i, 9);
+					}
+					else if(player2Cards.get(i).contains("10"))
+					{
+						player2CardScores.set(i, 10);
+					}
+					else if(player2Cards.get(i).contains("Q"))
+					{
+						player2CardScores.set(i, 12);
+					}
+					else if(player2Cards.get(i).contains("K"))
+					{
+						player2CardScores.set(i, 13);
+					}
+					else if(player2Cards.get(i).contains("A"))
+					{
+						player2CardScores.set(i, 14);
+					}
+					else if(player2Cards.get(i).contains("J"))
+					{
+						player2CardScores.set(i, 16);
+					}
+				}
+				else
+				{
+					if(player2Cards.get(i).contains("9"))
+					{
+						player2CardScores.set(i, 1);
+					}
+					else if(player2Cards.get(i).contains("10"))
+					{
+						player2CardScores.set(i, 2);
+					}
+					else if(player2Cards.get(i).contains("Q"))
+					{
+						player2CardScores.set(i, 4);
+					}
+					else if(player2Cards.get(i).contains("K"))
+					{
+						player2CardScores.set(i, 5);
+					}
+					else if(player2Cards.get(i).contains("A"))
+					{
+						player2CardScores.set(i, 6);
+					}
+					else if(player2Cards.get(i).contains("J"))
+					{
+						//test for left bower
+						if(Trump.contains("♠") && player2Cards.get(i).contains("♣"))
+						{
+							player2CardScores.set(i, 15);
+						}
+						else if(Trump.contains("♣") && player2Cards.get(i).contains("♠"))
+						{
+							player2CardScores.set(i, 15);
+						}
+						else if(Trump.contains("♦") && player2Cards.get(i).contains("♥"))
+						{
+							player2CardScores.set(i, 15);
+						}
+						else if(Trump.contains("♥") && player2Cards.get(i).contains("♦"))
+						{
+							player2CardScores.set(i, 15);
+						}
+						else
+						{
+							player2CardScores.set(i, 3);
+						}
+					}
+				}
+			}
+		}
+		
+		//Player 3 Card Score
+		for(int i = 0; i < cardsInHand; i++)
+		{
+
+			if(choosingTrump1 == true)
+			{
+
+				if(player3Cards.get(i).contains("9"))
+				{
+					player3CardScores.set(i, 1);
+				}
+				else if(player3Cards.get(i).contains("10"))
+				{
+					player3CardScores.set(i, 2);
+				}
+				else if(player3Cards.get(i).contains("Q"))
+				{
+					player3CardScores.set(i, 4);
+				}
+				else if(player3Cards.get(i).contains("K"))
+				{
+					player3CardScores.set(i, 5);
+				}
+				else if(player3Cards.get(i).contains("A"))
+				{
+					player3CardScores.set(i, 6);
+				}
+
+				else if(player3Cards.get(i).contains("J"))
+				{
+					//test for right bower
+					if(player3Cards.get(i).contains(proposedTrump))
+					{
+						player3CardScores.set(i, 8);
+					}
+
+					//test for left bower
+					if(proposedTrump.contains("♠") && player3Cards.get(i).contains("♣"))
+					{
+						player3CardScores.set(i, 7);
+					}
+					else if(proposedTrump.contains("♣") && player3Cards.get(i).contains("♠"))
+					{
+						player3CardScores.set(i, 7);
+					}
+					else if(proposedTrump.contains("♦") && player3Cards.get(i).contains("♥"))
+					{
+						player3CardScores.set(i, 7);
+					}
+					else if(proposedTrump.contains("♥") && player3Cards.get(i).contains("♦"))
+					{
+						player3CardScores.set(i, 7);
+					}
+				}
+			}
+
+			else if(choosingTrump2 == true)
+			{
+
+				if(player3Cards.get(i).contains("9"))
+				{
+					player3CardScores.set(i, 1);
+				}
+				else if(player3Cards.get(i).contains("10"))
+				{
+					player3CardScores.set(i, 2);
+				}
+				else if(player3Cards.get(i).contains("Q"))
+				{
+					player3CardScores.set(i, 4);
+				}
+				else if(player3Cards.get(i).contains("K"))
+				{
+					player3CardScores.set(i, 5);
+				}
+				else if(player3Cards.get(i).contains("A"))
+				{
+					player3CardScores.set(i, 6);
+				}
+				else if(player3Cards.get(i).contains("J"))
+				{
+					player3CardScores.set(i, 8);
+				}
+			}
+
+			else if(choosingTrump1 == false && choosingTrump2 == false)
+			{
+				if(player3Cards.get(i).contains(Trump))
+				{
+
+					if(player3Cards.get(i).contains("9"))
+					{
+						player3CardScores.set(i, 9);
+					}
+					else if(player3Cards.get(i).contains("10"))
+					{
+						player3CardScores.set(i, 10);
+					}
+					else if(player3Cards.get(i).contains("Q"))
+					{
+						player3CardScores.set(i, 12);
+					}
+					else if(player3Cards.get(i).contains("K"))
+					{
+						player3CardScores.set(i, 13);
+					}
+					else if(player3Cards.get(i).contains("A"))
+					{
+						player3CardScores.set(i, 14);
+					}
+					else if(player3Cards.get(i).contains("J"))
+					{
+						player3CardScores.set(i, 16);
+					}
+				}
+				else
+				{
+					if(player3Cards.get(i).contains("9"))
+					{
+						player3CardScores.set(i, 1);
+					}
+					else if(player3Cards.get(i).contains("10"))
+					{
+						player3CardScores.set(i, 2);
+					}
+					else if(player3Cards.get(i).contains("Q"))
+					{
+						player3CardScores.set(i, 4);
+					}
+					else if(player3Cards.get(i).contains("K"))
+					{
+						player3CardScores.set(i, 5);
+					}
+					else if(player3Cards.get(i).contains("A"))
+					{
+						player3CardScores.set(i, 6);
+					}
+					else if(player3Cards.get(i).contains("J"))
+					{
+						//test for left bower
+						if(Trump.contains("♠") && player3Cards.get(i).contains("♣"))
+						{
+							player3CardScores.set(i, 15);
+						}
+						else if(Trump.contains("♣") && player3Cards.get(i).contains("♠"))
+						{
+							player3CardScores.set(i, 15);
+						}
+						else if(Trump.contains("♦") && player3Cards.get(i).contains("♥"))
+						{
+							player3CardScores.set(i, 15);
+						}
+						else if(Trump.contains("♥") && player3Cards.get(i).contains("♦"))
+						{
+							player3CardScores.set(i, 15);
+						}
+						else
+						{
+							player3CardScores.set(i, 3);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public static void pickUpCard(int player)
@@ -535,7 +872,7 @@ public class Euchre_Singleplayer
 		int i;
 		for(i = 0; i < 5; i++)
 		{
-			choosingTrump = true;
+			choosingTrump1 = true;
 
 			if(play == 1)
 			{
@@ -554,7 +891,7 @@ public class Euchre_Singleplayer
 					{
 						Trump = proposedTrump;
 						System.out.println("Trump is now " + Trump);
-						choosingTrump = false;
+						choosingTrump1 = false;
 						i = 6;
 						break;
 					}
@@ -574,7 +911,7 @@ public class Euchre_Singleplayer
 					if(player2Suit == proposedTrump && p2Max >= 4)
 					{
 						System.out.println("Player 2 tells dealer to pick it up and will go alone");
-						choosingTrump = false;
+						choosingTrump1 = false;
 						break;
 					}
 					else 
@@ -596,7 +933,7 @@ public class Euchre_Singleplayer
 						else 
 						{
 							System.out.println("Player 2 tells dealer to pick it up");
-							choosingTrump = false;
+							choosingTrump1 = false;
 							break;
 						}
 					}
@@ -617,7 +954,7 @@ public class Euchre_Singleplayer
 					if(player3Suit == proposedTrump && p3Max >= 4)
 					{
 						System.out.println("Player 3 tells dealer to pick it up and will go alone");
-						choosingTrump = false;
+						choosingTrump1 = false;
 						break;
 					}
 					else 
@@ -639,7 +976,7 @@ public class Euchre_Singleplayer
 						else 
 						{
 							System.out.println("Player 3 tells dealer to pick it up");
-							choosingTrump = false;
+							choosingTrump1 = false;
 							break;
 						}
 					}
@@ -660,7 +997,7 @@ public class Euchre_Singleplayer
 					if(player4Suit == proposedTrump && p4Max >= 4)
 					{
 						System.out.println("Player 17 tells dealer to pick it up and will go alone");
-						choosingTrump = false;
+						choosingTrump1 = false;
 						break;
 					}
 					else 
@@ -682,7 +1019,7 @@ public class Euchre_Singleplayer
 						else 
 						{
 							System.out.println("Player 4 tells dealer to pick it up");
-							choosingTrump = false;
+							choosingTrump1 = false;
 							break;
 						}
 					}
@@ -698,8 +1035,11 @@ public class Euchre_Singleplayer
 		}
 
 
-		if(choosingTrump == true)
+		if(choosingTrump1 == true)
 		{
+			choosingTrump1 = false;
+			choosingTrump2 = true;
+
 			int f;
 			for(f = 0; f < 5; f++)
 			{
@@ -744,8 +1084,6 @@ public class Euchre_Singleplayer
 						}
 					}
 				}
-
-
 			}
 		}
 	}
@@ -793,7 +1131,7 @@ public class Euchre_Singleplayer
 									+ "\n"
 									+ "                Player 1");
 		}
-		
+
 		printPlayerCards(1);
 	}
 
