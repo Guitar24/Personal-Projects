@@ -457,8 +457,38 @@ public class Euchre_Singleplayer
 				p4Suit = i;
 			}
 		}
+		
+		if(kitty.get(0).contains("♥") || kitty.get(0).contains("♦"))
+		{
+			topCard = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  kitty.get(0) + " " +  RESET + " ";
+		}
+		else
+		{
+			topCard = WHITE_BACKGROUND_BRIGHT + BLACK_BOLD + " " + kitty.get(0) + " " + RESET + " ";
+		}
+		
+		if(topCard.contains("♥"))
+		{
+			proposedTrump = "♥";
+		}
+		else if(topCard.contains("♦"))
+		{
+			proposedTrump = "♦";
+		}
+		if(topCard.contains("♣"))
+		{
+			proposedTrump = "♣";
+		}
+		else if(topCard.contains("♠"))
+		{
+			proposedTrump = "♠";
+		}
 
 		cardScores(5);
+		
+		System.out.println(player2CardScores);
+		System.out.println(player3CardScores);
+		System.out.println(player4CardScores);
 	}
 
 	public static void cardScores(int cardsInHand)
@@ -627,7 +657,7 @@ public class Euchre_Singleplayer
 				}
 			}
 		}
-		
+
 		//Player 3 Card Score
 		for(int i = 0; i < cardsInHand; i++)
 		{
@@ -792,6 +822,171 @@ public class Euchre_Singleplayer
 				}
 			}
 		}
+
+		//Player 4 Card Score
+		for(int i = 0; i < cardsInHand; i++)
+		{
+
+			if(choosingTrump1 == true)
+			{
+
+				if(player4Cards.get(i).contains("9"))
+				{
+					player4CardScores.set(i, 1);
+				}
+				else if(player4Cards.get(i).contains("10"))
+				{
+					player4CardScores.set(i, 2);
+				}
+				else if(player4Cards.get(i).contains("Q"))
+				{
+					player4CardScores.set(i, 4);
+				}
+				else if(player4Cards.get(i).contains("K"))
+				{
+					player4CardScores.set(i, 5);
+				}
+				else if(player4Cards.get(i).contains("A"))
+				{
+					player4CardScores.set(i, 6);
+				}
+
+				else if(player4Cards.get(i).contains("J"))
+				{
+					//test for right bower
+					if(player4Cards.get(i).contains(proposedTrump))
+					{
+						player4CardScores.set(i, 8);
+					}
+
+					//test for left bower
+					if(proposedTrump.contains("♠") && player4Cards.get(i).contains("♣"))
+					{
+						player4CardScores.set(i, 7);
+					}
+					else if(proposedTrump.contains("♣") && player4Cards.get(i).contains("♠"))
+					{
+						player4CardScores.set(i, 7);
+					}
+					else if(proposedTrump.contains("♦") && player4Cards.get(i).contains("♥"))
+					{
+						player4CardScores.set(i, 7);
+					}
+					else if(proposedTrump.contains("♥") && player4Cards.get(i).contains("♦"))
+					{
+						player4CardScores.set(i, 7);
+					}
+				}
+			}
+
+			else if(choosingTrump2 == true)
+			{
+
+				if(player4Cards.get(i).contains("9"))
+				{
+					player4CardScores.set(i, 1);
+				}
+				else if(player4Cards.get(i).contains("10"))
+				{
+					player4CardScores.set(i, 2);
+				}
+				else if(player4Cards.get(i).contains("Q"))
+				{
+					player4CardScores.set(i, 4);
+				}
+				else if(player4Cards.get(i).contains("K"))
+				{
+					player4CardScores.set(i, 5);
+				}
+				else if(player4Cards.get(i).contains("A"))
+				{
+					player4CardScores.set(i, 6);
+				}
+				else if(player4Cards.get(i).contains("J"))
+				{
+					player4CardScores.set(i, 8);
+				}
+			}
+
+			else if(choosingTrump1 == false && choosingTrump2 == false)
+			{
+				if(player4Cards.get(i).contains(Trump))
+				{
+
+					if(player4Cards.get(i).contains("9"))
+					{
+						player4CardScores.set(i, 9);
+					}
+					else if(player4Cards.get(i).contains("10"))
+					{
+						player4CardScores.set(i, 10);
+					}
+					else if(player4Cards.get(i).contains("Q"))
+					{
+						player4CardScores.set(i, 12);
+					}
+					else if(player4Cards.get(i).contains("K"))
+					{
+						player4CardScores.set(i, 13);
+					}
+					else if(player4Cards.get(i).contains("A"))
+					{
+						player4CardScores.set(i, 14);
+					}
+					else if(player4Cards.get(i).contains("J"))
+					{
+						player4CardScores.set(i, 16);
+					}
+				}
+				else
+				{
+					if(player4Cards.get(i).contains("9"))
+					{
+						player4CardScores.set(i, 1);
+					}
+					else if(player4Cards.get(i).contains("10"))
+					{
+						player4CardScores.set(i, 2);
+					}
+					else if(player4Cards.get(i).contains("Q"))
+					{
+						player4CardScores.set(i, 4);
+					}
+					else if(player4Cards.get(i).contains("K"))
+					{
+						player4CardScores.set(i, 5);
+					}
+					else if(player4Cards.get(i).contains("A"))
+					{
+						player4CardScores.set(i, 6);
+					}
+					else if(player4Cards.get(i).contains("J"))
+					{
+						//test for left bower
+						if(Trump.contains("♠") && player4Cards.get(i).contains("♣"))
+						{
+							player4CardScores.set(i, 15);
+						}
+						else if(Trump.contains("♣") && player4Cards.get(i).contains("♠"))
+						{
+							player4CardScores.set(i, 15);
+						}
+						else if(Trump.contains("♦") && player4Cards.get(i).contains("♥"))
+						{
+							player4CardScores.set(i, 15);
+						}
+						else if(Trump.contains("♥") && player4Cards.get(i).contains("♦"))
+						{
+							player4CardScores.set(i, 15);
+						}
+						else
+						{
+							player4CardScores.set(i, 3);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public static void pickUpCard(int player)
@@ -845,7 +1040,6 @@ public class Euchre_Singleplayer
 	public static void gameLoop() 
 	{
 		chooseTrump();
-
 	}
 
 	public static void chooseTrump() 
