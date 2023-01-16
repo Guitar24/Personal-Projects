@@ -486,6 +486,8 @@ public class Euchre_Singleplayer
 
 		cardScores(5);
 		
+		debug();
+		
 		System.out.println(player2CardScores);
 		System.out.println(player3CardScores);
 		System.out.println(player4CardScores);
@@ -543,6 +545,10 @@ public class Euchre_Singleplayer
 						player2CardScores.set(i, 7);
 					}
 					else if(proposedTrump.contains("♥") && player2Cards.get(i).contains("♦"))
+					{
+						player2CardScores.set(i, 7);
+					}
+					else
 					{
 						player2CardScores.set(i, 7);
 					}
@@ -1064,7 +1070,7 @@ public class Euchre_Singleplayer
 		printStartTable();
 
 		int i;
-		for(i = 0; i < 5; i++)
+		for(i = 0; i < 4;)
 		{
 			choosingTrump1 = true;
 
@@ -1078,7 +1084,9 @@ public class Euchre_Singleplayer
 					if(input.equalsIgnoreCase("pass"))
 					{
 						play = 2;
-						i++;
+						//System.out.println(i);
+						i = i + 1;
+						//System.out.println(i);
 						break;
 					}
 					else if(input.equalsIgnoreCase("pick"))
@@ -1112,7 +1120,9 @@ public class Euchre_Singleplayer
 					{
 						System.out.println("Player 2 passes");
 						play = 3;
-						i++;
+						//System.out.println(i);
+						i = i + 1;
+						//System.out.println(i);
 						//continue;
 					}
 				}
@@ -1135,7 +1145,9 @@ public class Euchre_Singleplayer
 					{
 						System.out.println("Player 2 passes");
 						play = 3;
-						i++;
+						//System.out.println(i);
+						i = i + 1;
+						//System.out.println(i);
 						//continue;
 					}
 				}
@@ -1154,8 +1166,10 @@ public class Euchre_Singleplayer
 					else 
 					{
 						System.out.println("Player 3 passes");
-						play = 3;
-						i++;
+						play = 4;
+						//System.out.println(i);
+						i = i + 1;
+						//System.out.println(i);
 						//continue;
 					}
 				}
@@ -1178,7 +1192,9 @@ public class Euchre_Singleplayer
 					{
 						System.out.println("Player 3 passes");
 						play = 4;
-						i++;
+						//System.out.println(i);
+						i = i + 1;
+						//System.out.println(i);
 						//continue;
 					}
 				}
@@ -1198,7 +1214,9 @@ public class Euchre_Singleplayer
 					{
 						System.out.println("Player 4 passes");
 						play = 1;
+						//System.out.println(i);
 						i++;
+						//System.out.println(i);
 						//continue;
 					}
 				}
@@ -1221,7 +1239,9 @@ public class Euchre_Singleplayer
 					{
 						System.out.println("Player 4 passes");
 						play = 1;
+						//System.out.println(i);
 						i++;
+						//System.out.println(i);
 						//continue;
 					}
 				}
@@ -1241,7 +1261,7 @@ public class Euchre_Singleplayer
 				{
 					while(true)
 					{
-						System.out.println("To call a trump, type in one of the following: " + "1 - " + WHITE_BACKGROUND_BRIGHT +  BLACK_BOLD_BRIGHT + "♠   " + RESET + "2 - " + WHITE_BACKGROUND_BRIGHT +  RED_BOLD_BRIGHT + "♥   " + RESET + "3 - " + WHITE_BACKGROUND_BRIGHT +  BLACK_BOLD_BRIGHT + "♣   " + RESET + "4 - " + WHITE_BACKGROUND_BRIGHT +  RED_BOLD_BRIGHT + "♦" + RESET + "   Or type \"PASS\"");
+						System.out.println("To call a trump, type in one of the following: " + "1 - " + WHITE_BACKGROUND_BRIGHT +  BLACK_BOLD_BRIGHT + " ♠ " + RESET + "   2 - " + WHITE_BACKGROUND_BRIGHT +  RED_BOLD_BRIGHT + " ♥ " + RESET + "   3 - " + WHITE_BACKGROUND_BRIGHT +  BLACK_BOLD_BRIGHT + " ♣ " + RESET + "   4 - " + WHITE_BACKGROUND_BRIGHT +  RED_BOLD_BRIGHT + " ♦ " + RESET + "   Or type \"PASS\"");
 						System.out.print("Selection: ");
 
 						String userInput = Input.next();
@@ -1278,10 +1298,14 @@ public class Euchre_Singleplayer
 						}
 					}
 				}
+				
+				else if(play == 2)
+				{
+					
+				}
 			}
 		}
 	}
-
 	public static void printPlayerCards(int player)
 	{
 		System.out.print("\n        "); 
