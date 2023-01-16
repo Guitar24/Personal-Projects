@@ -1,16 +1,16 @@
 package animations;
 
 public class Colours {
-
+	
 	public static final String RESET = "\033[0m";  // Text Reset
-
+	
     public static final String ERASE = "\033[H\033[2J";
     
     public static final String HIDDEN = "\033[8;30m"; //Hidden
     
     //Creates a black box around the word
     public static final String BOXING = "\033[0;51m";   // BLACK
-
+    
     //This will create a black background and make the text previous color
     //Unless color black, then it will make it white
     public static final String TEXT_BACKGROUND = "\033[0;7m";   // BLACK
@@ -37,7 +37,7 @@ public class Colours {
     public static final String DARK_RED = "\033[38;2;145;40;16m"; //DARK RED
     public static final String LIGHT_PINK = "\033[38;2;255;153;240m"; //LIGHT PINK
     public static final String ROYAL_PURPLE = "\033[38;2;101;1;137m"; // ROYAL PURPLE
-        
+    
     // StrikeOut
     public static final String BLACK_STRIKE = "\033[9;30m";   // BLACK
     public static final String RED_STRIKE = "\033[9;31m";     // RED

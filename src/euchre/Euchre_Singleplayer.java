@@ -68,11 +68,9 @@ public class Euchre_Singleplayer
 
 	public static Scanner Input = new Scanner(System.in);
 
-	//Colours
+	
 	public static final String ESC = "\033[";
-
 	public static final String RESET = "\033[0m";  // RESET TEXT
-
 	public static final String BOXING = "\033[0;51m";   // BLACK BOXING
 
 	public static final String BLACK = "\033[0;30m";   // BLACK
@@ -1269,24 +1267,28 @@ public class Euchre_Singleplayer
 						if(userInput.equalsIgnoreCase("1"))
 						{
 							Trump = "♠";
+							System.out.println("Trump is now: " + Trump);
 							f = 6;
 							break;
 						}
 						else if(userInput.equalsIgnoreCase("2"))
 						{
 							Trump = "♥";
+							System.out.println("Trump is now: " + Trump);
 							f = 6;
 							break;
 						}
 						else if(userInput.equalsIgnoreCase("3"))
 						{
 							Trump = "♣";
+							System.out.println("Trump is now: " + Trump);
 							f = 6;
 							break;
 						}
 						else if(userInput.equalsIgnoreCase("4"))
 						{
 							Trump = "♦";
+							System.out.println("Trump is now: " + Trump);
 							f = 6;
 							break;
 						}
@@ -1306,6 +1308,7 @@ public class Euchre_Singleplayer
 			}
 		}
 	}
+	
 	public static void printPlayerCards(int player)
 	{
 		System.out.print("\n        "); 
