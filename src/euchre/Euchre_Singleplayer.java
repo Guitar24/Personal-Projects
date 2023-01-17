@@ -22,9 +22,13 @@ public class Euchre_Singleplayer
 
 	public static ArrayList<String> kitty = new ArrayList<String>();
 
-	public static ArrayList<Integer> player2CardScores  = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
-	public static ArrayList<Integer> player3CardScores  = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
-	public static ArrayList<Integer> player4CardScores  = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
+	public static ArrayList<Integer> player2CardScores = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
+	public static ArrayList<Integer> player3CardScores = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
+	public static ArrayList<Integer> player4CardScores = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
+
+	public static int[] player2SuitScores = new int[4];
+	public static int[] player3SuitScores = new int[4];
+	public static int[] player4SuitScores = new int[4];
 
 	public static int[] player2TrumpNum = {0, 0, 0, 0};
 	public static int[] player3TrumpNum = {0, 0, 0, 0};
@@ -41,6 +45,10 @@ public class Euchre_Singleplayer
 	public static int player3Partner = 1;
 	public static int player4Partner = 2;
 
+	public static int p2MaxScore;
+	public static int p3MaxScore;
+	public static int p4MaxScore;
+
 	public static int p2Max;
 	public static int p3Max;
 	public static int p4Max;
@@ -56,6 +64,8 @@ public class Euchre_Singleplayer
 	public static String topCard;
 	public static String proposedTrump;
 	public static String Trump;
+	
+	public static String suitLead = "";
 
 	public static boolean player1SoloStatus;
 	public static boolean player2SoloStatus;
@@ -68,7 +78,7 @@ public class Euchre_Singleplayer
 
 	public static Scanner Input = new Scanner(System.in);
 
-	
+
 	public static final String ESC = "\033[";
 	public static final String RESET = "\033[0m";  // RESET TEXT
 	public static final String BOXING = "\033[0;51m";   // BLACK BOXING
@@ -221,7 +231,7 @@ public class Euchre_Singleplayer
 
 	}
 
-	public static void dealCards()
+	public static void dealCards() throws InterruptedException 
 	{
 		int randCard;
 
@@ -455,7 +465,7 @@ public class Euchre_Singleplayer
 				p4Suit = i;
 			}
 		}
-		
+
 		if(kitty.get(0).contains("♥") || kitty.get(0).contains("♦"))
 		{
 			topCard = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  kitty.get(0) + " " +  RESET + " ";
@@ -464,7 +474,7 @@ public class Euchre_Singleplayer
 		{
 			topCard = WHITE_BACKGROUND_BRIGHT + BLACK_BOLD + " " + kitty.get(0) + " " + RESET + " ";
 		}
-		
+
 		if(topCard.contains("♥"))
 		{
 			proposedTrump = "♥";
@@ -483,15 +493,15 @@ public class Euchre_Singleplayer
 		}
 
 		cardScores(5);
-		
-		debug();
-		
-		System.out.println(player2CardScores);
-		System.out.println(player3CardScores);
-		System.out.println(player4CardScores);
+
+		//debug();
+
+		//System.out.println(player2CardScores);
+		//System.out.println(player3CardScores);
+		//System.out.println(player4CardScores);
 	}
 
-	public static void cardScores(int cardsInHand)
+	public static void cardScores(int cardsInHand) throws InterruptedException 
 	{
 		//Player 2 Card Score
 		for(int i = 0; i < cardsInHand; i++)
@@ -548,7 +558,7 @@ public class Euchre_Singleplayer
 					}
 					else
 					{
-						player2CardScores.set(i, 7);
+						player2CardScores.set(i, 3);
 					}
 				}
 			}
@@ -715,6 +725,10 @@ public class Euchre_Singleplayer
 					{
 						player3CardScores.set(i, 7);
 					}
+					else
+					{
+						player3CardScores.set(i, 3);
+					}
 				}
 			}
 
@@ -880,6 +894,10 @@ public class Euchre_Singleplayer
 					{
 						player4CardScores.set(i, 7);
 					}
+					else
+					{
+						player3CardScores.set(i, 3);
+					}
 				}
 			}
 
@@ -991,9 +1009,199 @@ public class Euchre_Singleplayer
 				}
 			}
 		}
+
+
+		//Finding Player 3 best suits
+		for(int i3 = 0; i3 < player3Suits.size(); i3++)
+		{
+			if(player3Suits.get(i3).equalsIgnoreCase("♥"))
+			{
+				player3SuitScores[0] = player3SuitScores[0] + player3CardScores.get(i3);
+			}
+			else if(player3Suits.get(i3).equalsIgnoreCase("♦"))
+			{
+				player3SuitScores[1] = player3SuitScores[1] + player3CardScores.get(i3);
+			}
+			else if(player3Suits.get(i3).equalsIgnoreCase("♣"))
+			{
+				player3SuitScores[2] = player3SuitScores[2] + player3CardScores.get(i3);
+			}
+			else if(player3Suits.get(i3).equalsIgnoreCase("♠"))
+			{
+				player3SuitScores[3] = player3SuitScores[3] + player3CardScores.get(i3);
+			}
+		}
+
+		p3MaxScore = player3SuitScores[0];
+
+		for(int i3 = 0; i3 < player3SuitScores.length; i3++)
+		{
+			if(player3SuitScores[i3] > p3MaxScore)
+			{
+				p3MaxScore = player3SuitScores[i3];
+			}
+		}
+
+		int suitIndex3 = 0;
+
+		int i3 = 0;
+		while(i3 < player3SuitScores.length)
+		{
+			if(player3SuitScores[i3] == p3MaxScore)
+			{
+				suitIndex3 = i3;
+				break;
+			}
+
+			i3++;
+		}
+
+		if(suitIndex3 == 0)
+		{
+			player3Suit = "♥";
+		}
+		else if(suitIndex3 == 1)
+		{
+			player3Suit = "♦";
+		}
+		else if(suitIndex3 == 2)
+		{
+			player3Suit = "♣";
+		}
+		else if(suitIndex3 == 3)
+		{
+			player3Suit = "♠";
+		}
+
+
+
+		//Finding Player 2 best suits
+		for(int i2 = 0; i2 < player2Suits.size(); i2++)
+		{
+			if(player2Suits.get(i2).equalsIgnoreCase("♥"))
+			{
+				player2SuitScores[0] = player2SuitScores[0] + player2CardScores.get(i2);
+			}
+			else if(player2Suits.get(i2).equalsIgnoreCase("♦"))
+			{
+				player2SuitScores[1] = player2SuitScores[1] + player2CardScores.get(i2);
+			}
+			else if(player2Suits.get(i2).equalsIgnoreCase("♣"))
+			{
+				player2SuitScores[2] = player2SuitScores[2] + player2CardScores.get(i2);
+			}
+			else if(player2Suits.get(i2).equalsIgnoreCase("♠"))
+			{
+				player2SuitScores[3] = player2SuitScores[3] + player2CardScores.get(i2);
+			}
+		}
+
+		p2MaxScore = player2SuitScores[0];
+
+		for(int i2 = 0; i2 < player2SuitScores.length; i2++)
+		{
+			if(player2SuitScores[i2] > p2MaxScore)
+			{
+				p2MaxScore = player2SuitScores[i2];
+			}
+		}
+
+		int suitIndex2 = 0;
+
+		int i2 = 0;
+		while(i2 < player2SuitScores.length)
+		{
+			if(player2SuitScores[i2] == p2MaxScore)
+			{
+				suitIndex2 = i2;
+				break;
+			}
+
+			i2++;
+		}
+
+		if(suitIndex2 == 0)
+		{
+			player2Suit = "♥";
+		}
+		else if(suitIndex2 == 1)
+		{
+			player2Suit = "♦";
+		}
+		else if(suitIndex2 == 2)
+		{
+			player2Suit = "♣";
+		}
+		else if(suitIndex2 == 3)
+		{
+			player2Suit = "♠";
+		}
+
+
+		//Finding Player 4 best suits
+		for(int i4 = 0; i4 < player4Suits.size(); i4++)
+		{
+			if(player4Suits.get(i4).equalsIgnoreCase("♥"))
+			{
+				player4SuitScores[0] = player4SuitScores[0] + player4CardScores.get(i4);
+			}
+			else if(player4Suits.get(i4).equalsIgnoreCase("♦"))
+			{
+				player4SuitScores[1] = player4SuitScores[1] + player4CardScores.get(i4);
+			}
+			else if(player4Suits.get(i4).equalsIgnoreCase("♣"))
+			{
+				player4SuitScores[2] = player4SuitScores[2] + player4CardScores.get(i4);
+			}
+			else if(player4Suits.get(i4).equalsIgnoreCase("♠"))
+			{
+				player4SuitScores[3] = player4SuitScores[3] + player4CardScores.get(i4);
+			}
+		}
+
+		p4MaxScore = player4SuitScores[0];
+
+		for(int i4 = 0; i4 < player4SuitScores.length; i4++)
+		{
+			if(player4SuitScores[i4] > p4MaxScore)
+			{
+				p4MaxScore = player4SuitScores[i4];
+			}
+		}
+
+		int suitIndex4 = 0;
+
+		int i4 = 0;
+		while(i4 < player4SuitScores.length)
+		{
+			if(player4SuitScores[i4] == p4MaxScore)
+			{
+				suitIndex4 = i4;
+				break;
+			}
+
+			i4++;
+		}
+
+		if(suitIndex4 == 0)
+		{
+			player4Suit = "♥";
+		}
+		else if(suitIndex4 == 1)
+		{
+			player4Suit = "♦";
+		}
+		else if(suitIndex4 == 2)
+		{
+			player4Suit = "♣";
+		}
+		else if(suitIndex4 == 3)
+		{
+			player4Suit = "♠";
+		}
 	}
 
-	public static void pickUpCard(int player)
+	public static void pickUpCard(int player)  throws InterruptedException 
 	{
 		if(dealer == 4)
 		{
@@ -1041,12 +1249,45 @@ public class Euchre_Singleplayer
 		}
 	}
 
-	public static void gameLoop() 
+	public static void gameLoop() throws InterruptedException 
 	{
 		chooseTrump();
+
+		System.out.println("Trump is now: " + Trump);
+		
+		//Start game
+		if(dealer == 4)
+		{
+			play = 1;
+			System.out.println("Player 1 starts (That's you!)");
+		}
+		else if(dealer == 1)
+		{
+			play = 2;
+			System.out.println("Player 2 starts");
+		}
+		else if(dealer == 2)
+		{
+			play = 3;
+			System.out.println("Player 3 starts");
+		}
+		else if(dealer == 3)
+		{
+			play = 2;
+		}
+		System.out.println("Player 4 starts");
+		
+		for(int i = 0; i < 4; i++)
+		{
+			if(play == 1)
+			{
+				
+			}
+		}
+		
 	}
 
-	public static void chooseTrump() 
+	public static void chooseTrump() throws InterruptedException  
 	{
 		if(topCard.contains("♥"))
 		{
@@ -1076,12 +1317,14 @@ public class Euchre_Singleplayer
 			{
 				while(true)
 				{
-					System.out.print("\n\"PASS\" or \"PICK\"  : ");
+					System.out.print("\n\n\"PASS\" or \"PICK\": ");
 					String input = Input.next();
 
 					if(input.equalsIgnoreCase("pass"))
 					{
+						System.out.println(" ");
 						play = 2;
+						Thread.sleep(1000);
 						//System.out.println(i);
 						i = i + 1;
 						//System.out.println(i);
@@ -1090,7 +1333,7 @@ public class Euchre_Singleplayer
 					else if(input.equalsIgnoreCase("pick"))
 					{
 						Trump = proposedTrump;
-						System.out.println("Trump is now " + Trump);
+						//System.out.println("Trump is now " + Trump);
 						choosingTrump1 = false;
 						i = 6;
 						break;
@@ -1117,6 +1360,7 @@ public class Euchre_Singleplayer
 					else 
 					{
 						System.out.println("Player 2 passes");
+						Thread.sleep(1000);
 						play = 3;
 						//System.out.println(i);
 						i = i + 1;
@@ -1142,6 +1386,7 @@ public class Euchre_Singleplayer
 					else 
 					{
 						System.out.println("Player 2 passes");
+						Thread.sleep(1000);
 						play = 3;
 						//System.out.println(i);
 						i = i + 1;
@@ -1164,6 +1409,7 @@ public class Euchre_Singleplayer
 					else 
 					{
 						System.out.println("Player 3 passes");
+						Thread.sleep(1000);
 						play = 4;
 						//System.out.println(i);
 						i = i + 1;
@@ -1189,6 +1435,7 @@ public class Euchre_Singleplayer
 					else 
 					{
 						System.out.println("Player 3 passes");
+						Thread.sleep(1000);
 						play = 4;
 						//System.out.println(i);
 						i = i + 1;
@@ -1204,13 +1451,14 @@ public class Euchre_Singleplayer
 				{
 					if(player4Suit == proposedTrump && p4Max >= 4)
 					{
-						System.out.println("Player 17 tells dealer to pick it up and will go alone");
+						System.out.println("Player 4 tells dealer to pick it up and will go alone");
 						choosingTrump1 = false;
 						break;
 					}
 					else 
 					{
 						System.out.println("Player 4 passes");
+						Thread.sleep(1000);
 						play = 1;
 						//System.out.println(i);
 						i++;
@@ -1236,6 +1484,7 @@ public class Euchre_Singleplayer
 					else 
 					{
 						System.out.println("Player 4 passes");
+						Thread.sleep(1000);
 						play = 1;
 						//System.out.println(i);
 						i++;
@@ -1249,6 +1498,7 @@ public class Euchre_Singleplayer
 
 		if(choosingTrump1 == true)
 		{
+			cardScores(5);
 			choosingTrump1 = false;
 			choosingTrump2 = true;
 
@@ -1259,57 +1509,172 @@ public class Euchre_Singleplayer
 				{
 					while(true)
 					{
-						System.out.println("To call a trump, type in one of the following: " + "1 - " + WHITE_BACKGROUND_BRIGHT +  BLACK_BOLD_BRIGHT + " ♠ " + RESET + "   2 - " + WHITE_BACKGROUND_BRIGHT +  RED_BOLD_BRIGHT + " ♥ " + RESET + "   3 - " + WHITE_BACKGROUND_BRIGHT +  BLACK_BOLD_BRIGHT + " ♣ " + RESET + "   4 - " + WHITE_BACKGROUND_BRIGHT +  RED_BOLD_BRIGHT + " ♦ " + RESET + "   Or type \"PASS\"");
-						System.out.print("Selection: ");
+						System.out.println("\nTo call a trump, type in one of the following: " + "1 - " + WHITE_BACKGROUND_BRIGHT +  BLACK_BOLD_BRIGHT + " ♠ " + RESET + "   2 - " + WHITE_BACKGROUND_BRIGHT +  RED_BOLD_BRIGHT + " ♥ " + RESET + "   3 - " + WHITE_BACKGROUND_BRIGHT +  BLACK_BOLD_BRIGHT + " ♣ " + RESET + "   4 - " + WHITE_BACKGROUND_BRIGHT +  RED_BOLD_BRIGHT + " ♦ " + RESET + "   Or type \"PASS\"");
+						System.out.print("Your selection: ");
 
 						String userInput = Input.next();
 
 						if(userInput.equalsIgnoreCase("1"))
 						{
-							Trump = "♠";
-							System.out.println("Trump is now: " + Trump);
-							f = 6;
-							break;
+							if(proposedTrump != "♠")
+							{
+								Trump = "♠";
+								//System.out.println("Trump is now: " + Trump);
+								choosingTrump2 = false;
+								f = 6;
+								break;
+							}
+							else
+							{
+								System.out.println("You cannot choose this suit because it has already been turned down");
+								continue;
+							}
 						}
 						else if(userInput.equalsIgnoreCase("2"))
 						{
-							Trump = "♥";
-							System.out.println("Trump is now: " + Trump);
-							f = 6;
-							break;
+							if(proposedTrump != "♥")
+							{
+								Trump = "♥";
+								//System.out.println("Trump is now: " + Trump);
+								choosingTrump2 = false;
+								f = 6;
+								break;
+							}
+							else
+							{
+								System.out.println("You cannot choose this suit because it has already been turned down");
+								continue;
+							}
 						}
 						else if(userInput.equalsIgnoreCase("3"))
 						{
-							Trump = "♣";
-							System.out.println("Trump is now: " + Trump);
-							f = 6;
-							break;
+							if(proposedTrump != "♣")
+							{
+								Trump = "♣";
+								System.out.println("Trump is now: " + Trump);
+								choosingTrump2 = false;
+								f = 6;
+								break;
+							}
+							else
+							{
+								System.out.println("You cannot choose this suit because it has already been turned down");
+								continue;
+							}
 						}
 						else if(userInput.equalsIgnoreCase("4"))
 						{
-							Trump = "♦";
-							System.out.println("Trump is now: " + Trump);
-							f = 6;
-							break;
+							if(proposedTrump != "♦")
+							{
+								Trump = "♦";
+								System.out.println("Trump is now: " + Trump);
+								choosingTrump2 = false;
+								f = 6;
+								break;
+							}
+							else
+							{
+								System.out.println("You cannot choose this suit because it has already been turned down");
+								continue;
+							}
 						}
 						else if(userInput.equalsIgnoreCase("pass"));
 						{
 							play = 2;
-							f++;
 							break;
 						}
 					}
 				}
-				
+
 				else if(play == 2)
 				{
-					
+					if(dealer == 2)
+					{
+						System.out.println("Player 2 is dealer and must choose a trump");
+						Thread.sleep(500);
+						System.out.println("Player 2 sets trump to be:" + player2Suit);
+						Trump = player2Suit;
+						choosingTrump2 = false;
+						break;
+					}
+					else
+					{
+						if(p2MaxScore > 11 && player2Suit != proposedTrump)
+						{
+							System.out.println("Player 2 sets trump to be: " + player2Suit);
+							Trump = player2Suit;
+							choosingTrump2 = false;
+							break;
+						}
+						else
+						{
+							System.out.println("Player 2 Passes");
+							play = 3;
+						}
+					}
+				}
+
+				else if(play == 3)
+				{
+					if(dealer == 3)
+					{
+						System.out.println("Player 3 is dealer and must choose a trump");
+						Thread.sleep(500);
+						System.out.println("Player 3 sets trump to be:" + player3Suit);
+						Trump = player2Suit;
+						choosingTrump2 = false;
+						break;
+					}
+					else
+					{
+						if(p3MaxScore > 11 && player2Suit != proposedTrump)
+						{
+							System.out.println("Player 3 sets trump to be: " + player3Suit);
+							Trump = player2Suit;
+							choosingTrump2 = false;
+							break;
+						}
+						else
+						{
+							System.out.println("Player 3 Passes");
+							play = 4;
+						}
+					}
+				}
+
+				else if(play == 4)
+				{
+					if(dealer == 4)
+					{
+						System.out.println("Player 4 is dealer and must choose a trump");
+						Thread.sleep(500);
+						System.out.println("Player 4 sets trump to be:" + player4Suit);
+						Trump = player2Suit;
+						choosingTrump2 = false;
+						break;
+					}
+					else
+					{
+						if(p4MaxScore > 11 && player2Suit != proposedTrump)
+						{
+							System.out.println("Player 4 sets trump to be: " + player4Suit);
+							Trump = player2Suit;
+							choosingTrump2 = false;
+							break;
+						}
+						else
+						{
+							System.out.println("Player 4 Passes");
+							play = 1;
+						}
+					}
 				}
 			}
 		}
 	}
-	
-	public static void printPlayerCards(int player)
+
+
+	public static void printPlayerCards(int player) throws InterruptedException 
 	{
 		System.out.print("\n        "); 
 
@@ -1327,7 +1692,8 @@ public class Euchre_Singleplayer
 		}
 	}
 
-	public static void printStartTable()
+
+	public static void printStartTable() throws InterruptedException 
 	{
 		String kittyCard;
 		if(kitty.get(0).contains("♥") || kitty.get(0).contains("♦"))
@@ -1356,7 +1722,8 @@ public class Euchre_Singleplayer
 		printPlayerCards(1);
 	}
 
-	public static void printTable()
+
+	public static void printTable() throws InterruptedException 
 	{
 		//cardsOnTable[0] = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  player1Cards.get(0) + " " +  RESET + " ";
 		//cardsOnTable[1] = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  player2Cards.get(0) + " " +  RESET + " ";
@@ -1381,7 +1748,8 @@ public class Euchre_Singleplayer
 
 	}
 
-	public static void resetDeck()
+
+	public static void resetDeck() throws InterruptedException 
 	{
 		cards = new ArrayList<String>(Arrays.asList("9♥", "10♥", "J♥", "Q♥", "K♥", "A♥", 
 				"9♦", "10♦", "J♦", "Q♦", "K♦", "A♦", 
@@ -1389,17 +1757,21 @@ public class Euchre_Singleplayer
 				"9♠", "10♠", "J♠", "Q♠", "K♠", "A♠"));
 	}
 
-	public static void debug()
+
+	public static void debug() throws InterruptedException 
 	{
 
 		System.out.print("\nPlayer 2 cards: " + player2Cards);
 		System.out.println("Player 2 suit: " + player2Suit  + Arrays.toString(player2TrumpNum));
+		System.out.println("Player 2 card scores: " + player2CardScores);
 
-		System.out.print("Player 3 cards: " + player3Cards);
+		System.out.print("\nPlayer 3 cards: " + player3Cards);
 		System.out.println("Player 3 suit: " + player3Suit + Arrays.toString(player3TrumpNum));
+		System.out.println("Player 3 card scores: " + player3CardScores);
 
-		System.out.print("Player 4 cards: " + player4Cards);
+		System.out.print("\nPlayer 4 cards: " + player4Cards);
 		System.out.println("Player 4 suit: " + player4Suit + Arrays.toString(player4TrumpNum));
+		System.out.println("Player 3 card scores: " + player4CardScores);
 
 		System.out.println(proposedTrump);
 
