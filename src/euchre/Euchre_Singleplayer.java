@@ -39,7 +39,7 @@ public class Euchre_Singleplayer
 	public static int play;
 	public static int dealer = 4;
 	public static int numOfGames = 0;
-
+	
 	public static int player1Partner = 3;
 	public static int player2Partner = 4;
 	public static int player3Partner = 1;
@@ -74,7 +74,6 @@ public class Euchre_Singleplayer
 
 	public static boolean choosingTrump1 = true;
 	public static boolean choosingTrump2 = false;
-
 
 	public static Scanner Input = new Scanner(System.in);
 
@@ -188,6 +187,7 @@ public class Euchre_Singleplayer
 			}
 		}
 	}
+
 
 	public static void startGame() throws InterruptedException
 	{
@@ -1237,15 +1237,90 @@ public class Euchre_Singleplayer
 		}
 		else if(dealer == 1)
 		{
+			if(player == 3)
+			{
+				player3SoloStatus = true;
+				Trump = proposedTrump;
+				System.out.println("Player 3 is going alone!");
+			}
+			else
+			{
+				Trump = proposedTrump;
+				player3Cards.add(kitty.get(0));
+				int worstCard = 0;
+				
+				printPlayerCards(1);
+				
+				System.out.println("");
+				//System.out.println();
+				player2Cards.remove(worstCard);
+				//System.out.println(player4Cards);
 
+			}
 		}
 		else if(dealer == 2)
 		{
+			if(player == 4)
+			{
+				player4SoloStatus = true;
+				Trump = proposedTrump;
+				System.out.println("Player 4 is going alone!");
+			}
+			else
+			{
+				Trump = proposedTrump;
+				player2Cards.add(kitty.get(0));
+				int worstCard = 0;
+				for(int i = 0; i < player2Cards.size(); i++)
+				{
+					if(player2Cards.get(i).contains(Trump))
+					{}
+					else
+					{
+						if(player2Cards.get(i).contains("9") || player2Cards.get(i).contains("10"))
+						{
+							worstCard = i;
+						}
+						else {}
+					}
+				}
+				//System.out.println();
+				player2Cards.remove(worstCard);
+				//System.out.println(player4Cards);
 
+			}
 		}
 		else if(dealer == 3)
 		{
+			if(player == 1)
+			{
+				player1SoloStatus = true;
+				Trump = proposedTrump;
+				System.out.println("Player 1 is going alone! (That's you!)");
+			}
+			else
+			{
+				Trump = proposedTrump;
+				player1Cards.add(kitty.get(0));
+				int worstCard = 0;
+				for(int i = 0; i < player1Cards.size(); i++)
+				{
+					if(player1Cards.get(i).contains(Trump))
+					{}
+					else
+					{
+						if(player1Cards.get(i).contains("9") || player1Cards.get(i).contains("10"))
+						{
+							worstCard = i;
+						}
+						else {}
+					}
+				}
+				//System.out.println();
+				player1Cards.remove(worstCard);
+				//System.out.println(player4Cards);
 
+			}
 		}
 	}
 
@@ -1273,15 +1348,20 @@ public class Euchre_Singleplayer
 		}
 		else if(dealer == 3)
 		{
-			play = 2;
+			play = 4;
+			System.out.println("Player 4 starts");
 		}
-		System.out.println("Player 4 starts");
+		
+		printTable();
 		
 		for(int i = 0; i < 4; i++)
 		{
 			if(play == 1)
 			{
+				System.out.println("The cards in your hand are number from left to right starting at 1");
+				System.out.print("Type in the position of the card you want to play: ");
 				
+				String userInput = Input.next();
 			}
 		}
 		
@@ -1673,7 +1753,6 @@ public class Euchre_Singleplayer
 		}
 	}
 
-
 	public static void printPlayerCards(int player) throws InterruptedException 
 	{
 		System.out.print("\n        "); 
@@ -1690,8 +1769,12 @@ public class Euchre_Singleplayer
 				System.out.print(WHITE_BACKGROUND_BRIGHT + BLACK_BOLD + " " + player1Cards.get(i) + " " + RESET + " ");
 			}
 		}
+		System.out.print("\n     ");
+		for(int i = 0; i < player1Cards.size(); i++)
+		{
+			System.out.print((i + 1));
+		}
 	}
-
 
 	public static void printStartTable() throws InterruptedException 
 	{
@@ -1722,7 +1805,6 @@ public class Euchre_Singleplayer
 		printPlayerCards(1);
 	}
 
-
 	public static void printTable() throws InterruptedException 
 	{
 		//cardsOnTable[0] = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  player1Cards.get(0) + " " +  RESET + " ";
@@ -1748,15 +1830,14 @@ public class Euchre_Singleplayer
 
 	}
 
-
 	public static void resetDeck() throws InterruptedException 
 	{
-		cards = new ArrayList<String>(Arrays.asList("9♥", "10♥", "J♥", "Q♥", "K♥", "A♥", 
+		cards = new ArrayList<String>(Arrays.asList(
+				"9♥", "10♥", "J♥", "Q♥", "K♥", "A♥", 
 				"9♦", "10♦", "J♦", "Q♦", "K♦", "A♦", 
 				"9♣", "10♣", "J♣", "Q♣", "K♣", "A♣", 
 				"9♠", "10♠", "J♠", "Q♠", "K♠", "A♠"));
 	}
-
 
 	public static void debug() throws InterruptedException 
 	{
