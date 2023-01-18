@@ -39,7 +39,7 @@ public class Euchre_Singleplayer
 	public static int play;
 	public static int dealer = 4;
 	public static int numOfGames = 0;
-	
+
 	public static int player1Partner = 3;
 	public static int player2Partner = 4;
 	public static int player3Partner = 1;
@@ -64,7 +64,7 @@ public class Euchre_Singleplayer
 	public static String topCard;
 	public static String proposedTrump;
 	public static String Trump;
-	
+
 	public static String suitLead = "";
 
 	public static boolean player1SoloStatus;
@@ -75,14 +75,20 @@ public class Euchre_Singleplayer
 	public static boolean choosingTrump1 = true;
 	public static boolean choosingTrump2 = false;
 
+	public static boolean darkMode;
+
 	public static Scanner Input = new Scanner(System.in);
 
 
 	public static final String ESC = "\033[";
 	public static final String RESET = "\033[0m";  // RESET TEXT
+	public static final String HIDDEN = "\033[8;30m"; //Hidden
 	public static final String BOXING = "\033[0;51m";   // BLACK BOXING
 
 	public static final String BLACK = "\033[0;30m";   // BLACK
+
+	public static final String DARK_MODE = "\033[38;2;48;44;44m"; // Eclipse Dark Mode
+	public static final String LIGHT_MODE = "\033[38;2;255;255;255m"; // Eclipse Light Mode
 
 	public static final String BLACK_BOLD = "\033[1;30m";  // BLACK BOLD
 	public static final String WHITE_BOLD = "\033[1;97m";  // WHITE
@@ -101,6 +107,33 @@ public class Euchre_Singleplayer
 
 		//Welcomes the user and shows the menu
 		System.out.println("Welcome to Euchre!");
+
+		while(true)
+		{
+			System.out.println("\nAre you using dark mode or light mode in Eclipse?");
+			System.out.print("Type \"D\" for dark of \"L\" for light: ");
+
+			String userInput = Input.next();
+			
+			if(userInput.equalsIgnoreCase("d"))
+			{
+				darkMode = true;
+				break;
+			}
+			else if(userInput.equalsIgnoreCase("l"))
+			{
+				darkMode = false;
+				break;
+			}
+			else
+			{
+				Thread.sleep(750);
+				System.out.println("\nError code: ID-10-T");
+				Thread.sleep(750);
+			}
+
+
+		}
 
 		menu();
 	}
@@ -187,7 +220,6 @@ public class Euchre_Singleplayer
 			}
 		}
 	}
-
 
 	public static void startGame() throws InterruptedException
 	{
@@ -1248,9 +1280,9 @@ public class Euchre_Singleplayer
 				Trump = proposedTrump;
 				player3Cards.add(kitty.get(0));
 				int worstCard = 0;
-				
+
 				printPlayerCards(1);
-				
+
 				System.out.println("");
 				//System.out.println();
 				player2Cards.remove(worstCard);
@@ -1329,7 +1361,7 @@ public class Euchre_Singleplayer
 		chooseTrump();
 
 		System.out.println("Trump is now: " + Trump);
-		
+
 		//Start game
 		if(dealer == 4)
 		{
@@ -1351,20 +1383,20 @@ public class Euchre_Singleplayer
 			play = 4;
 			System.out.println("Player 4 starts");
 		}
-		
+
 		printTable();
-		
+
 		for(int i = 0; i < 4; i++)
 		{
 			if(play == 1)
 			{
 				System.out.println("The cards in your hand are number from left to right starting at 1");
 				System.out.print("Type in the position of the card you want to play: ");
-				
+
 				String userInput = Input.next();
 			}
 		}
-		
+
 	}
 
 	public static void chooseTrump() throws InterruptedException  
@@ -1769,10 +1801,21 @@ public class Euchre_Singleplayer
 				System.out.print(WHITE_BACKGROUND_BRIGHT + BLACK_BOLD + " " + player1Cards.get(i) + " " + RESET + " ");
 			}
 		}
-		System.out.print("\n     ");
-		for(int i = 0; i < player1Cards.size(); i++)
+		if(darkMode == true)
 		{
-			System.out.print((i + 1));
+			System.out.print("\n      ");
+			for(int i = 0; i < player1Cards.size(); i++)
+			{
+				System.out.print(DARK_MODE + player1Cards.get(i) + " " + RESET + (i + 1) + " ");
+			}
+		}
+		else if(darkMode == false)
+		{
+			System.out.print("\n      ");
+			for(int i = 0; i < player1Cards.size(); i++)
+			{
+				System.out.print(LIGHT_MODE + player1Cards.get(i) + " " + RESET + (i + 1) + " ");
+			}
 		}
 	}
 
