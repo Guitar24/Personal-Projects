@@ -1467,6 +1467,7 @@ public class Euchre_Singleplayer
 					{
 						System.out.println("Player 2 tells dealer to pick it up and will go alone");
 						choosingTrump1 = false;
+						pickUpCard(2);
 						break;
 					}
 					else 
@@ -1487,6 +1488,8 @@ public class Euchre_Singleplayer
 						if(player2Suit == proposedTrump && p2Max >= 4)
 						{
 							System.out.println("Player 2 tells dealer to pick it up and will go alone");
+							pickUpCard(2);
+							player2SoloStatus = true;
 						}
 						else 
 						{
