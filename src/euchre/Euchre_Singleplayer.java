@@ -1390,8 +1390,7 @@ public class Euchre_Singleplayer
 		{
 			if(play == 1)
 			{
-				System.out.println("The cards in your hand are number from left to right starting at 1");
-				System.out.print("Type in the position of the card you want to play: ");
+				System.out.print("\nType in the position of the card you want to play: ");
 
 				String userInput = Input.next();
 			}
@@ -1466,6 +1465,7 @@ public class Euchre_Singleplayer
 					if(player2Suit == proposedTrump && p2Max >= 4)
 					{
 						System.out.println("Player 2 tells dealer to pick it up and will go alone");
+						Trump = proposedTrump;
 						choosingTrump1 = false;
 						pickUpCard(2);
 						break;
@@ -1487,15 +1487,41 @@ public class Euchre_Singleplayer
 					{
 						if(player2Suit == proposedTrump && p2Max >= 4)
 						{
-							System.out.println("Player 2 tells dealer to pick it up and will go alone");
-							pickUpCard(2);
-							player2SoloStatus = true;
+							if(dealer == 2)
+							{
+								System.out.println("Player 2 is dealer and will pick it up and go alone");
+								Trump = proposedTrump;
+								choosingTrump1 = false;
+								pickUpCard(2);
+								break;
+							}
+							else
+							{
+								System.out.println("Player 2 tells dealer to pick it up and will go alone");
+								Trump = proposedTrump;
+								choosingTrump1 = false;
+								pickUpCard(2);
+								break;
+							}
 						}
 						else 
 						{
-							System.out.println("Player 2 tells dealer to pick it up");
-							choosingTrump1 = false;
-							break;
+							if(dealer == 2)
+							{
+								System.out.println("Player 2 is dealer and will pick it up");
+								Trump = proposedTrump;
+								choosingTrump1 = false;
+								pickUpCard(2);
+								break;
+							}
+							else
+							{
+								System.out.println("Player 2 tells dealer to pick it up");
+								Trump = proposedTrump;
+								choosingTrump1 = false;
+								pickUpCard(2);
+								break;
+							}
 						}
 					}
 					else 
@@ -1518,6 +1544,7 @@ public class Euchre_Singleplayer
 					if(player3Suit == proposedTrump && p3Max >= 4)
 					{
 						System.out.println("Player 3 tells dealer to pick it up and will go alone");
+						Trump = proposedTrump;
 						choosingTrump1 = false;
 						break;
 					}
@@ -1536,14 +1563,20 @@ public class Euchre_Singleplayer
 				{
 					if(player3Suit == proposedTrump && p3Max >= 3)
 					{
-						if(player3Suit == proposedTrump && p3Max >= 4)
+						if(dealer == 3)
+						{
+							System.out.println("Player 3 is dealer and will pick it up and go alone");
+							Trump = proposedTrump;
+							choosingTrump1 = false;
+							pickUpCard(3);
+							break;
+						}
+						else
 						{
 							System.out.println("Player 3 tells dealer to pick it up and will go alone");
-						}
-						else 
-						{
-							System.out.println("Player 3 tells dealer to pick it up");
+							Trump = proposedTrump;
 							choosingTrump1 = false;
+							pickUpCard(3);
 							break;
 						}
 					}
