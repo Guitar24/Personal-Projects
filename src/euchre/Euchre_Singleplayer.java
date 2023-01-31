@@ -20,24 +20,28 @@ public class Euchre_Singleplayer
 	public static ArrayList<String> player3Suits = new ArrayList<String>();
 	public static ArrayList<String> player4Suits = new ArrayList<String>();
 
-	public static ArrayList<String> kitty = new ArrayList<String>();
 
+	public static ArrayList<Integer> player1CardScores = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
 	public static ArrayList<Integer> player2CardScores = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
 	public static ArrayList<Integer> player3CardScores = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
 	public static ArrayList<Integer> player4CardScores = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
+	
+	public static ArrayList<String> kitty = new ArrayList<String>();
+	public static ArrayList<String> tableList = new ArrayList<String>(Arrays.asList("    ", "    ", "    ","    "));
 
 	public static int[] player2SuitScores = new int[4];
 	public static int[] player3SuitScores = new int[4];
 	public static int[] player4SuitScores = new int[4];
-
-	public static int[] player2TrumpNum = {0, 0, 0, 0};
-	public static int[] player3TrumpNum = {0, 0, 0, 0};
-	public static int[] player4TrumpNum = {0, 0, 0, 0};
+	public static int[] cardsOnTableScores = new int[4];
 
 	public static String[] cardsOnTable = {"    ", "    ", "    ", "    "};
 
 	public static int play;
 	public static int dealer = 4;
+	public static int trumpMaker;
+	public static int team24Tricks;
+	public static int team13Tricks;
+	public static int pointsInGame = 10;
 	public static int numOfGames = 0;
 
 	public static int player1Partner = 3;
@@ -48,14 +52,9 @@ public class Euchre_Singleplayer
 	public static int p2MaxScore;
 	public static int p3MaxScore;
 	public static int p4MaxScore;
-
-	public static int p2Max;
-	public static int p3Max;
-	public static int p4Max;
-
-	public static int p2Suit;
-	public static int p3Suit;
-	public static int p4Suit;
+	
+	public static int team24Score = 0;
+	public static int team13Score = 0;
 
 	public static String player2Suit;
 	public static String player3Suit;
@@ -67,10 +66,10 @@ public class Euchre_Singleplayer
 
 	public static String suitLead = "";
 
-	public static boolean player1SoloStatus;
-	public static boolean player2SoloStatus;
-	public static boolean player3SoloStatus;
-	public static boolean player4SoloStatus;
+	public static boolean player1SoloStatus = false;
+	public static boolean player2SoloStatus = false;
+	public static boolean player3SoloStatus = false;
+	public static boolean player4SoloStatus = false;
 
 	public static boolean choosingTrump1 = true;
 	public static boolean choosingTrump2 = false;
@@ -78,43 +77,35 @@ public class Euchre_Singleplayer
 	public static boolean darkMode;
 
 	public static Scanner Input = new Scanner(System.in);
-
+	
 
 	public static final String ESC = "\033[";
-	public static final String RESET = "\033[0m";  // RESET TEXT
-	public static final String HIDDEN = "\033[8;30m"; //Hidden
-	public static final String BOXING = "\033[0;51m";   // BLACK BOXING
+	public static final String RESET = "\033[0m"; 		                              // RESET TEXT
+	public static final String BLACK = "\033[0;30m";                                 // BLACK
 
-	public static final String BLACK = "\033[0;30m";   // BLACK
+	public static final String DARK_MODE = "\033[38;2;48;44;44m";                  // Eclipse Dark Mode
+	public static final String LIGHT_MODE = "\033[38;2;255;255;255m";             // Eclipse Light Mode
 
-	public static final String DARK_MODE = "\033[38;2;48;44;44m"; // Eclipse Dark Mode
-	public static final String LIGHT_MODE = "\033[38;2;255;255;255m"; // Eclipse Light Mode
+	public static final String BLACK_BOLD = "\033[1;30m";                       // BLACK BOLD
+	public static final String WHITE_BOLD = "\033[1;97m";                      // WHITE
 
-	public static final String BLACK_BOLD = "\033[1;30m";  // BLACK BOLD
-	public static final String WHITE_BOLD = "\033[1;97m";  // WHITE
+	public static final String RED_BOLD_BRIGHT = "\033[1;91m";               // RED
+	public static final String BLACK_BOLD_BRIGHT = "\033[1;90m";            // BLACK BOLD BRIGHT
+	public static final String GREEN_BOLD_BRIGHT = "\033[1;92m";           // GREEN
 
-	public static final String RED_BOLD_BRIGHT = "\033[1;91m";   // RED
-	public static final String BLACK_BOLD_BRIGHT = "\033[1;90m"; // BLACK BOLD BRIGHT
-	public static final String GREEN_BOLD_BRIGHT = "\033[1;92m"; // GREEN
+	public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";  // WHITE BACKGROUND
 
-	public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";   // WHITE BACKGROUND
-
-
+	
 	public static void main(String[] args) throws InterruptedException 
 	{
-		//Turns on caps lock
-		//Toolkit.getDefaultToolkit().setLockingKeyState(KeyEvent.VK_CAPS_LOCK, true);
-
-		//Welcomes the user and shows the menu
-		System.out.println("Welcome to Euchre!");
-
 		while(true)
 		{
+			System.out.println("\nSETUP            **WARNING THIS PROGRAM WILL ONLY WORK IF YOU ARE USING ECLIPSE v4.25 OR LATER**");
 			System.out.println("\nAre you using dark mode or light mode in Eclipse?");
 			System.out.print("Type \"D\" for dark of \"L\" for light: ");
-
-			String userInput = Input.next();
 			
+			String userInput = Input.next();
+
 			if(userInput.equalsIgnoreCase("d"))
 			{
 				darkMode = true;
@@ -135,9 +126,31 @@ public class Euchre_Singleplayer
 
 		}
 
+		player1Cards = new ArrayList<String>();
+		player2Cards = new ArrayList<String>();
+		player3Cards = new ArrayList<String>();
+		player4Cards = new ArrayList<String>();
+
+		player1Suits = new ArrayList<String>();
+		player2Suits = new ArrayList<String>();
+		player3Suits = new ArrayList<String>();
+		player4Suits = new ArrayList<String>();
+
+		System.out.println("             -------------------------------------------------------------------\n\n\n\n\n\n\n     Resize the console so that you these lines are on the top and bottom of the window\n\n\n\n\n\n\n\n");
+		System.out.print("             -------------------------------------------------------------------");
+		
+		sleep(5000);
+		
+		System.out.println("\n\n\nWelcome to Euchre!");
 		menu();
 	}
 
+	/* 
+	 * Method name: menu
+	 * Description: prints out the menu and asks the user for an input
+	 * Parameters: n/a
+	 * Returns: n/a
+	 */
 	public static void menu() throws InterruptedException 
 	{
 		//Prints out the menu and asks the user for input
@@ -205,9 +218,28 @@ public class Euchre_Singleplayer
 
 				menu();
 			}
-			else if(menuInput.equalsIgnoreCase("o")) // allows the user to select how many points in a game
+			else if(menuInput.equalsIgnoreCase("p")) // allows the user to select how many points in a game
 			{
+				while(true)
+				{
+					System.out.println("\nHow many points would you like to play to?\n");
+					System.out.println("                 10 (Default)");
+					System.out.println("                 7");
+					System.out.println("                 5");
+					System.out.print("\nType in one of the numbers above: ");
 
+					String userInput = Input.next();
+					if(userInput.equalsIgnoreCase("10") || userInput.equalsIgnoreCase("7") || userInput.equalsIgnoreCase("5"))
+					{
+						pointsInGame = Integer.parseInt(userInput);
+						break;
+					}
+					else
+					{
+						System.out.println("\nError code: ID-10-T");
+						sleep(500);
+					}
+				}
 			}
 			else if(menuInput.equalsIgnoreCase("q")) // exits the program
 			{
@@ -221,50 +253,111 @@ public class Euchre_Singleplayer
 		}
 	}
 
+	/*
+	 * Method name: startGame
+	 * Description: Resets all variables and loops the game until a player has enough points to win the game
+	 * Parameters: n/a
+	 * Returns: n/a
+	 */
 	public static void startGame() throws InterruptedException
 	{
-		dealCards();
-
-		if(kitty.get(0).contains("♥") || kitty.get(0).contains("♦"))
+		dealer = 4;
+		numOfGames = 0;
+		
+		while(team13Score < pointsInGame && team24Score < pointsInGame)
 		{
-			topCard = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  kitty.get(0) + " " +  RESET + " ";
-		}
-		else
-		{
-			topCard = WHITE_BACKGROUND_BRIGHT + BLACK_BOLD + " " + kitty.get(0) + " " + RESET + " ";
-		}
+			resetDeck();
+			resetTable();
+			dealCards();
+			
+			player1SoloStatus = false;
+			player2SoloStatus = false;
+			player3SoloStatus = false;
+			player4SoloStatus = false;
+			
 
-		if((numOfGames % 4) == 0) 
-		{
-			play = 1;
-			dealer = 4;
-		}
+			team13Tricks = 0;
+			team24Tricks = 0;
+			
+			//debug();
 
-		else if((numOfGames % 4) == 1)
-		{
-			play = 2;
-			dealer = 1;
-		}
+			if(kitty.get(0).contains("♥") || kitty.get(0).contains("♦"))
+			{
+				topCard = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  kitty.get(0) + " " +  RESET + " ";
+			}
+			else
+			{
+				topCard = WHITE_BACKGROUND_BRIGHT + BLACK_BOLD + " " + kitty.get(0) + " " + RESET + " ";
+			}
 
-		else if((numOfGames % 4) == 2)
-		{
-			play = 3;
-			dealer = 2;
-		}
+			if((numOfGames % 4) == 0) 
+			{
+				play = 1;
+				dealer = 4;
+			}
 
-		else if((numOfGames % 4) == 3)
-		{
-			play = 4;
-			dealer = 3;
-		}
+			else if((numOfGames % 4) == 1)
+			{
+				play = 2;
+				dealer = 1;
+			}
 
-		gameLoop();
+			else if((numOfGames % 4) == 2)
+			{
+				play = 3;
+				dealer = 2;
+			}
+
+			else if((numOfGames % 4) == 3)
+			{
+				play = 4;
+				dealer = 3;
+			}
+
+			gameLoop();
+		}
+		
+		if(team13Score >= pointsInGame)
+		{
+			System.out.println("\nYOU AND PLAYER 3 WON!!!!!");
+			sleep(6000);
+		}
+		else if(team24Score >= pointsInGame)
+		{
+			System.out.println("\nPlayer 2 and Player 4 won.");
+			sleep(6000);
+		}
 
 
 	}
 
+	/*
+	 * Method name: dealCards
+	 * Description: Resets all cards in play and gives each player 5 new cards. It also adds each card suit to each player's suit list
+	 * Parameters: n/a
+	 * Returns: n/a
+	 */
 	public static void dealCards() throws InterruptedException 
 	{
+		resetDeck();
+		
+		player1Cards.removeAll(player1Cards);
+		player2Cards.removeAll(player2Cards);
+		player3Cards.removeAll(player3Cards);
+		player4Cards.removeAll(player4Cards);
+		
+		player1Suits.removeAll(player1Suits);
+		player2Suits.removeAll(player2Suits);
+		player3Suits.removeAll(player3Suits);
+		player4Suits.removeAll(player4Suits);
+		
+		kitty.removeAll(kitty);
+		
+		player1CardScores = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
+		player2CardScores = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
+		player3CardScores = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
+		player4CardScores = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
+		
 		int randCard;
 
 		for(int i = 0; i < 5; i++)
@@ -295,6 +388,26 @@ public class Euchre_Singleplayer
 		for(int i = 0; i < size; i++)
 		{
 			kitty.add(cards.get(i));
+		}
+
+		for(int i = 0; i < 5; i++)
+		{
+			if(player1Cards.get(i).contains("♥"))
+			{
+				player1Suits.add("♥");
+			}
+			else if(player1Cards.get(i).contains("♦"))
+			{
+				player1Suits.add("♦");
+			}
+			else if(player1Cards.get(i).contains("♣"))
+			{
+				player1Suits.add("♣");
+			}
+			else if(player1Cards.get(i).contains("♠"))
+			{
+				player1Suits.add("♠");
+			}
 		}
 
 		for(int i = 0; i < 5; i++)
@@ -355,148 +468,6 @@ public class Euchre_Singleplayer
 			}
 		}
 
-		for(int i = 0; i < 5; i++)
-		{
-			if(player2Suits.get(i) == "♥")
-			{
-				player2TrumpNum[0] ++;
-			}
-			else if(player2Suits.get(i) == "♦")
-			{
-				player2TrumpNum[1] ++;
-			}
-			else if(player2Suits.get(i) == "♣")
-			{
-				player2TrumpNum[2] ++;
-			}
-			else if(player2Suits.get(i) == "♠")
-			{
-				player2TrumpNum[3] ++;
-			}
-		}
-
-		for(int i = 0; i < 5; i++)
-		{
-			if(player3Suits.get(i) == "♥")
-			{
-				player3TrumpNum[0] ++;
-			}
-			else if(player3Suits.get(i) == "♦")
-			{
-				player3TrumpNum[1] ++;
-			}
-			else if(player3Suits.get(i) == "♣")
-			{
-				player3TrumpNum[2] ++;
-			}
-			else if(player3Suits.get(i) == "♠")
-			{
-				player3TrumpNum[3] ++;
-			}
-		}
-
-		for(int i = 0; i < 5; i++)
-		{
-			if(player4Suits.get(i) == "♥")
-			{
-				player4TrumpNum[0] ++;
-			}
-			else if(player4Suits.get(i) == "♦")
-			{
-				player4TrumpNum[1] ++;
-			}
-			else if(player4Suits.get(i) == "♣")
-			{
-				player4TrumpNum[2] ++;
-			}
-			else if(player4Suits.get(i) == "♠")
-			{
-				player4TrumpNum[3] ++;
-			}
-		}
-
-		player2Suit = player2Suits.get(0);
-
-		int maxCount = 0;
-		for (int i = 0; i < player2Suits.size(); i++) {
-			String value = player2Suits.get(i);
-			int count = 1;
-			for (int j = 0; j < player2Suits.size(); j++) {
-				if (player2Suits.get(j) == value)
-					count++;
-				if (count > maxCount) {
-					player2Suit = value;
-					maxCount = count;
-				}
-			}
-		}
-
-		player3Suit = player3Suits.get(0);
-
-		int maxCount2 = 0;
-		for (int i = 0; i < player3Suits.size(); i++) {
-			String value = player3Suits.get(i);
-			int count = 1;
-			for (int j = 0; j < player3Suits.size(); j++) {
-				if (player3Suits.get(j) == value)
-					count++;
-				if (count > maxCount2) {
-					player3Suit = value;
-					maxCount2 = count;
-				}
-			}
-		}
-
-		player4Suit = player4Suits.get(0);
-
-		int maxCount3 = 0;
-		for (int i = 0; i < player4Suits.size(); i++) {
-			String value = player4Suits.get(i);
-			int count = 1;
-			for (int j = 0; j < player4Suits.size(); j++) {
-				if (player4Suits.get(j) == value)
-					count++;
-				if (count > maxCount3) {
-					player4Suit = value;
-					maxCount3 = count;
-				}
-			}
-		}
-
-
-
-		p2Max = player2TrumpNum[0];
-		p2Suit = 0;
-		for (int i = 0; i < player2TrumpNum.length; i++) 
-		{
-			if (p2Max < player2TrumpNum[i]) 
-			{
-				p2Max = player2TrumpNum[i];
-				p2Suit = i;
-			}
-		}
-
-		p3Max = player3TrumpNum[0];
-		p3Suit = 0;
-		for (int i = 0; i < player3TrumpNum.length; i++) 
-		{
-			if (p3Max < player3TrumpNum[i]) 
-			{
-				p3Max = player3TrumpNum[i];
-				p3Suit = i;
-			}
-		}
-
-		p4Max = player3TrumpNum[0];
-		p4Suit = 0;
-		for (int i = 0; i < player3TrumpNum.length; i++) 
-		{
-			if (p4Max < player3TrumpNum[i]) 
-			{
-				p4Max = player3TrumpNum[i];
-				p4Suit = i;
-			}
-		}
 
 		if(kitty.get(0).contains("♥") || kitty.get(0).contains("♦"))
 		{
@@ -533,8 +504,194 @@ public class Euchre_Singleplayer
 		//System.out.println(player4CardScores);
 	}
 
+	/*
+	 * Method name: cardScores
+	 * Description: This method attaches a score to each card in each player's hand and sets each player's preffered suit to whatever they have the most of
+	 * Parameters: int cardsInHand
+	 * Returns: n/a
+	 */
 	public static void cardScores(int cardsInHand) throws InterruptedException 
 	{
+		
+		cardsInHand = 5;
+		//System.out.println("CardsInHand: " + cardsInHand);
+		
+		//Player 1 Card Score
+		for(int i = 0; i < cardsInHand; i++)
+		{
+
+			if(choosingTrump1 == true)
+			{
+
+				if(player1Cards.get(i).contains("9"))
+				{
+					player1CardScores.set(i, 1);
+				}
+				else if(player1Cards.get(i).contains("10"))
+				{
+					player1CardScores.set(i, 2);
+				}
+				else if(player1Cards.get(i).contains("Q"))
+				{
+					player1CardScores.set(i, 4);
+				}
+				else if(player1Cards.get(i).contains("K"))
+				{
+					player1CardScores.set(i, 5);
+				}
+				else if(player1Cards.get(i).contains("A"))
+				{
+					player1CardScores.set(i, 6);
+				}
+
+				else if(player1Cards.get(i).contains("J"))
+				{
+					//test for right bower
+					if(player1Cards.get(i).contains(proposedTrump))
+					{
+						player1CardScores.set(i, 8);
+					}
+
+					//test for left bower
+					if(proposedTrump.contains("♠") && player1Cards.get(i).contains("♣"))
+					{
+						player1CardScores.set(i, 7);
+						player1Suits.set(i, "♠");
+					}
+					else if(proposedTrump.contains("♣") && player1Cards.get(i).contains("♠"))
+					{
+						player1CardScores.set(i, 7);
+						player1Suits.set(i, "♣");
+					}
+					else if(proposedTrump.contains("♦") && player1Cards.get(i).contains("♥"))
+					{
+						player1CardScores.set(i, 7);
+						player1Suits.set(i, "♦");
+					}
+					else if(proposedTrump.contains("♥") && player1Cards.get(i).contains("♦"))
+					{
+						player1CardScores.set(i, 7);
+						player1Suits.set(i, "♥");
+					}
+					else
+					{
+						player1CardScores.set(i, 3);
+					}
+				}
+			}
+
+			else if(choosingTrump2 == true)
+			{
+
+				if(player1Cards.get(i).contains("9"))
+				{
+					player1CardScores.set(i, 1);
+				}
+				else if(player1Cards.get(i).contains("10"))
+				{
+					player1CardScores.set(i, 2);
+				}
+				else if(player1Cards.get(i).contains("Q"))
+				{
+					player1CardScores.set(i, 4);
+				}
+				else if(player1Cards.get(i).contains("K"))
+				{
+					player1CardScores.set(i, 5);
+				}
+				else if(player1Cards.get(i).contains("A"))
+				{
+					player1CardScores.set(i, 6);
+				}
+				else if(player1Cards.get(i).contains("J"))
+				{
+					player1CardScores.set(i, 8);
+				}
+			}
+
+			else if(choosingTrump1 == false && choosingTrump2 == false)
+			{
+				if(player1Cards.get(i).contains(Trump))
+				{
+
+					if(player1Cards.get(i).contains("9"))
+					{
+						player1CardScores.set(i, 9);
+					}
+					else if(player1Cards.get(i).contains("10"))
+					{
+						player1CardScores.set(i, 10);
+					}
+					else if(player1Cards.get(i).contains("Q"))
+					{
+						player1CardScores.set(i, 12);
+					}
+					else if(player1Cards.get(i).contains("K"))
+					{
+						player1CardScores.set(i, 13);
+					}
+					else if(player1Cards.get(i).contains("A"))
+					{
+						player1CardScores.set(i, 14);
+					}
+					else if(player1Cards.get(i).contains("J"))
+					{
+						player1CardScores.set(i, 16);
+					}
+				}
+				else
+				{
+					if(player1Cards.get(i).contains("9"))
+					{
+						player1CardScores.set(i, 1);
+					}
+					else if(player1Cards.get(i).contains("10"))
+					{
+						player1CardScores.set(i, 2);
+					}
+					else if(player1Cards.get(i).contains("Q"))
+					{
+						player1CardScores.set(i, 4);
+					}
+					else if(player1Cards.get(i).contains("K"))
+					{
+						player1CardScores.set(i, 5);
+					}
+					else if(player1Cards.get(i).contains("A"))
+					{
+						player1CardScores.set(i, 6);
+					}
+					else if(player1Cards.get(i).contains("J"))
+					{
+						//test for left bower
+						if(Trump.contains("♠") && player1Cards.get(i).contains("♣"))
+						{
+							player1CardScores.set(i, 15);
+							player1Suits.set(i, "♠");
+						}
+						else if(Trump.contains("♣") && player1Cards.get(i).contains("♠"))
+						{
+							player1CardScores.set(i, 15);
+							player1Suits.set(i, "♣");
+						}
+						else if(Trump.contains("♦") && player1Cards.get(i).contains("♥"))
+						{
+							player1CardScores.set(i, 15);
+							player1Suits.set(i, "♦");
+						}
+						else if(Trump.contains("♥") && player1Cards.get(i).contains("♦"))
+						{
+							player1CardScores.set(i, 15);
+							player1Suits.set(i, "♥");
+						}
+						else
+						{
+							player1CardScores.set(i, 3);
+						}
+					}
+				}
+			}
+		}
 		//Player 2 Card Score
 		for(int i = 0; i < cardsInHand; i++)
 		{
@@ -575,18 +732,22 @@ public class Euchre_Singleplayer
 					if(proposedTrump.contains("♠") && player2Cards.get(i).contains("♣"))
 					{
 						player2CardScores.set(i, 7);
+						player2Suits.set(i, "♠");
 					}
 					else if(proposedTrump.contains("♣") && player2Cards.get(i).contains("♠"))
 					{
 						player2CardScores.set(i, 7);
+						player2Suits.set(i, "♣");
 					}
 					else if(proposedTrump.contains("♦") && player2Cards.get(i).contains("♥"))
 					{
 						player2CardScores.set(i, 7);
+						player2Suits.set(i, "♦");
 					}
 					else if(proposedTrump.contains("♥") && player2Cards.get(i).contains("♦"))
 					{
 						player2CardScores.set(i, 7);
+						player2Suits.set(i, "♥");
 					}
 					else
 					{
@@ -682,18 +843,22 @@ public class Euchre_Singleplayer
 						if(Trump.contains("♠") && player2Cards.get(i).contains("♣"))
 						{
 							player2CardScores.set(i, 15);
+							player2Suits.set(i, "♠");
 						}
 						else if(Trump.contains("♣") && player2Cards.get(i).contains("♠"))
 						{
 							player2CardScores.set(i, 15);
+							player2Suits.set(i, "♣");
 						}
 						else if(Trump.contains("♦") && player2Cards.get(i).contains("♥"))
 						{
 							player2CardScores.set(i, 15);
+							player2Suits.set(i, "♦");
 						}
 						else if(Trump.contains("♥") && player2Cards.get(i).contains("♦"))
 						{
 							player2CardScores.set(i, 15);
+							player2Suits.set(i, "♥");
 						}
 						else
 						{
@@ -744,18 +909,22 @@ public class Euchre_Singleplayer
 					if(proposedTrump.contains("♠") && player3Cards.get(i).contains("♣"))
 					{
 						player3CardScores.set(i, 7);
+						player3Suits.set(i, "♠");
 					}
 					else if(proposedTrump.contains("♣") && player3Cards.get(i).contains("♠"))
 					{
 						player3CardScores.set(i, 7);
+						player3Suits.set(i, "♣");
 					}
 					else if(proposedTrump.contains("♦") && player3Cards.get(i).contains("♥"))
 					{
 						player3CardScores.set(i, 7);
+						player3Suits.set(i, "♦");
 					}
 					else if(proposedTrump.contains("♥") && player3Cards.get(i).contains("♦"))
 					{
 						player3CardScores.set(i, 7);
+						player3Suits.set(i, "♥");
 					}
 					else
 					{
@@ -851,18 +1020,22 @@ public class Euchre_Singleplayer
 						if(Trump.contains("♠") && player3Cards.get(i).contains("♣"))
 						{
 							player3CardScores.set(i, 15);
+							player3Suits.set(i, "♠");
 						}
 						else if(Trump.contains("♣") && player3Cards.get(i).contains("♠"))
 						{
 							player3CardScores.set(i, 15);
+							player3Suits.set(i, "♣");
 						}
 						else if(Trump.contains("♦") && player3Cards.get(i).contains("♥"))
 						{
 							player3CardScores.set(i, 15);
+							player3Suits.set(i, "♦");
 						}
 						else if(Trump.contains("♥") && player3Cards.get(i).contains("♦"))
 						{
 							player3CardScores.set(i, 15);
+							player3Suits.set(i, "♥");
 						}
 						else
 						{
@@ -913,18 +1086,22 @@ public class Euchre_Singleplayer
 					if(proposedTrump.contains("♠") && player4Cards.get(i).contains("♣"))
 					{
 						player4CardScores.set(i, 7);
+						player4Suits.set(i, "♠");
 					}
 					else if(proposedTrump.contains("♣") && player4Cards.get(i).contains("♠"))
 					{
 						player4CardScores.set(i, 7);
+						player4Suits.set(i, "♣");
 					}
 					else if(proposedTrump.contains("♦") && player4Cards.get(i).contains("♥"))
 					{
 						player4CardScores.set(i, 7);
+						player4Suits.set(i, "♦");
 					}
 					else if(proposedTrump.contains("♥") && player4Cards.get(i).contains("♦"))
 					{
 						player4CardScores.set(i, 7);
+						player4Suits.set(i, "♥");
 					}
 					else
 					{
@@ -961,6 +1138,8 @@ public class Euchre_Singleplayer
 					player4CardScores.set(i, 8);
 				}
 			}
+
+
 
 			else if(choosingTrump1 == false && choosingTrump2 == false)
 			{
@@ -1020,18 +1199,22 @@ public class Euchre_Singleplayer
 						if(Trump.contains("♠") && player4Cards.get(i).contains("♣"))
 						{
 							player4CardScores.set(i, 15);
+							player4Suits.set(i, "♠");
 						}
 						else if(Trump.contains("♣") && player4Cards.get(i).contains("♠"))
 						{
 							player4CardScores.set(i, 15);
+							player4Suits.set(i, "♣");
 						}
 						else if(Trump.contains("♦") && player4Cards.get(i).contains("♥"))
 						{
 							player4CardScores.set(i, 15);
+							player4Suits.set(i, "♦");
 						}
 						else if(Trump.contains("♥") && player4Cards.get(i).contains("♦"))
 						{
 							player4CardScores.set(i, 15);
+							player4Suits.set(i, "♥");
 						}
 						else
 						{
@@ -1233,6 +1416,12 @@ public class Euchre_Singleplayer
 		}
 	}
 
+	/*
+	 * Method name: pickUpCard
+	 * Description: This method allows a player to tell the dealer to pick it up. If the player is the dealer, then they can choose what card to get rid of
+	 * Parameters: int player
+	 * Returns n/a
+	 */
 	public static void pickUpCard(int player)  throws InterruptedException 
 	{
 		if(dealer == 4)
@@ -1246,8 +1435,7 @@ public class Euchre_Singleplayer
 			else
 			{
 				Trump = proposedTrump;
-				player4Cards.add(kitty.get(0));
-				int worstCard = 0;
+				int worstCard = 6;
 				for(int i = 0; i < player4Cards.size(); i++)
 				{
 					if(player4Cards.get(i).contains(Trump))
@@ -1261,10 +1449,30 @@ public class Euchre_Singleplayer
 						else {}
 					}
 				}
-				//System.out.println();
-				player4Cards.remove(worstCard);
-				//System.out.println(player4Cards);
+				if(worstCard == 6)
+				{
+					for(int i = 0; i < player4Cards.size(); i++)
+					{
+						if(player4Cards.get(i).contains(Trump))
+						{}
+						else
+						{
+							if(player4Cards.get(i).contains("Q") || player4Cards.get(i).contains("K"))
+							{
+								worstCard = i;
+							}
+							else {}
+						}
+					}
+					if(worstCard == 6)
+					{
+						worstCard = randInt(0, 4);
+					}
+					
+					player4Cards.remove(worstCard);
+					player4Cards.add(kitty.get(0));
 
+				}
 			}
 		}
 		else if(dealer == 1)
@@ -1278,16 +1486,35 @@ public class Euchre_Singleplayer
 			else
 			{
 				Trump = proposedTrump;
-				player3Cards.add(kitty.get(0));
 				int worstCard = 0;
+				
+				while(true)
+				{
+					System.out.print("Which card would you like to get rid of: ");
+					String userInput = Input.next();
 
-				printPlayerCards(1);
-
-				System.out.println("");
-				//System.out.println();
-				player2Cards.remove(worstCard);
-				//System.out.println(player4Cards);
-
+					if(userInput.contains("1") || userInput.contains("2") || userInput.contains("3") || userInput.contains("4") || userInput.contains("5"))
+					{
+						worstCard = Integer.parseInt(userInput);
+						
+						System.out.println("");
+						player1Cards.remove(worstCard - 1);
+						player1Suits.remove(worstCard - 1);
+						player1Cards.add(kitty.get(0));
+						player1Suits.add(proposedTrump);
+						
+						cardScores(5);
+						
+						//debug();
+						
+						break;
+					}
+					else
+					{
+						System.out.println("\nError code: ID-10-T");
+						sleep(500);
+					}
+				}
 			}
 		}
 		else if(dealer == 2)
@@ -1301,8 +1528,7 @@ public class Euchre_Singleplayer
 			else
 			{
 				Trump = proposedTrump;
-				player2Cards.add(kitty.get(0));
-				int worstCard = 0;
+				int worstCard = 6;
 				for(int i = 0; i < player2Cards.size(); i++)
 				{
 					if(player2Cards.get(i).contains(Trump))
@@ -1316,10 +1542,29 @@ public class Euchre_Singleplayer
 						else {}
 					}
 				}
-				//System.out.println();
-				player2Cards.remove(worstCard);
-				//System.out.println(player4Cards);
-
+				if(worstCard == 6)
+				{
+					for(int i = 0; i < player2Cards.size(); i++)
+					{
+						if(player2Cards.get(i).contains(Trump))
+						{}
+						else
+						{
+							if(player2Cards.get(i).contains("Q") || player2Cards.get(i).contains("K"))
+							{
+								worstCard = i;
+							}
+							else {}
+						}
+					}
+					if(worstCard == 6)
+					{
+						worstCard = randInt(0, 4);
+					}
+					
+					player2Cards.remove(worstCard);
+					player2Cards.add(kitty.get(0));
+				}
 			}
 		}
 		else if(dealer == 3)
@@ -1333,71 +1578,967 @@ public class Euchre_Singleplayer
 			else
 			{
 				Trump = proposedTrump;
-				player1Cards.add(kitty.get(0));
-				int worstCard = 0;
+				int worstCard = 6;
 				for(int i = 0; i < player1Cards.size(); i++)
 				{
-					if(player1Cards.get(i).contains(Trump))
+					if(player3Cards.get(i).contains(Trump))
 					{}
 					else
 					{
-						if(player1Cards.get(i).contains("9") || player1Cards.get(i).contains("10"))
+						if(player3Cards.get(i).contains("9") || player3Cards.get(i).contains("10"))
 						{
 							worstCard = i;
 						}
 						else {}
 					}
 				}
-				//System.out.println();
-				player1Cards.remove(worstCard);
-				//System.out.println(player4Cards);
-
+				if(worstCard == 6)
+				{
+					for(int i = 0; i < player3Cards.size(); i++)
+					{
+						if(player3Cards.get(i).contains(Trump))
+						{}
+						else
+						{
+							if(player3Cards.get(i).contains("Q") || player3Cards.get(i).contains("K"))
+							{
+								worstCard = i;
+							}
+							else {}
+						}
+					}
+					if(worstCard == 6)
+					{
+						worstCard = randInt(0, 4);
+					}
+					
+					player3Cards.remove(worstCard);
+					player3Cards.add(kitty.get(0));
+					
+				}
 			}
 		}
 	}
 
+	/*
+	 * Method name: gameLoop
+	 * Description: This is the main method that runs the game. 
+	 *              Each player gets a turn to play a card unless somebody elected to play alone, in which case their partner's turn will be skipped
+	 * Parameters: n/a
+	 * Returns: n/a
+	 */
 	public static void gameLoop() throws InterruptedException 
 	{
 		chooseTrump();
+		
+		//debug();
 
-		System.out.println("Trump is now: " + Trump);
+		Thread.sleep(1000);
+
+		System.out.println("\nTrump is now: " + Trump + "\n");
+
+		Thread.sleep(1000);
 
 		//Start game
 		if(dealer == 4)
 		{
-			play = 1;
-			System.out.println("Player 1 starts (That's you!)");
+			if(player3SoloStatus == true)
+			{
+				play = 2;
+				System.out.println("Player 2 starts");
+			}
+			else
+			{
+				play = 1;
+				System.out.println("Player 1 starts (That's you!)");
+			}
 		}
 		else if(dealer == 1)
 		{
-			play = 2;
-			System.out.println("Player 2 starts");
+			if(player4SoloStatus == true)
+			{
+				play = 3;
+				System.out.println("Player 3 starts");
+			}
+			else
+			{
+				play = 2;
+				System.out.println("Player 2 starts");
+			}
 		}
 		else if(dealer == 2)
 		{
-			play = 3;
-			System.out.println("Player 3 starts");
+			if(player1SoloStatus == true)
+			{
+				play = 4;
+				System.out.println("Player 4 starts");
+			}
+			else
+			{
+				play = 3;
+				System.out.println("Player 3 starts");
+			}
 		}
 		else if(dealer == 3)
 		{
-			play = 4;
-			System.out.println("Player 4 starts");
-		}
-
-		printTable();
-
-		for(int i = 0; i < 4; i++)
-		{
-			if(play == 1)
+			if(player2SoloStatus == true)
 			{
-				System.out.print("\nType in the position of the card you want to play: ");
-
-				String userInput = Input.next();
+				play = 1;
+				System.out.println("Player 1 starts (That's you!)");
+			}
+			else
+			{
+				play = 4;
+				System.out.println("Player 4 starts");
 			}
 		}
 
-	}
+		sleep(3000);
+		
+		printTable();
 
+		choosingTrump1 = false;
+		choosingTrump2 = false;
+
+		int playWinner = 6;
+
+		cardScores(5);
+		
+		//debug();
+		
+		for(int j = 1; j < 6; j++)
+		{
+			int[] played = {0, 0, 0, 0};
+			
+			resetTable();
+			
+			printTable();
+			
+			if(playWinner == 0)
+			{
+				play = 1;
+			}
+			else if(playWinner == 1)
+			{
+				play = 2;
+			}
+			else if(playWinner == 2)
+			{
+				play = 3;
+			}
+			else if(playWinner == 3)
+			{
+				play = 4;
+			}
+			
+			boolean playing = true;
+
+			while(playing)
+			{
+				ArrayList<String> tableTable = new ArrayList<String>(Arrays.asList("a", "b", "c", "d"));
+				for(int i = 0; i < 4; i++)
+				{
+					tableTable.set(i, cardsOnTable[i]);
+				}
+				
+				if(!tableTable.contains("    "))
+				{
+					playing = false;
+					break;
+				}
+
+
+				//System.out.println(i + 1);
+				if(played[0] == 0)
+				{
+					if(play == 1)
+					{
+						if(player3SoloStatus == false)
+						{
+							if(suitLead == "")
+							{
+								while(true)
+								{
+									System.out.print("\nType in the position of the card you want to play: ");
+
+									String userInput = Input.next();
+
+									int cardNum;
+
+									if(userInput.contains("1") || userInput.contains("2") || userInput.contains("3") || userInput.contains("4") || userInput.contains("5"))
+									{
+										cardNum = Integer.parseInt(userInput);
+
+										if(cardNum >= 1 && cardNum <= player1Cards.size())
+										{
+											cardsOnTable[0] = player1Cards.get(cardNum - 1);
+											//cardsOnTableScores[0] = player1CardScores.get();
+											suitLead = player1Suits.get(cardNum - 1);
+											player1Cards.remove(cardNum - 1);
+											player1Suits.remove(cardNum - 1);
+											player1CardScores.remove(cardNum - 1);
+											printTable();
+											played[0] = 1;
+											
+											play = 2;
+											
+											break;
+										}
+									}
+									else if(userInput.equalsIgnoreCase("debug"))
+									{
+										debug();
+									}
+								}
+							}
+							else
+							{
+								if(player1Suits.contains(suitLead))
+								{
+									while(true)
+									{
+										System.out.print("\nType in the position of the card you want to play: ");
+
+										String userInput = Input.next();
+
+										int cardNum;
+
+										if(userInput.contains("1") || userInput.contains("2") || userInput.contains("3") || userInput.contains("4") || userInput.contains("5"))
+										{
+											cardNum = Integer.parseInt(userInput);
+											if(player1Suits.get(cardNum-1).contains(suitLead))
+											{
+												if(cardNum >= 1 && cardNum <= player1Cards.size())
+												{
+													cardsOnTable[0] = player1Cards.get(cardNum - 1);
+													//cardsOnTableScores[0] = player1CardScores.get();
+													player1Cards.remove(cardNum - 1);
+													player1Suits.remove(cardNum - 1);
+													player1CardScores.remove(cardNum - 1);
+													printTable();
+													played[0] = 1;
+													
+													play = 2;
+													
+													break;
+												}
+											}
+											else
+											{
+												System.out.println("You cannot play this card because you must play a card with a suit that matches the card lead");
+												sleep(500);
+											}
+										}
+										else if(userInput.equalsIgnoreCase("debug"))
+										{
+											debug();
+										}
+									}
+								}
+								else if(!player1Suits.contains(suitLead))
+								{
+									while(true)
+									{
+										System.out.print("\nType in the position of the card you want to play: ");
+
+										String userInput = Input.next();
+
+										int cardNum;
+
+										if(userInput.contains("1") || userInput.contains("2") || userInput.contains("3") || userInput.contains("4") || userInput.contains("5"))
+										{
+											cardNum = Integer.parseInt(userInput);
+
+											if(cardNum >= 1 && cardNum <= player1Cards.size())
+											{
+												cardsOnTable[0] = player1Cards.get(cardNum - 1);
+												//cardsOnTableScores[0] = player1CardScores.get();
+												player1Cards.remove(cardNum - 1);
+												player1Suits.remove(cardNum - 1);
+												player1CardScores.remove(cardNum - 1);
+												printTable();
+												played[0] = 1;
+
+												play = 2;
+												
+												break;
+											}
+										}
+										else if(userInput.equalsIgnoreCase("debug"))
+										{
+											debug();
+										}
+									}
+								}
+							}
+						}
+						else
+						{
+							cardsOnTable[0] = "Skip";
+							play = 2;
+						}
+					}
+				}
+				if(played[1] == 0)
+				{
+					if(player4SoloStatus == false) 
+					{
+						if(play == 2)
+						{
+							if(suitLead == "")
+							{
+								int randCard;
+								int count = 0;
+
+								while(true)
+								{
+									randCard = randInt(0, (player2Cards.size() - 1));
+
+									if(player2CardScores.get(randCard) > 3)
+									{
+										break;
+									}
+									else if(count > 5)
+									{
+										break;
+									}
+									else
+									{
+										count ++;
+										continue;
+									}
+								}
+
+								cardsOnTable[1] = player2Cards.get(randCard);
+								
+								suitLead = player2Suits.get(randCard);
+
+								//System.out.println("\n\nPlayer 2 plays: " + cardsOnTable[1]);
+
+								player2Cards.remove(randCard);
+								player2Suits.remove(randCard);
+								player2CardScores.remove(randCard - 1);
+
+								printTable();
+
+								played[1] = 1;
+
+								play = 3;
+							}
+
+							else if(player2Suits.contains(suitLead))
+							{
+								int cardIndex = player2Suits.indexOf(suitLead);
+
+								cardsOnTable[1] = player2Cards.get(cardIndex);
+
+								//System.out.println("\n\nPlayer 2 plays: " + cardsOnTable[1]);
+
+								player2Cards.remove(cardIndex);
+								player2Suits.remove(cardIndex);
+								player2CardScores.remove(cardIndex - 1);
+
+								printTable();
+
+								played[1] = 1;
+
+								play = 3;
+							}
+							else if(!player2Suits.contains(suitLead))
+							{
+								if(player2Suits.contains(Trump))
+								{
+									int cardIndex = player2Suits.indexOf(Trump);
+
+									cardsOnTable[1] = player2Cards.get(cardIndex);
+
+									//System.out.println("\n\nPlayer 2 plays: " + cardsOnTable[1]);
+
+									player2Cards.remove(cardIndex);
+									player2Suits.remove(cardIndex);
+									player2CardScores.remove(cardIndex - 1);
+
+									printTable();
+
+									played[1] = 1;
+
+									play = 3;
+								}
+								else
+								{
+									int cardIndex = randInt(0, (player2Suits.size() - 1));
+
+									cardsOnTable[1] = player2Cards.get(cardIndex);
+
+									//System.out.println("\n\nPlayer 2 plays: " + cardsOnTable[1]);
+
+									player2Cards.remove(cardIndex);
+									player2Suits.remove(cardIndex);
+									player2CardScores.remove(cardIndex - 1);
+
+									printTable();
+
+									played[1] = 1;
+
+									play = 3;
+								}
+							}
+						}
+
+					}
+					else
+					{
+						cardsOnTable[1] = "Skip";
+						play = 3;
+					}
+				}
+				if(played[2] == 0)
+				{
+					if(player1SoloStatus == false) 
+					{
+						if(play == 3)
+						{
+							if(suitLead == "")
+							{
+								int randCard;
+								int count = 0;
+
+								while(true)
+								{
+									randCard = randInt(0, (player3Cards.size() - 1));
+
+									if(player3CardScores.get(randCard) > 3)
+									{
+										break;
+									}
+									else if(count > 5)
+									{
+										break;
+									}
+									else
+									{
+										count ++;
+										continue;
+									}
+								}
+
+								cardsOnTable[2] = player3Cards.get(randCard);
+								
+								suitLead = player3Suits.get(randCard);
+
+								//System.out.println("\n\nPlayer 3 plays: " + cardsOnTable[2]);
+
+								player3Cards.remove(randCard);
+								player3Suits.remove(randCard);
+								player3CardScores.remove(randCard - 1);
+
+								printTable();
+
+								played[2] = 1;
+
+								play = 4;
+							}
+
+							else if(player3Suits.contains(suitLead))
+							{
+								int cardIndex = player3Suits.indexOf(suitLead);
+
+								cardsOnTable[2] = player3Cards.get(cardIndex);
+
+								//System.out.println("\n\nPlayer 3 plays: " + cardsOnTable[2]);
+
+								player3Cards.remove(cardIndex);
+								player3Suits.remove(cardIndex);
+								player3CardScores.remove(cardIndex - 1);
+
+								printTable();
+
+								played[2] = 1;
+
+								play = 4;
+							}
+							else if(!player3Suits.contains(suitLead))
+							{
+								if(player3Suits.contains(Trump))
+								{
+									int cardIndex = player3Suits.indexOf(Trump);
+
+									cardsOnTable[2] = player3Cards.get(cardIndex);
+
+									//System.out.println("\n\nPlayer 2 plays: " + cardsOnTable[2]);
+
+									player3Cards.remove(cardIndex);
+									player3Suits.remove(cardIndex);
+									player3CardScores.remove(cardIndex - 1);
+
+									printTable();
+
+									played[2] = 1;
+
+									play = 4;
+								}
+								else
+								{
+									int cardIndex = randInt(0, (player3Suits.size() - 1));
+
+									cardsOnTable[2] = player3Cards.get(cardIndex);
+
+									//System.out.println("\n\nPlayer 3 plays: " + cardsOnTable[2]);
+
+									player3Cards.remove(cardIndex);
+									player3Suits.remove(cardIndex);
+									player3CardScores.remove(cardIndex - 1);
+
+									printTable();
+
+									played[2] = 1;
+
+									play = 4;
+								}
+							}
+						}
+
+					}
+					else
+					{
+						cardsOnTable[2] = "Skip";
+						play = 4;
+					}
+				}
+
+				if(played[3] == 0)
+				{
+					if(player2SoloStatus == false) 
+					{
+						if(play == 4)
+						{
+							if(suitLead == "")
+							{
+								int randCard;
+								int count = 0;
+
+								while(true)
+								{
+									randCard = randInt(0, (player4Cards.size() - 1));
+
+									if(player4CardScores.get(randCard) > 3)
+									{
+										break;
+									}
+									else if(count > 5)
+									{
+										break;
+									}
+									else
+									{
+										count ++;
+										continue;
+									}
+								}
+
+								cardsOnTable[3] = player4Cards.get(randCard);
+
+								suitLead = player4Suits.get(randCard);
+
+								//System.out.println("\n\nPlayer 4 plays: " + cardsOnTable[3]);
+
+								player4Cards.remove(randCard);
+								player4Suits.remove(randCard);
+								player4CardScores.remove(randCard - 1);
+
+								printTable();
+
+								played[3] = 1;
+
+								play = 1;
+							}
+
+							else if(player4Suits.contains(suitLead))
+							{
+								int cardIndex = player4Suits.indexOf(suitLead);
+
+								cardsOnTable[3] = player4Cards.get(cardIndex);
+
+								//System.out.println("\n\nPlayer 4 plays: " + cardsOnTable[3]);
+
+								player4Cards.remove(cardIndex);
+								player4Suits.remove(cardIndex);
+								player4CardScores.remove(cardIndex - 1);
+
+								printTable();
+
+								played[3] = 1;
+
+								play = 1;
+							}
+							else if(!player4Suits.contains(suitLead))
+							{
+								if(player4Suits.contains(Trump))
+								{
+									int cardIndex = player4Suits.indexOf(Trump);
+
+									cardsOnTable[3] = player4Cards.get(cardIndex);
+
+									//System.out.println("\n\nPlayer 4 plays: " + cardsOnTable[3]);
+
+									player4Cards.remove(cardIndex);
+									player4Suits.remove(cardIndex);
+									player4CardScores.remove(cardIndex - 1);
+
+									printTable();
+
+									played[3] = 1;
+
+									play = 1;
+								}
+								else
+								{
+									int cardIndex = randInt(0, (player4Suits.size() - 1));
+
+									cardsOnTable[3] = player4Cards.get(cardIndex);
+
+									//System.out.println("\n\nPlayer 4 plays: " + cardsOnTable[3]);
+
+									player4Cards.remove(cardIndex);
+									player4Suits.remove(cardIndex);
+									player4CardScores.remove(cardIndex - 1);
+
+									printTable();
+
+									played[3] = 1;
+
+									play = 1;
+								}
+							}
+						}
+						
+					}
+					else
+					{
+						cardsOnTable[3] = "Skip";
+						play = 1;
+					}
+				}
+
+				//System.out.println("\nsuitLead = " + suitLead+ "\n\n");
+
+				//debug();
+			}//End while loop
+
+
+
+			if(cardsOnTable[0] != "    " && cardsOnTable[1] != "    " && cardsOnTable[2] != "    " && cardsOnTable[3] != "    " )
+			{
+				for(int i = 0; i < 4; i++)
+				{
+					//System.out.println("ScoreLoop");
+					String tableCard = cardsOnTable[i];
+
+					if(tableCard.contains(Trump))
+					{
+						//System.out.println("ScoreLoop - Trump");
+						if(tableCard.contains("9"))
+						{
+							cardsOnTableScores[i] = 15;
+						}
+						else if(tableCard.contains("10"))
+						{
+							cardsOnTableScores[i] = 16;
+						}
+						else if(tableCard.contains("Q"))
+						{
+							cardsOnTableScores[i] = 18;
+						}
+						else if(tableCard.contains("K"))
+						{
+							cardsOnTableScores[i] = 19;
+						}
+						else if(tableCard.contains("A"))
+						{
+							cardsOnTableScores[i] = 20;
+						}
+						else if(tableCard.contains("J"))
+						{
+							//test for left bower
+							if(Trump.contains("♠") && tableCard.contains("♣"))
+							{
+								cardsOnTableScores[i] = 21;
+							}
+							else if(Trump.contains("♣") && tableCard.contains("♠"))
+							{
+								cardsOnTableScores[i] = 21;
+							}
+							else if(Trump.contains("♦") && tableCard.contains("♥"))
+							{
+								cardsOnTableScores[i] = 21;
+							}
+							else if(Trump.contains("♥") && tableCard.contains("♦"))
+							{
+								cardsOnTableScores[i] = 21;
+							}
+							else
+							{
+								cardsOnTableScores[i] = 22;
+							}
+						}
+					}
+
+					else if(tableCard.contains(suitLead))
+					{
+						//System.out.println("ScoreLoop - suitLead");
+						if(tableCard.contains("9"))
+						{
+							cardsOnTableScores[i] = 9;
+						}
+						else if(tableCard.contains("10"))
+						{
+							cardsOnTableScores[i] = 10;
+						}
+						else if(tableCard.contains("J"))
+						{
+							//test for left bower
+							if(Trump.contains("♠") && tableCard.contains("♣"))
+							{
+								cardsOnTableScores[i] = 21;
+							}
+							else if(Trump.contains("♣") && tableCard.contains("♠"))
+							{
+								cardsOnTableScores[i] = 21;
+							}
+							else if(Trump.contains("♦") && tableCard.contains("♥"))
+							{
+								cardsOnTableScores[i] = 21;
+							}
+							else if(Trump.contains("♥") && tableCard.contains("♦"))
+							{
+								cardsOnTableScores[i] = 21;
+							}
+							else
+							{
+								cardsOnTableScores[i] = 11;
+							}
+						}
+						else if(tableCard.contains("Q"))
+						{
+							cardsOnTableScores[i] = 12;
+						}
+						else if(tableCard.contains("K"))
+						{
+							cardsOnTableScores[i] = 13;
+						}
+						else if(tableCard.contains("A"))
+						{
+							cardsOnTableScores[i] = 14;
+						}
+						
+					}
+					else if(!tableCard.contains(suitLead))
+					{
+						//System.out.println("ScoreLoop- !suitLead");
+						if(tableCard.contains("9"))
+						{
+							cardsOnTableScores[i] = 1;
+						}
+						else if(tableCard.contains("10"))
+						{
+							cardsOnTableScores[i] = 2;
+						}
+						else if(tableCard.contains("J"))
+						{
+							//test for left bower
+							if(Trump.contains("♠") && tableCard.contains("♣"))
+							{
+								cardsOnTableScores[i] = 21;
+							}
+							else if(Trump.contains("♣") && tableCard.contains("♠"))
+							{
+								cardsOnTableScores[i] = 21;
+							}
+							else if(Trump.contains("♦") && tableCard.contains("♥"))
+							{
+								cardsOnTableScores[i] = 21;
+							}
+							else if(Trump.contains("♥") && tableCard.contains("♦"))
+							{
+								cardsOnTableScores[i] = 21;
+							}
+							else
+							{
+								cardsOnTableScores[i] = 3;
+							}
+						}
+						else if(tableCard.contains("Q"))
+						{
+							cardsOnTableScores[i] = 4;
+						}
+						else if(tableCard.contains("K"))
+						{
+							cardsOnTableScores[i] = 5;
+						}
+						else if(tableCard.contains("A"))
+						{
+							cardsOnTableScores[i] = 6;
+						}
+					}
+					else
+					{
+
+						cardsOnTableScores[i] = 0;
+					}
+
+				}
+
+
+				int maxScore = cardsOnTableScores[0];
+
+				for(int i = 0; i < 4; i++)
+				{
+					if(cardsOnTableScores[i] > maxScore)
+					{
+						maxScore = cardsOnTableScores[i];
+					}
+				}
+
+
+				for(int i = 0; i < 4; i++)
+				{
+					if(cardsOnTableScores[i] == maxScore)
+					{
+						playWinner = i;
+						break;
+					}
+				}
+
+				if(playWinner == 0)
+				{
+					System.out.println("\nPlayer 1 wins this trick! (That's you!)");
+					suitLead = "";
+					team13Tricks ++;
+					sleep(3000);
+				}
+				else if(playWinner == 2)
+				{
+					System.out.println("\nPlayer 3 wins this trick!");
+					suitLead = "";
+					team13Tricks ++;
+					sleep(3000);
+				}
+				else if(playWinner == 1)
+				{
+					System.out.println("\nPlayer 2 wins this trick!");
+					suitLead = "";
+					team24Tricks ++;
+					sleep(3000);
+				}
+				else if(playWinner == 3)
+				{
+					System.out.println("\nPlayer 4 wins this trick!");
+					suitLead = "";
+					team24Tricks ++;
+					sleep(3000);
+				}
+				
+				if(team24Tricks + team13Tricks == 5)
+				{
+					if(team13Tricks >= 3)
+					{
+						if(player3SoloStatus == true || player1SoloStatus == true)
+						{
+							if(team13Tricks == 5)
+							{
+								System.out.println("You and your partner won all the tricks this hand!");
+								team13Score += 4;
+								
+								sleep(3000);
+							}
+							else
+							{
+								System.out.println("You and your partner won this hand!");
+								team13Score += 1;
+								sleep(3000);
+							}
+						}
+						else
+						{
+							if(trumpMaker == 1 || trumpMaker == 3)
+							{
+								if(team13Tricks == 5)
+								{
+									System.out.println("You and your partner won all the tricks this hand!");
+									team13Score += 2;
+									sleep(3000);
+								}
+								else
+								{
+									System.out.println("You and your partner won this hand!");
+									team13Score += 1;
+									sleep(3000);
+								}
+							}
+							else if(trumpMaker == 2 || trumpMaker == 4)
+							{
+								System.out.println("You and your partner euchred them!");
+								team13Score += 2;
+								sleep(3000);
+							}
+						}
+					}
+					else if(team24Tricks >= 3)
+					{
+						if(player2SoloStatus == true || player4SoloStatus == true)
+						{
+							if(team24Tricks == 5)
+							{
+								System.out.println("They won all the tricks in this hand");
+								team24Score += 4;
+								sleep(3000);
+							}
+							else
+							{
+								System.out.println("They won this hand");
+								team24Score += 1;
+								sleep(3000);
+							}
+						}
+						else
+						{
+							if(trumpMaker == 2 || trumpMaker == 4)
+							{
+								if(team24Tricks == 5)
+								{
+									System.out.println("They won all the tricks in this hand");
+									team24Score += 2;
+									sleep(3000);
+								}
+								else
+								{
+									System.out.println("They won this hand");
+									team24Score += 1;
+									sleep(3000);
+								}
+							}
+							else if(trumpMaker == 1 || trumpMaker == 3)
+							{
+								System.out.println("You and your partner got euchred!");
+								team24Score += 2;
+								sleep(3000);
+							}
+						}
+					}
+					
+					numOfGames ++;
+				}
+			}
+		}
+	}
+	
+	/*
+	 * Method name: chooseTrump
+	 * Description: This method goes through each player and allows them to either pass, or tell the dealer to pick it up.
+	 *              If everybody passes, then the play goes around again and allows each player to choose any suit to be trump except the suit that was turned down.
+	 * Parameters: n/a
+	 * Returns: n/a
+	 */
 	public static void chooseTrump() throws InterruptedException  
 	{
 		if(topCard.contains("♥"))
@@ -1418,7 +2559,9 @@ public class Euchre_Singleplayer
 		}
 
 		printStartTable();
-
+		
+		System.out.println("");
+		
 		int i;
 		for(i = 0; i < 4;)
 		{
@@ -1435,7 +2578,7 @@ public class Euchre_Singleplayer
 					{
 						System.out.println(" ");
 						play = 2;
-						Thread.sleep(1000);
+						sleep(2000);
 						//System.out.println(i);
 						i = i + 1;
 						//System.out.println(i);
@@ -1443,11 +2586,43 @@ public class Euchre_Singleplayer
 					}
 					else if(input.equalsIgnoreCase("pick"))
 					{
-						Trump = proposedTrump;
-						//System.out.println("Trump is now " + Trump);
-						choosingTrump1 = false;
-						i = 6;
+						if(dealer == 3)
+						{
+							System.out.println("You told your partner to pick it up so you will go alone");
+							Trump = proposedTrump;
+							pickUpCard(1);
+							//System.out.println("Trump is now " + Trump);
+							trumpMaker = 1;
+							choosingTrump1 = false;
+							i = 6;
+						}
+						else
+						{
+							Trump = proposedTrump;
+							pickUpCard(1);
+							//System.out.println("Trump is now " + Trump);
+							trumpMaker = 1;
+							choosingTrump1 = false;
+							i = 6;
+						}
+						System.out.print("Would you like to play alone? \"Y\" or \"N\": ");
+						String userInput = Input.next();
+						
+						if(userInput.equalsIgnoreCase("y"))
+						{
+							player1SoloStatus = true;
+						}
+						else
+						{
+							player1SoloStatus = false;
+						}
 						break;
+						
+						
+					}
+					else if(input.equalsIgnoreCase("thequickbrownfoxjumpsoverthelazydog"))
+					{
+						debug();
 					}
 
 					else
@@ -1462,119 +2637,188 @@ public class Euchre_Singleplayer
 			{
 				if(player2Partner == dealer)
 				{
-					if(player2Suit == proposedTrump && p2Max >= 4)
+					if(player2Suit == proposedTrump && p2MaxScore >= randInt(13, 14))
 					{
+						sleep(2000);
 						System.out.println("Player 2 tells dealer to pick it up and will go alone");
 						Trump = proposedTrump;
+						trumpMaker = 2;
 						choosingTrump1 = false;
+						player2SoloStatus = true;
 						pickUpCard(2);
 						break;
 					}
 					else 
 					{
 						System.out.println("Player 2 passes");
-						Thread.sleep(1000);
+						sleep(2000);
 						play = 3;
 						//System.out.println(i);
-						i = i + 1;
+						i++;
+						//System.out.println(i);
+						//continue;
+					}
+				}
+				else if(dealer == 2)
+				{
+					if(player2Suit == proposedTrump && p2MaxScore >= randInt(7, 9))
+					{
+						if(player2Suit == proposedTrump && p2MaxScore >= randInt(13, 14))
+						{
+							sleep(2000);
+							System.out.println("Player 2 is dealer so they will pick it up and will go alone");
+							Trump = proposedTrump;
+							trumpMaker = 2;
+							choosingTrump1 = false;
+							player2SoloStatus = true;
+							pickUpCard(2);
+							break;
+						}
+						else 
+						{
+							sleep(2000);
+							System.out.println("Player 2 is the dealer and will pick it up");
+							Trump = proposedTrump;
+							trumpMaker = 2;
+							choosingTrump1 = false;
+							pickUpCard(2);
+							break;
+						}
+					}
+					else
+					{
+						System.out.println("Player 2 passes");
+						sleep(2000);
+						play = 3;
+						//System.out.println(i);
+						i++;
 						//System.out.println(i);
 						//continue;
 					}
 				}
 				else
 				{
-					if(player2Suit == proposedTrump && p2Max >= 3)
+					if(player2Suit == proposedTrump && p2MaxScore >= randInt(7, 9))
 					{
-						if(player2Suit == proposedTrump && p2Max >= 4)
+						if(player2Suit == proposedTrump && p2MaxScore >= randInt(13, 14))
 						{
-							if(dealer == 2)
-							{
-								System.out.println("Player 2 is dealer and will pick it up and go alone");
-								Trump = proposedTrump;
-								choosingTrump1 = false;
-								pickUpCard(2);
-								break;
-							}
-							else
-							{
-								System.out.println("Player 2 tells dealer to pick it up and will go alone");
-								Trump = proposedTrump;
-								choosingTrump1 = false;
-								pickUpCard(2);
-								break;
-							}
+							sleep(2000);
+							System.out.println("Player 2 tells dealer to pick it up and will go alone");
+							Trump = proposedTrump;
+							trumpMaker = 2;
+							choosingTrump1 = false;
+							player2SoloStatus = true;
+							pickUpCard(2);
+							break;
 						}
 						else 
 						{
-							if(dealer == 2)
-							{
-								System.out.println("Player 2 is dealer and will pick it up");
-								Trump = proposedTrump;
-								choosingTrump1 = false;
-								pickUpCard(2);
-								break;
-							}
-							else
-							{
-								System.out.println("Player 2 tells dealer to pick it up");
-								Trump = proposedTrump;
-								choosingTrump1 = false;
-								pickUpCard(2);
-								break;
-							}
+							sleep(2000);
+							System.out.println("Player 2 tells dealer to pick it up");
+							Trump = proposedTrump;
+							trumpMaker = 2;
+							choosingTrump1 = false;
+							pickUpCard(2);
+							break;
 						}
 					}
 					else 
 					{
 						System.out.println("Player 2 passes");
-						Thread.sleep(1000);
+						sleep(2000);
 						play = 3;
 						//System.out.println(i);
-						i = i + 1;
+						i++;
 						//System.out.println(i);
 						//continue;
 					}
 				}
-			}
-
+			}//End player 2 trump choosing
+			
 			else if(play == 3)
 			{
 				if(player3Partner == dealer)
 				{
-					if(player3Suit == proposedTrump && p3Max >= 4)
+					if(player3Suit == proposedTrump && p3MaxScore >= randInt(13, 14))
 					{
+						sleep(2000);
 						System.out.println("Player 3 tells dealer to pick it up and will go alone");
 						Trump = proposedTrump;
+						trumpMaker = 3;
 						choosingTrump1 = false;
+						player3SoloStatus = true;
+						pickUpCard(3);
 						break;
 					}
 					else 
 					{
 						System.out.println("Player 3 passes");
-						Thread.sleep(1000);
+						sleep(2000);
 						play = 4;
 						//System.out.println(i);
-						i = i + 1;
+						i++;
+						//System.out.println(i);
+						//continue;
+					}
+				}
+				else if(dealer == 3)
+				{
+					if(player3Suit == proposedTrump && p3MaxScore >= randInt(7, 9))
+					{
+						if(player3Suit == proposedTrump && p3MaxScore >= randInt(13, 14))
+						{
+							sleep(2000);
+							System.out.println("Player 3 is dealer so they will pick it up and will go alone");
+							Trump = proposedTrump;
+							trumpMaker = 3;
+							choosingTrump1 = false;
+							player3SoloStatus = true;
+							pickUpCard(3);
+							break;
+						}
+						else 
+						{
+							sleep(2000);
+							System.out.println("Player 3 is the dealer and will pick it up");
+							Trump = proposedTrump;
+							trumpMaker = 3;
+							choosingTrump1 = false;
+							pickUpCard(3);
+							break;
+						}
+					}
+					else
+					{
+						System.out.println("Player 3 passes");
+						sleep(2000);
+						play = 4;
+						//System.out.println(i);
+						i++;
 						//System.out.println(i);
 						//continue;
 					}
 				}
 				else
 				{
-					if(player3Suit == proposedTrump && p3Max >= 3)
+					if(player3Suit == proposedTrump && p3MaxScore >= randInt(7, 9))
 					{
-						if(dealer == 3)
+						if(player3Suit == proposedTrump && p3MaxScore >= randInt(13, 14))
 						{
-							System.out.println("Player 3 is dealer and will pick it up and go alone");
+							sleep(2000);
+							System.out.println("Player 3 tells dealer to pick it up and will go alone");
 							Trump = proposedTrump;
+							trumpMaker = 3;
 							choosingTrump1 = false;
+							player3SoloStatus = true;
 							pickUpCard(3);
 							break;
 						}
-						else
+						else 
 						{
-							System.out.println("Player 3 tells dealer to pick it up and will go alone");
+							sleep(2000);
+							System.out.println("Player 3 tells dealer to pick it up");
 							Trump = proposedTrump;
+							trumpMaker = 3;
 							choosingTrump1 = false;
 							pickUpCard(3);
 							break;
@@ -1583,30 +2827,73 @@ public class Euchre_Singleplayer
 					else 
 					{
 						System.out.println("Player 3 passes");
-						Thread.sleep(1000);
+						sleep(2000);
 						play = 4;
 						//System.out.println(i);
-						i = i + 1;
+						i++;
 						//System.out.println(i);
 						//continue;
 					}
 				}
-			}
-
+			}//End player 3 trump choosing
+			
 			else if(play == 4)
 			{
 				if(player4Partner == dealer)
 				{
-					if(player4Suit == proposedTrump && p4Max >= 4)
+					if(player4Suit == proposedTrump && p4MaxScore >= randInt(13, 14))
 					{
+						sleep(2000);
 						System.out.println("Player 4 tells dealer to pick it up and will go alone");
+						Trump = proposedTrump;
+						trumpMaker = 4;
 						choosingTrump1 = false;
+						player4SoloStatus = true;
+						pickUpCard(4);
 						break;
 					}
 					else 
 					{
+						sleep(2000);
 						System.out.println("Player 4 passes");
-						Thread.sleep(1000);
+						sleep(2000);
+						play = 1;
+						//System.out.println(i);
+						i++;
+						//System.out.println(i);
+						//continue;
+					}
+				}
+				else if(dealer == 4)
+				{
+					if(player4Suit == proposedTrump && p4MaxScore >= randInt(7, 9))
+					{
+						if(player4Suit == proposedTrump && p4MaxScore >= randInt(13, 14))
+						{
+							sleep(2000);
+							System.out.println("Player 4 is dealer so they will pick it up and will go alone");
+							Trump = proposedTrump;
+							trumpMaker = 4;
+							choosingTrump1 = false;
+							player4SoloStatus = true;
+							pickUpCard(4);
+							break;
+						}
+						else 
+						{
+							sleep(2000);
+							System.out.println("Player 4 is the dealer and will pick it up");
+							Trump = proposedTrump;
+							trumpMaker = 4;
+							choosingTrump1 = false;
+							pickUpCard(4);
+							break;
+						}
+					}
+					else
+					{
+						System.out.println("Player 4 passes");
+						sleep(2000);
 						play = 1;
 						//System.out.println(i);
 						i++;
@@ -1616,23 +2903,34 @@ public class Euchre_Singleplayer
 				}
 				else
 				{
-					if(player4Suit == proposedTrump && p4Max >= 3)
+					if(player4Suit == proposedTrump && p4MaxScore >= randInt(7, 9))
 					{
-						if(player4Suit == proposedTrump && p4Max >= 4)
+						if(player4Suit == proposedTrump && p4MaxScore >= randInt(13, 14))
 						{
+							sleep(2000);
 							System.out.println("Player 4 tells dealer to pick it up and will go alone");
+							Trump = proposedTrump;
+							trumpMaker = 4;
+							choosingTrump1 = false;
+							player4SoloStatus = true;
+							pickUpCard(4);
+							break;
 						}
 						else 
 						{
+							sleep(2000);
 							System.out.println("Player 4 tells dealer to pick it up");
+							Trump = proposedTrump;
+							trumpMaker = 4;
 							choosingTrump1 = false;
+							pickUpCard(4);
 							break;
 						}
 					}
 					else 
 					{
 						System.out.println("Player 4 passes");
-						Thread.sleep(1000);
+						sleep(2000);
 						play = 1;
 						//System.out.println(i);
 						i++;
@@ -1640,7 +2938,7 @@ public class Euchre_Singleplayer
 						//continue;
 					}
 				}
-			}
+			}//End player 4 trump choosing
 		}
 
 
@@ -1657,7 +2955,7 @@ public class Euchre_Singleplayer
 				{
 					while(true)
 					{
-						System.out.println("\nTo call a trump, type in one of the following: " + "1 - " + WHITE_BACKGROUND_BRIGHT +  BLACK_BOLD_BRIGHT + " ♠ " + RESET + "   2 - " + WHITE_BACKGROUND_BRIGHT +  RED_BOLD_BRIGHT + " ♥ " + RESET + "   3 - " + WHITE_BACKGROUND_BRIGHT +  BLACK_BOLD_BRIGHT + " ♣ " + RESET + "   4 - " + WHITE_BACKGROUND_BRIGHT +  RED_BOLD_BRIGHT + " ♦ " + RESET + "   Or type \"PASS\"");
+						System.out.println("\nTo call a trump, type in one of the following: " + "1 - " + WHITE_BACKGROUND_BRIGHT +  BLACK_BOLD + " ♠ " + RESET + "   2 - " + WHITE_BACKGROUND_BRIGHT +  RED_BOLD_BRIGHT + " ♥ " + RESET + "   3 - " + WHITE_BACKGROUND_BRIGHT +  BLACK_BOLD + " ♣ " + RESET + "   4 - " + WHITE_BACKGROUND_BRIGHT +  RED_BOLD_BRIGHT + " ♦ " + RESET + "   Or type \"PASS\"");
 						System.out.print("Your selection: ");
 
 						String userInput = Input.next();
@@ -1668,6 +2966,7 @@ public class Euchre_Singleplayer
 							{
 								Trump = "♠";
 								//System.out.println("Trump is now: " + Trump);
+								trumpMaker = 1;
 								choosingTrump2 = false;
 								f = 6;
 								break;
@@ -1684,6 +2983,7 @@ public class Euchre_Singleplayer
 							{
 								Trump = "♥";
 								//System.out.println("Trump is now: " + Trump);
+								trumpMaker = 1;
 								choosingTrump2 = false;
 								f = 6;
 								break;
@@ -1699,7 +2999,8 @@ public class Euchre_Singleplayer
 							if(proposedTrump != "♣")
 							{
 								Trump = "♣";
-								System.out.println("Trump is now: " + Trump);
+								//System.out.println("Trump is now: " + Trump);
+								trumpMaker = 1;
 								choosingTrump2 = false;
 								f = 6;
 								break;
@@ -1715,7 +3016,8 @@ public class Euchre_Singleplayer
 							if(proposedTrump != "♦")
 							{
 								Trump = "♦";
-								System.out.println("Trump is now: " + Trump);
+								//System.out.println("Trump is now: " + Trump);
+								trumpMaker = 1;
 								choosingTrump2 = false;
 								f = 6;
 								break;
@@ -1739,18 +3041,20 @@ public class Euchre_Singleplayer
 					if(dealer == 2)
 					{
 						System.out.println("Player 2 is dealer and must choose a trump");
-						Thread.sleep(500);
+						sleep(2000);
 						System.out.println("Player 2 sets trump to be:" + player2Suit);
 						Trump = player2Suit;
+						trumpMaker = 2;
 						choosingTrump2 = false;
 						break;
 					}
 					else
 					{
-						if(p2MaxScore > 11 && player2Suit != proposedTrump)
+						if(p2MaxScore > randInt(8, 9) && player2Suit != proposedTrump)
 						{
 							System.out.println("Player 2 sets trump to be: " + player2Suit);
 							Trump = player2Suit;
+							trumpMaker = 2;
 							choosingTrump2 = false;
 							break;
 						}
@@ -1767,18 +3071,20 @@ public class Euchre_Singleplayer
 					if(dealer == 3)
 					{
 						System.out.println("Player 3 is dealer and must choose a trump");
-						Thread.sleep(500);
+						sleep(2000);
 						System.out.println("Player 3 sets trump to be:" + player3Suit);
 						Trump = player2Suit;
+						trumpMaker = 3;
 						choosingTrump2 = false;
 						break;
 					}
 					else
 					{
-						if(p3MaxScore > 11 && player2Suit != proposedTrump)
+						if(p3MaxScore > randInt(8, 9) && player2Suit != proposedTrump)
 						{
 							System.out.println("Player 3 sets trump to be: " + player3Suit);
 							Trump = player2Suit;
+							trumpMaker = 3;
 							choosingTrump2 = false;
 							break;
 						}
@@ -1795,18 +3101,57 @@ public class Euchre_Singleplayer
 					if(dealer == 4)
 					{
 						System.out.println("Player 4 is dealer and must choose a trump");
-						Thread.sleep(500);
-						System.out.println("Player 4 sets trump to be:" + player4Suit);
-						Trump = player2Suit;
-						choosingTrump2 = false;
-						break;
+						sleep(2000);
+						
+						if(player4Suit == proposedTrump)
+						{
+							System.out.println("Player 4 sets trump to be:" + player4Suit);
+							Trump = player2Suit;
+							trumpMaker = 4;
+							choosingTrump2 = false;
+							break;
+						}
+						else
+						{
+							while(true)
+							{
+								int randChoice = randInt(1, 4);
+								if(randChoice == 1)
+								{
+									Trump = "♥";
+								}
+								else if(randChoice == 2)
+								{
+									Trump = "♦";
+								}
+								else if(randChoice == 3)
+								{
+									Trump = "♣";
+								}
+								else if(randChoice == 4)
+								{
+									Trump = "♠";
+								}
+								
+								if(Trump != proposedTrump)
+								{
+									break;
+								}
+							}
+							
+							System.out.println("Player 4 sets trump to be:" + Trump);
+							trumpMaker = 4;
+							choosingTrump2 = false;
+							break;
+						}
 					}
 					else
 					{
-						if(p4MaxScore > 11 && player2Suit != proposedTrump)
+						if(p4MaxScore > randInt(8, 9) && player2Suit != proposedTrump)
 						{
 							System.out.println("Player 4 sets trump to be: " + player4Suit);
 							Trump = player2Suit;
+							trumpMaker = 4;
 							choosingTrump2 = false;
 							break;
 						}
@@ -1818,10 +3163,18 @@ public class Euchre_Singleplayer
 					}
 				}
 			}
-		}
-	}
+		} 
 
-	public static void printPlayerCards(int player) throws InterruptedException 
+		cardScores(5);
+	}
+	
+	/*
+	 * Method name: printPlayerCards
+	 * Description: Prints out any player's cards
+	 * Parameters: int player
+	 * Returns: n/a
+	 */
+ 	public static void printPlayerCards(int player) throws InterruptedException 
 	{
 		System.out.print("\n        "); 
 
@@ -1837,24 +3190,34 @@ public class Euchre_Singleplayer
 				System.out.print(WHITE_BACKGROUND_BRIGHT + BLACK_BOLD + " " + player1Cards.get(i) + " " + RESET + " ");
 			}
 		}
-		if(darkMode == true)
+		
+		if(!choosingTrump1 && !choosingTrump2)
 		{
-			System.out.print("\n      ");
-			for(int i = 0; i < player1Cards.size(); i++)
+			if(darkMode == true)
 			{
-				System.out.print(DARK_MODE + player1Cards.get(i) + " " + RESET + (i + 1) + " ");
+				System.out.print("\n      ");
+				for(int i = 0; i < player1Cards.size(); i++)
+				{
+					System.out.print(DARK_MODE + player1Cards.get(i) + " " + RESET + (i + 1) + " ");
+				}
 			}
-		}
-		else if(darkMode == false)
-		{
-			System.out.print("\n      ");
-			for(int i = 0; i < player1Cards.size(); i++)
+			else if(darkMode == false)
 			{
-				System.out.print(LIGHT_MODE + player1Cards.get(i) + " " + RESET + (i + 1) + " ");
+				System.out.print("\n      ");
+				for(int i = 0; i < player1Cards.size(); i++)
+				{
+					System.out.print(LIGHT_MODE + player1Cards.get(i) + " " + RESET + (i + 1) + " ");
+				}
 			}
 		}
 	}
 
+ 	/*
+ 	 * Method name: printStartTable
+ 	 * Description: Prints out the table with the top card in the middle. This method is only called during the deciding of trump
+ 	 * Parameters: n/a
+ 	 * Returns: n/a
+ 	 */
 	public static void printStartTable() throws InterruptedException 
 	{
 		String kittyCard;
@@ -1871,44 +3234,180 @@ public class Euchre_Singleplayer
 		{
 			System.out.println("\n                Player 3\n"
 					+ "\n"
-					+ "\n                  " + cardsOnTable[2] 
-							+ "\n"
-							+ " Player 4     " + cardsOnTable[3] + kittyCard + cardsOnTable[1] +  "      Player 2\n"
-							+ "  " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
-							+ "          " + cardsOnTable[0]
-									+ "\n\n\n"
-									+ "\n"
-									+ "                Player 1");
+					+ "\n                  " 
+					+ "\n"
+					+ " Player 4       " + kittyCard +  "        Player 2\n"
+					+ "  " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
+					+ "          "
+					+ "\n\n\n"
+					+ "\n"
+					+ "                  You");
 		}
-
-		printPlayerCards(1);
-	}
-
-	public static void printTable() throws InterruptedException 
-	{
-		//cardsOnTable[0] = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  player1Cards.get(0) + " " +  RESET + " ";
-		//cardsOnTable[1] = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  player2Cards.get(0) + " " +  RESET + " ";
-		//cardsOnTable[2] = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  player3Cards.get(0) + " " +  RESET + " ";
-		//cardsOnTable[3] = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " +  player4Cards.get(0) + " " +  RESET + " ";
-
-		if(dealer == 4)
+		else if(dealer == 1)
 		{
 			System.out.println("\n                Player 3\n"
+					+ "\n                  "
 					+ "\n"
-					+ "\n                  " + cardsOnTable[2] 
-							+ "\n"
-							+ " Player 4     " + cardsOnTable[3] + "   " + cardsOnTable[1] +  "      Player 2\n"
-							+ "  " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
-							+ "          " + cardsOnTable[0]
-									+ "\n\n\n"
-									+ "\n"
-									+ "                Player 1");
+					+ " Player 4       " + kittyCard +  "        Player 2\n"
+					+ "  "
+					+ "\n                "
+					+ "\n"
+					+ "\n" 
+					+ "\n                  You\n                 " + GREEN_BOLD_BRIGHT + "DEALER" + RESET);
 		}
+		else if(dealer == 2)
+		{
+			System.out.println("\n                Player 3\n"
+					+ "\n                   "
+					+ "\n"
+					+ " Player 4       " + kittyCard +  "        Player 2\n"
+					+ "                          " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
+					+ "\n                "
+					+ "\n"
+					+ "\n" 
+					+ "\n                  You");
+		}
+		else if(dealer == 3)
+		{
+			System.out.println("\n                Player 3\n" + "             " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
+					+ "\n                  "
+					+ "\n"
+					+ " Player 4       " + kittyCard +  "        Player 2\n"
+					+ " "
+					+ "\n                "
+					+ "\n"
+					+ "\n" 
+					+ "\n                  You");
+		}
+		
 
 		printPlayerCards(1);
+	}
+	
+	/*
+	 * Method name: printTable
+	 * Description: Prints the table and all important information and changes how the table looks depending on who is the dealer
+	 * Parameters: n/a
+	 * Returns: n/a
+	 */
+	public static void printTable() throws InterruptedException 
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			tableList.set(i, cardsOnTable[i]);
+		}
+		
+		
+		String tableTrump = null;
+		
+		if(Trump == "♥" || Trump == "♦")
+		{
+			tableTrump = WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " + Trump + " " + RESET;
+		}
+		else if(Trump == "♣" || Trump == "♠")
+		{
+			tableTrump = WHITE_BACKGROUND_BRIGHT + BLACK_BOLD + " " + Trump + " " + RESET;
+		}
+
+		for(int i = 0; i < 4; i++)
+		{
+			if(tableList.get(i).contains("♥") || tableList.get(i).contains("♦"))
+			{
+				tableList.set(i, WHITE_BACKGROUND_BRIGHT + RED_BOLD_BRIGHT + " " + cardsOnTable[i] + " " + RESET);
+			}
+			else if(tableList.get(i).contains("♣") || tableList.get(i).contains("♠"))
+			{
+				tableList.set(i, WHITE_BACKGROUND_BRIGHT + BLACK_BOLD + " " + cardsOnTable[i] + " " + RESET);
+			}
+			else
+			{
+				tableList.set(i, RESET + "    ");
+			}
+		}
+		
+		sleep(1500);
+		
+		if(dealer == 4)
+		{
+			System.out.println("\n\n\n                Player 3\n"
+					+ "\n                  " + tableList.get(2) 
+					+ "\n"
+					+ " Player 4  " + tableList.get(3) + "        " + tableList.get(1) +  "     Player 2\n"
+					+ "  " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
+					+ "\n                " + tableList.get(0)
+					+ "\n                                                                 Trump: " + tableTrump + "                                             You and Player 3's points: " + team13Score + "/" + pointsInGame + "\n                                                                                                                        Player 2 and Player 4's points: " + team24Score + "/" + pointsInGame + "\n                                                                 You and Player 3 have " + team13Tricks + " tricks"
+					+ "\n                                                                 Player 2 and Player 4 have " + team24Tricks + " tricks                     Player " + trumpMaker + " made trump" 
+					+ "\n                  You");
+		}
+		else if(dealer == 1)
+		{
+			System.out.println("\n\n\n                Player 3\n"
+					+ "\n                  " + tableList.get(2) 
+					+ "\n"
+					+ " Player 4  " + tableList.get(3) + "        " + tableList.get(1) +  "     Player 2\n"
+					+ "  "
+					+ "\n                " + tableList.get(0)
+					+ "\n                                                                 Trump: " + tableTrump + "                                             You and Player 3's points: " + team13Score + "/" + pointsInGame + "\n                                                                                                                        Player 2 and Player 4's points: " + team24Score + "/" + pointsInGame + "\n                                                                 You and Player 3 have " + team13Tricks + " tricks"
+					+ "\n                                                                 Player 2 and Player 4 have " + team24Tricks + " tricks                     Player " + trumpMaker + " made trump" 
+					+ "\n                  You\n                  " + GREEN_BOLD_BRIGHT + "DEALER" + RESET);
+		}
+		else if(dealer == 2)
+		{
+			System.out.println("\n\n\n                Player 3\n"
+					+ "\n                  " + tableList.get(2) 
+					+ "\n"
+					+ " Player 4  " + tableList.get(3) + "        " + tableList.get(1) +  "     Player 2\n"
+					+ "                                  " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
+					+ "\n                " + tableList.get(0)
+					+ "\n                                                                 Trump: " + tableTrump + "                                             You and Player 3's points: " + team13Score + "/" + pointsInGame + "\n                                                                                                                        Player 2 and Player 4's points: " + team24Score + "/" + pointsInGame + "\n                                                                 You and Player 3 have " + team13Tricks + " tricks"
+					+ "\n                                                                 Player 2 and Player 4 have " + team24Tricks + " tricks                     Player " + trumpMaker + " made trump" 
+					+ "\n                  You");
+		}
+		else if(dealer == 3)
+		{
+			System.out.println("\n\n\n                Player 3\n" + "                " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
+					+ "\n                  " + tableList.get(2) 
+					+ "\n"
+					+ " Player 4  " + tableList.get(3) + "        " + tableList.get(1) +  "     Player 2\n"
+					+ " "
+					+ "\n                " + tableList.get(0)
+					+ "\n                                                                 Trump: " + tableTrump + "                                             You and Player 3's points: " + team13Score + "/" + pointsInGame + "\n                                                                                                                        Player 2 and Player 4's points: " + team24Score + "/" + pointsInGame + "\n                                                                 You and Player 3 have " + team13Tricks + " tricks"
+					+ "\n                                                                 Player 2 and Player 4 have " + team24Tricks + " tricks                     Player " + trumpMaker + " made trump" 
+					+ "\n                  You");
+		}
+		printPlayerCards(1);
+		
+		//System.out.println("Suit lead: " + suitLead);
 
 	}
+	
+	/*
+	 * Method name: resetTable
+	 * Description: This just resets all the variable related to playing the game back to what they were original
+	 * Parameters: n/a
+	 * Returns: n/a
+	 */
+	public static void resetTable() throws InterruptedException
+	{
+		cardsOnTable[0] = "    ";
+		cardsOnTable[1] = "    ";
+		cardsOnTable[2] = "    ";
+		cardsOnTable[3] = "    ";
 
+		cardsOnTableScores[0] = 0;
+		cardsOnTableScores[1] = 0;
+		cardsOnTableScores[2] = 0;
+		cardsOnTableScores[3] = 0;
+		
+		suitLead = "";
+	}
+	
+	/*
+	 * Method name: resetDeck
+	 * Description: Resets all the cards in the card arraylist back to what it originaly was
+	 * Parameters: n/a
+	 * Returns: n/a
+	 */
 	public static void resetDeck() throws InterruptedException 
 	{
 		cards = new ArrayList<String>(Arrays.asList(
@@ -1917,23 +3416,61 @@ public class Euchre_Singleplayer
 				"9♣", "10♣", "J♣", "Q♣", "K♣", "A♣", 
 				"9♠", "10♠", "J♠", "Q♠", "K♠", "A♠"));
 	}
+	
+	/*
+	 * Method name: randInt
+	 * Description: generates a random integer between the two inputted numbers
+	 * Parameters: int min, int max
+	 * Returns: int randomNumber
+	 */
+	public static int  randInt(int min, int max) throws InterruptedException
+	{
+		int randomNumber = (int)Math.floor(Math.random() * (max - min + 1) + min);
 
+		return randomNumber;
+	}
+	
+	/*
+	 * Method name: sleep
+	 * Description: Adds a delay to the program whenever this method is called
+	 * Parameters: int miliSeconds
+	 * Returns: n/a
+	 */
+	public static void sleep(int miliSeconds) throws InterruptedException
+	{
+		Thread.sleep(miliSeconds);
+	}
+	
+	/*
+	 * Method name: debug
+	 * Description: Prints all information for each player's cards, suits, and card scores
+	 * Parameters: n/a
+	 * Returns: n/a
+	 */
 	public static void debug() throws InterruptedException 
 	{
+		System.out.print("\nPlayer 1 cards: " + player1Cards);
+		System.out.println("Player 1 suits: " + player1Suits);
+		System.out.println("Player 1 card scores: " + player1CardScores);
 
 		System.out.print("\nPlayer 2 cards: " + player2Cards);
-		System.out.println("Player 2 suit: " + player2Suit  + Arrays.toString(player2TrumpNum));
+		System.out.println("Player 2 suit: " + player2Suit);
+		System.out.println("Player 2 suits: " + player2Suits);
 		System.out.println("Player 2 card scores: " + player2CardScores);
 
 		System.out.print("\nPlayer 3 cards: " + player3Cards);
-		System.out.println("Player 3 suit: " + player3Suit + Arrays.toString(player3TrumpNum));
+		System.out.println("Player 3 suit: " + player3Suit);
+		System.out.println("Player 3 suits: " + player3Suits);
 		System.out.println("Player 3 card scores: " + player3CardScores);
 
 		System.out.print("\nPlayer 4 cards: " + player4Cards);
-		System.out.println("Player 4 suit: " + player4Suit + Arrays.toString(player4TrumpNum));
-		System.out.println("Player 3 card scores: " + player4CardScores);
+		System.out.println("Player 4 suit: " + player4Suit);
+		System.out.println("Player 4 suits: " + player4Suits);
+		System.out.println("Player 4 card scores: " + player4CardScores);
 
-		System.out.println(proposedTrump);
+		System.out.println("Proposed trump: " + proposedTrump);
+		System.out.println("Trump: " + Trump);
+		System.out.println("SuitLead: " + suitLead);
 
 	}
 }
