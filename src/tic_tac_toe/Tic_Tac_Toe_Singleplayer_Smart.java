@@ -64,7 +64,7 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 
 	}
 
-	//Places X or O in board baised on user input
+	//Places X or O in board based on user input
 	public static void InputSlot(int slot, int player)
 	{
 		if(startingPlayer == 1)
@@ -343,7 +343,6 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 		}
 	}
 	
-
 	public static void CoinFlip() throws InterruptedException
 	{
 		while(true)
