@@ -1,6 +1,6 @@
 package animations;
 
-public class lol {
+public class computer_Melter {
 
 	public static void main(String[] args) throws InterruptedException 
 	{
@@ -13,8 +13,9 @@ public class lol {
 			{
 				break;
 			}
-			//Thread.sleep(100);
+		//	Thread.sleep(100);
 		}
+		
 	}
 
 }
