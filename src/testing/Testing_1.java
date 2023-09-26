@@ -3,19 +3,21 @@ import java.util.*;
 
 public class Testing_1 {
 
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
 		Scanner Input = new Scanner(System.in);
 
-		String newMessage = keyboardShiftEncode(Input);
+		String newMessage = keyboardShift(Input, 2);
 
 		System.out.println(newMessage);
 
 
 	}
 
-	public static String keyboardShiftEncode(Scanner Input)
+	public static String keyboardShift(Scanner Input, int encodeOrDecode)
 	{
+		//All characters on keyboard
+
 		char[] row1 = {'`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='};
 		char[] row2 = {'~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+'};
 
@@ -28,152 +30,88 @@ public class Testing_1 {
 		char[] row7 = {'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'};
 		char[] row8 = {'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?'};
 
-		System.out.print("Enter string to encode: ");
+		char[][] allKeyboard = {row1, row2, row3, row4, row5, row6, row7, row8};
 
-		String messageString = Input.nextLine();
+		if(encodeOrDecode == 1)
+		{
+			System.out.print("Enter string to encode: ");
+		}
+		else if(encodeOrDecode == 2)
+		{
+			System.out.print("Enter string to decode: ");
+		}
 
+		String messageString = Input.nextLine();//message to encode or decode
+
+		int shift = 1;
+		
+		try
+		{
+			System.out.print("Enter shift number: ");
+			shift = Input.nextInt();//message to encode
+		}
+		catch(Exception e)
+		{
+			System.out.println("Input was not an integer");
+		}
+		
+		if(encodeOrDecode == 2)
+		{
+			shift = shift * -1;
+		}
+		
+		
+		//New arrays same length as message
 		char[] message = new char[messageString.length()];
 		char[] messageEncoded = new char[messageString.length()];
 
+		//Copies message into arrays
 		for(int i = 0; i < messageString.length(); i++)
 		{
 			message[i] = messageString.charAt(i);
-		}
-
-		for(int i = 0; i < message.length; i++)
-		{
 			messageEncoded[i] = message[i];
 		}
 
-		for(int i = 0; i < message.length; i++)
+		//Loops through message
+		for(int i = 0; i < message.length;)
 		{
-			System.out.println("i = " + i);
-			if(messageEncoded[i] != ' ')
+			if(messageEncoded[i] != ' ')//only searches keyboard if character is not a space
 			{	
-				for(int a = 0; a < row1.length; a++)
+				for(int j = 0; j < 8; j++)//Loop through arrays in 2D array
 				{
-					//Searches the first array for character
-					if(message[i] == row1[a])
+					for(int k = 0; k < allKeyboard[j].length; k++)//loops through characters in array in 2D array
 					{
-
-						if(a - 1 == row1.length)
+						if(messageEncoded[i] == allKeyboard[j][k])//Finds character
 						{
-							messageEncoded[i] = row1[0];
-							a = 15;
-						}
-						else
-						{
-							messageEncoded[i] = row1[a + 1];
-							a = 15;
-						}
-
-						//Searches the second array for character
-						for(int b = 0; b < row2.length; b++)
-						{
-							if(b - 1 == row1.length)
+							if((k + shift) >= allKeyboard[j].length)
 							{
-								messageEncoded[i] = row2[0];
-								a = 15;
+								messageEncoded[i] = allKeyboard[j][(k + shift) - allKeyboard[j].length];
+								i++;
+								j = 9;
+								break;
+							}
+							else if((k + shift) < 0)
+							{
+								int offset = shift - (shift / allKeyboard[j].length);
+								System.out.println(offset);
+								messageEncoded[i] = allKeyboard[j][(k + shift) + (allKeyboard[j].length)];
+								i++;
+								j = 9;
+								break;
 							}
 							else
 							{
-								messageEncoded[i] = row2[b + 1];
-								a = 15;
-							}
-							//Searches the third array for character
-							for(int c = 0; c < row3.length; c++)
-							{
-								if(c - 1 == row3.length)
-								{
-									messageEncoded[i] = row3[0];
-									a = 15;
-								}
-								else
-								{
-									messageEncoded[i] = row3[c + 1];
-									a = 15;
-								}
-								
-								//Searches the fourth array for character
-								for(int d = 0; d < row4.length; d++)
-								{
-									if(d - 1 == row4.length)
-									{
-										messageEncoded[i] = row4[0];
-										a = 15;
-									}
-									else
-									{
-										messageEncoded[i] = row4[d + 1];
-										a = 15;
-									}
-									
-									//Searches the fifth array for character
-									for(int e = 0; e < row5.length; e++)
-									{
-										if(e - 1 == row5.length)
-										{
-											messageEncoded[i] = row5[0];
-											a = 15;
-										}
-										else
-										{
-											messageEncoded[i] = row1[e + 1];
-											a = 15;
-										}
-										
-										//Searches the sixth array for character
-										for(int f = 0; f < row6.length; f++)
-										{
-											if(f - 1 == row6.length)
-											{
-												messageEncoded[i] = row6[0];
-												a = 15;
-											}
-											else
-											{
-												messageEncoded[i] = row6[f + 1];
-												a = 15;
-											}
-											
-											//Searches the seventh array for character
-											for(int g = 0; g < row7.length; g++)
-											{
-												if(g - 1 == row7.length)
-												{
-													messageEncoded[i] = row7[0];
-													a = 15;
-												}
-												else
-												{
-													messageEncoded[i] = row7[g + 1];
-													a = 15;
-												}
-												
-												//Searches the eighth array for character
-												for(int h = 0; h < row8.length; h++)
-												{
-													if(h - 1 == row8.length)
-													{
-														messageEncoded[i] = row8[0];
-														a = 15;
-													}
-													else
-													{
-														messageEncoded[i] = row8[h + 1];
-														a = 15;
-													}
-												}
-											}
-										}
-									}
-								}
+								messageEncoded[i] = allKeyboard[j][k + shift];
+								i++;
+								j = 9;
+								break;
 							}
 						}
-					}
-				}
+					}//end character loop
+				}//end row loop
 			}
-		}
+			i++;
+		}//end message loop
 
 		String encoded = new String(messageEncoded);
 
