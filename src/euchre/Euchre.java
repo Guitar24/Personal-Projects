@@ -3501,5 +3501,4 @@ public class Euchre
 			}
 		}
 	}
-
 }
