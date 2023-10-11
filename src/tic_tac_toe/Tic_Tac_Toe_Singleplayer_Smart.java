@@ -64,7 +64,6 @@ public class Tic_Tac_Toe_Singleplayer_Smart {
 
 	}
 
-	//Places X or O in board based on user input
 	public static void InputSlot(int slot, int player)
 	{
 		if(startingPlayer == 1)
