@@ -3206,13 +3206,13 @@ public class Euchre
 			kittyCard = WHITE_BACKGROUND_BRIGHT + BLACK_BOLD + " " + kitty.get(0) + " " + RESET;
 		}
 
-		if(dealer == 4)
+		if(dealer == 2)
 		{
 			System.out.println("\n                Player 3\n"
 					+ "\n"
 					+ "\n                  " 
 					+ "\n"
-					+ " Player 4       " + kittyCard +  "        Player 2\n"
+					+ " Player 2       " + kittyCard +  "        Player 4\n"
 					+ "  " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
 					+ "          "
 					+ "\n\n\n"
@@ -3224,20 +3224,20 @@ public class Euchre
 			System.out.println("\n                Player 3\n"
 					+ "\n                  "
 					+ "\n"
-					+ " Player 4       " + kittyCard +  "        Player 2\n"
+					+ " Player 2       " + kittyCard +  "        Player 4\n"
 					+ "  "
 					+ "\n                "
 					+ "\n"
 					+ "\n" 
 					+ "\n                  You\n                 " + GREEN_BOLD_BRIGHT + "DEALER" + RESET);
 		}
-		else if(dealer == 2)
+		else if(dealer == 4)
 		{
 			System.out.println("\n                Player 3\n"
 					+ "\n                   "
 					+ "\n"
-					+ " Player 4       " + kittyCard +  "        Player 2\n"
-					+ "                          " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
+					+ " Player 2       " + kittyCard +  "        Player 4\n"
+					+ "                             " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
 					+ "\n                "
 					+ "\n"
 					+ "\n" 
@@ -3248,7 +3248,7 @@ public class Euchre
 			System.out.println("\n                Player 3\n" + "             " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
 					+ "\n                  "
 					+ "\n"
-					+ " Player 4       " + kittyCard +  "        Player 2\n"
+					+ " Player 2       " + kittyCard +  "        Player 4\n"
 					+ " "
 					+ "\n                "
 					+ "\n"
@@ -3297,16 +3297,17 @@ public class Euchre
 
 		sleep(1500);
 
-		if(dealer == 4)
+		if(dealer == 2)
 		{
 			System.out.println("\n\n\n                Player 3\n"
 					+ "\n                  " + tableList.get(2) 
 					+ "\n"
-					+ " Player 4  " + tableList.get(3) + "        " + tableList.get(1) +  "     Player 2\n"
+					+ " Player 2  " + tableList.get(1) + "        " + tableList.get(3) +  "     Player 4\n"
 					+ "  " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
 					+ "\n                " + tableList.get(0)
-					+ "\n                                                                 Trump: " + tableTrump + "                                             You and Player 3's points: " + team13Score + "/" + pointsInGame + "\n                                                                                                                        Player 2 and Player 4's points: " + team24Score + "/" + pointsInGame + "\n                                                                 You and Player 3 have " + team13Tricks + " tricks"
-					+ "\n                                                                 Player 2 and Player 4 have " + team24Tricks + " tricks                     Player " + trumpMaker + " made trump" 
+					+ "                                   Trump: " + tableTrump + "          Player " + trumpMaker + " made trump" 
+					+ "\n                                                       1 & 3: " + team13Tricks + " Tricks     " + team13Score + "/" + pointsInGame + " Points"
+					+ "\n                                                       2 & 4: " + team24Tricks + " Tricks     " + team24Score + "/" + pointsInGame + " Points"
 					+ "\n                  You");
 		}
 		else if(dealer == 1)
@@ -3314,23 +3315,25 @@ public class Euchre
 			System.out.println("\n\n\n                Player 3\n"
 					+ "\n                  " + tableList.get(2) 
 					+ "\n"
-					+ " Player 4  " + tableList.get(3) + "        " + tableList.get(1) +  "     Player 2\n"
+					+ " Player 2  " + tableList.get(1) + "        " + tableList.get(3) +  "     Player 4\n"
 					+ "  "
 					+ "\n                " + tableList.get(0)
-					+ "\n                                                                 Trump: " + tableTrump + "                                             You and Player 3's points: " + team13Score + "/" + pointsInGame + "\n                                                                                                                        Player 2 and Player 4's points: " + team24Score + "/" + pointsInGame + "\n                                                                 You and Player 3 have " + team13Tricks + " tricks"
-					+ "\n                                                                 Player 2 and Player 4 have " + team24Tricks + " tricks                     Player " + trumpMaker + " made trump" 
+					+ "                                   Trump: " + tableTrump + "          Player " + trumpMaker + " made trump" 
+					+ "\n                                                       1 & 3: " + team13Tricks + " Tricks     " + team13Score + "/" + pointsInGame + " Points"
+					+ "\n                                                       2 & 4: " + team24Tricks + " Tricks     " + team24Score + "/" + pointsInGame + " Points"
 					+ "\n                  You\n                  " + GREEN_BOLD_BRIGHT + "DEALER" + RESET);
 		}
-		else if(dealer == 2)
+		else if(dealer == 4)
 		{
 			System.out.println("\n\n\n                Player 3\n"
 					+ "\n                  " + tableList.get(2) 
 					+ "\n"
-					+ " Player 4  " + tableList.get(3) + "        " + tableList.get(1) +  "     Player 2\n"
+					+ " Player 2  " + tableList.get(1) + "        " + tableList.get(3) +  "     Player 4\n"
 					+ "                                  " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
 					+ "\n                " + tableList.get(0)
-					+ "\n                                                                 Trump: " + tableTrump + "                                             You and Player 3's points: " + team13Score + "/" + pointsInGame + "\n                                                                                                                        Player 2 and Player 4's points: " + team24Score + "/" + pointsInGame + "\n                                                                 You and Player 3 have " + team13Tricks + " tricks"
-					+ "\n                                                                 Player 2 and Player 4 have " + team24Tricks + " tricks                     Player " + trumpMaker + " made trump" 
+					+ "                                   Trump: " + tableTrump + "          Player " + trumpMaker + " made trump" 
+					+ "\n                                                       1 & 3: " + team13Tricks + " Tricks     " + team13Score + "/" + pointsInGame + " Points"
+					+ "\n                                                       2 & 4: " + team24Tricks + " Tricks     " + team24Score + "/" + pointsInGame + " Points"
 					+ "\n                  You");
 		}
 		else if(dealer == 3)
@@ -3338,11 +3341,12 @@ public class Euchre
 			System.out.println("\n\n\n                Player 3\n" + "                " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
 					+ "\n                  " + tableList.get(2) 
 					+ "\n"
-					+ " Player 4  " + tableList.get(3) + "        " + tableList.get(1) +  "     Player 2\n"
+					+ " Player 2  " + tableList.get(1) + "        " + tableList.get(3) +  "     Player 4\n"
 					+ " "
 					+ "\n                " + tableList.get(0)
-					+ "\n                                                                 Trump: " + tableTrump + "                                             You and Player 3's points: " + team13Score + "/" + pointsInGame + "\n                                                                                                                        Player 2 and Player 4's points: " + team24Score + "/" + pointsInGame + "\n                                                                 You and Player 3 have " + team13Tricks + " tricks"
-					+ "\n                                                                 Player 2 and Player 4 have " + team24Tricks + " tricks                     Player " + trumpMaker + " made trump" 
+					+ "                                   Trump: " + tableTrump + "          Player " + trumpMaker + " made trump" 
+					+ "\n                                                       1 & 3: " + team13Tricks + " Tricks     " + team13Score + "/" + pointsInGame + " Points"
+					+ "\n                                                       2 & 4: " + team24Tricks + " Tricks     " + team24Score + "/" + pointsInGame + " Points"
 					+ "\n                  You");
 		}
 		printPlayerCards(1);
