@@ -103,20 +103,20 @@ public class Testing_1 {
 	{
 		if(rowOrColumn == "r")
 		{
-			int rowLength = array1[0].length + array2[0].length;
-			int columnLength = array1.length;
+			int numOfColumns = array1[0].length + array2[0].length;
+			int numOfRows = array1.length;
 			
 			System.out.println(array1[0].length);
 			System.out.println(array2[0].length);
 			
-			System.out.println(rowLength);
-			System.out.println(columnLength);
+			System.out.println(numOfColumns);
+			System.out.println(numOfRows);
 			
-			int[][] appendedArray = new int[rowLength][columnLength];
+			int[][] appendedArray = new int[numOfColumns][numOfRows];
 			
-			for(int row = 0; row < rowLength; row ++)
+			for(int row = 0; row < numOfRows; row ++)
 			{
-				for(int column = 0; column < columnLength; column ++)
+				for(int column = 0; column < numOfColumns; column ++)
 				{
 					if(column < array1[0].length)
 					{
@@ -124,7 +124,7 @@ public class Testing_1 {
 					}
 					else
 					{
-						appendedArray[row][column] = array2[row - (array1.length - 1)][column];
+						appendedArray[row][column] = array2[row - (array1.length)][column];
 					}
 				}
 			}
