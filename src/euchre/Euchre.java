@@ -12,7 +12,6 @@ public class Euchre
 {
 
 	public static ArrayList<String> cards = new ArrayList<String>(Arrays.asList("9♥", "10♥", "J♥", "Q♥", "K♥", "A♥", "9♦", "10♦", "J♦", "Q♦", "K♦", "A♦",  "9♣", "10♣", "J♣", "Q♣", "K♣", "A♣", "9♠", "10♠", "J♠", "Q♠", "K♠", "A♠"));
-
 	
 	public static ArrayList<String> player1Cards = new ArrayList<String>();
 	public static ArrayList<String> player2Cards = new ArrayList<String>();
