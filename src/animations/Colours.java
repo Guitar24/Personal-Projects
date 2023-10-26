@@ -119,6 +119,10 @@ public class Colours {
     public static final String PURPLE_BOLD_BRIGHT = "\033[1;95m";// PURPLE
     public static final String CYAN_BOLD_BRIGHT = "\033[1;96m";  // CYAN
     public static final String WHITE_BOLD_BRIGHT = "\033[1;97m"; // WHITE
+    
+    
+    public static final String UNO_YELLOW_BACKGROUND = "\033[48;2;209;202;2m";
+    public static final String UNO_YELLOW = "\033[38;2;209;202;2m";
 
     // High Intensity backgrounds
     public static final String BLACK_BACKGROUND_BRIGHT = "\033[0;100m";// BLACK
