@@ -27,9 +27,10 @@ public class UNO {
 
 		cardsPlayed.add(cards.get(0));
 
-		//printTable();
 		
 		printGiantUnoCard();
+		printTable();
+		debug();
 
 
 
@@ -37,7 +38,7 @@ public class UNO {
 
 	public static void printGiantUnoCard()
 	{
-		System.out.print(Colours.WHITE + "█" + Colours.BLACK_BACKGROUND + "█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀██");
+		System.out.print(Colours.WHITE +   "█████████████████████████████████");
 		System.out.print(Colours.WHITE + "\n██" + Colours.BLACK + "█████████████████████████████" + Colours.WHITE + "██");
 		System.out.print(Colours.WHITE + "\n██" + Colours.BLACK + "████████████████" + Colours.RED_BOLD + "█████████" + Colours.BLACK   + "████" + Colours.WHITE + "██");
 		System.out.print(Colours.WHITE + "\n██" + Colours.BLACK + "████████████" + Colours.RED_BOLD + "████████████████" + Colours.BLACK   + "█" + Colours.WHITE + "██");
@@ -58,7 +59,7 @@ public class UNO {
 		System.out.print(Colours.WHITE + "\n██" + Colours.BLACK + "█" + Colours.RED_BOLD + "██████████████" + Colours.BLACK   + "██████████████" + Colours.WHITE + "██");
 		System.out.print(Colours.WHITE + "\n██" + Colours.BLACK + "███" + Colours.RED_BOLD + "█████████" + Colours.BLACK   + "█████████████████" + Colours.WHITE + "██");
 		System.out.print(Colours.WHITE + "\n██" + Colours.BLACK + "█████████████████████████████" + Colours.WHITE + "██");
-		System.out.print(Colours.WHITE + Colours.BLACK_BACKGROUND + "\n██▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄██");
+		System.out.print(Colours.WHITE + "\n█████████████████████████████████");
 	}
 	
 	public static void printCard(String card)
@@ -241,7 +242,7 @@ public class UNO {
 		
 		if(numOfPlayers == 3)
 		{
-			System.out.print("\nPlayer 2                         Player 3\n\n");
+			System.out.print("\n\nPlayer 2                         Player 3\n\n");
 			System.out.print("                   ");
 			printCard(cardsPlayed.get(0));
 			System.out.println("\n\n\n                Player 1");
@@ -265,6 +266,14 @@ public class UNO {
 		{
 			printCard(playerCards[player-1][i]);
 			System.out.print(" ");
+		}
+	}
+
+	public static void debug()
+	{
+		for(int i = 0; i < numOfPlayers; i++)
+		{
+			System.out.println("Player " + (i+1) + ": " + Arrays.toString(playerCards[i]));
 		}
 	}
 }
