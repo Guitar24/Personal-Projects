@@ -2,9 +2,10 @@ package uno;
 
 import java.util.*;
 import animations.Colours;
-import array.Array;
 
 public class UNO {
+	
+	static Scanner Input = new Scanner(System.in);
 
 	static ArrayList<String> cards = new ArrayList<String>(Arrays.asList("OR", "1R", "1R", "2R", "2R", "3R", "3R", "4R", "4R", "5R", "5R", "6R", "6R", "7R", "7R", "8R", "8R", "9R", "9R","OG", "1G", "1G", "2G", "2G", "3G", "3G", "4G", "4G", "5G", "5G", "6G", "6G", "7G", "7G", "8G", "8G", "9G", "9G","OB", "1B", "1B", "2B", "2B", "3B", "3B", "4B", "4B", "5B", "5B", "6B", "6B", "7B", "7B", "8B", "8B", "9B", "9B","0Y", "1Y", "1Y", "2Y", "2Y", "3Y", "3Y", "4Y", "4Y", "5Y", "5Y", "6Y", "6Y", "7Y", "7Y", "8Y", "8Y", "9Y", "9Y", "🛇R", "🛇R", "«»R", "«»R", "+2R", "+2R", "▄▀K", "▄▀K", "+4▄▀K","🛇G", "🛇G", "«»G", "«»G", "+2G", "+2G", "▄▀K", "▄▀K", "+4▄▀K","🛇B", "🛇B", "«»B", "«»B", "+2B", "+2B", "▄▀K", "▄▀K", "+4▄▀K","🛇Y", "🛇Y", "«»Y", "«»Y", "+2Y", "+2Y", "▄▀K", "▄▀K", "+4▄▀K"));
 
@@ -14,11 +15,15 @@ public class UNO {
 
 	static int numOfPlayers;
 	static int numOfCards;
+	
+	static int play;
+	
+	static String cardOnTop;
 
 
 	public static void main(String[] args) 
 	{
-		numOfPlayers = 3;
+		numOfPlayers = 4;
 		numOfCards = 8;
 
 
@@ -29,13 +34,88 @@ public class UNO {
 
 		
 		printGiantUnoCard();
-		printTable();
-		debug();
+		gameLoop();
+		//debug();
 
 
 
 	}
 
+	public static void gameLoop()
+	{
+		playerCards = dealCards();
+		printTable();
+		playCard();
+	}
+	
+	public static void playCard()
+	{
+		System.out.print("\n\nPlay card: ");
+		String cardToPlay = Input.nextLine();
+		
+		String desiredCard = "";
+
+		if(cardToPlay.toLowerCase().contains("skip"))
+			desiredCard += "🛇";
+		else if(cardToPlay.toLowerCase().contains("reverse"))
+			desiredCard += "«»";
+		else if(cardToPlay.toLowerCase().contains("+2"))
+			desiredCard += "+2";
+		else if(cardToPlay.toLowerCase().contains("+4"))
+			desiredCard += "+4▄▀K";
+		else if(cardToPlay.toLowerCase().contains("change colour"))
+			desiredCard += "▄▀K";
+		else if(cardToPlay.toLowerCase().contains("0"))
+			desiredCard += "0";
+		else if(cardToPlay.toLowerCase().contains("1"))
+			desiredCard += "1";
+		else if(cardToPlay.toLowerCase().contains("2"))
+			desiredCard += "2";
+		else if(cardToPlay.toLowerCase().contains("3"))
+			desiredCard += "3";
+		else if(cardToPlay.toLowerCase().contains("4"))
+			desiredCard += "4";
+		else if(cardToPlay.toLowerCase().contains("5"))
+			desiredCard += "5";
+		else if(cardToPlay.toLowerCase().contains("6"))
+			desiredCard += "6";
+		else if(cardToPlay.toLowerCase().contains("7"))
+			desiredCard += "7";
+		else if(cardToPlay.toLowerCase().contains("8"))
+			desiredCard += "8";
+		else if(cardToPlay.toLowerCase().contains("9"))
+			desiredCard += "9";
+		
+		if(cardToPlay.toLowerCase().contains("red"))
+			desiredCard += "R";
+		if(cardToPlay.toLowerCase().contains("blue"))
+			desiredCard += "B";
+		if(cardToPlay.toLowerCase().contains("green"))
+			desiredCard += "G";
+		if(cardToPlay.toLowerCase().contains("yellow"))
+			desiredCard += "Y";
+		
+		
+		//System.out.println(desiredCard);
+		
+		boolean inHand = false;
+		for(int i = 0; i < playerCards[0].length; i++)
+		{
+			if(playerCards[0][i].equals(desiredCard))
+			{
+				inHand = true;
+				break;
+			}
+		}
+		System.out.println(inHand);
+		
+		if(inHand)
+		{
+			
+		}
+		
+	}
+	
 	public static void printGiantUnoCard()
 	{
 		System.out.print(Colours.WHITE +   "█████████████████████████████████");
@@ -239,38 +319,40 @@ public class UNO {
 
 	public static void printTable()
 	{
+		cardOnTop = cardsPlayed.get(0);
 		
 		if(numOfPlayers == 3)
 		{
 			System.out.print("\n\nPlayer 2                         Player 3\n\n");
 			System.out.print("                   ");
-			printCard(cardsPlayed.get(0));
+			printCard(cardOnTop);
 			System.out.println("\n\n\n                Player 1");
 			System.out.print("\n           ");
 		}
 		if(numOfPlayers == 4)
 		{
-			System.out.print("               Player 3\n\n\n\n");
+			System.out.print("\n\n               Player 3\n\n\n\n");
 			System.out.print("Player 2          ");
-			printCard(cardsPlayed.get(0));
+			printCard(cardOnTop);
 			System.out.print("          Player 4");
 			System.out.print("\n\n\n\n               Player 1");
 			System.out.print("\n        ");
 		}
-		printPlayerCards(1);
+		printPlayerCards(0);
 	}
 
 	public static void printPlayerCards(int player)
 	{		
-		for(int i = 0; i < playerCards[player-1].length; i++)
+		for(int i = 0; i < playerCards[0].length; i++)
 		{
-			printCard(playerCards[player-1][i]);
+			printCard(playerCards[0][i]);
 			System.out.print(" ");
 		}
 	}
 
 	public static void debug()
 	{
+		System.out.println("\n");
 		for(int i = 0; i < numOfPlayers; i++)
 		{
 			System.out.println("Player " + (i+1) + ": " + Arrays.toString(playerCards[i]));
