@@ -4,36 +4,36 @@ import java.util.*;
 import animations.Colours;
 
 public class UNO {
-	
+
 	static Scanner Input = new Scanner(System.in);
 
 	static ArrayList<String> cards = new ArrayList<String>(Arrays.asList("OR", "1R", "1R", "2R", "2R", "3R", "3R", "4R", "4R", "5R", "5R", "6R", "6R", "7R", "7R", "8R", "8R", "9R", "9R","OG", "1G", "1G", "2G", "2G", "3G", "3G", "4G", "4G", "5G", "5G", "6G", "6G", "7G", "7G", "8G", "8G", "9G", "9G","OB", "1B", "1B", "2B", "2B", "3B", "3B", "4B", "4B", "5B", "5B", "6B", "6B", "7B", "7B", "8B", "8B", "9B", "9B","0Y", "1Y", "1Y", "2Y", "2Y", "3Y", "3Y", "4Y", "4Y", "5Y", "5Y", "6Y", "6Y", "7Y", "7Y", "8Y", "8Y", "9Y", "9Y", "🛇R", "🛇R", "«»R", "«»R", "+2R", "+2R", "▄▀K", "▄▀K", "+4▄▀K","🛇G", "🛇G", "«»G", "«»G", "+2G", "+2G", "▄▀K", "▄▀K", "+4▄▀K","🛇B", "🛇B", "«»B", "«»B", "+2B", "+2B", "▄▀K", "▄▀K", "+4▄▀K","🛇Y", "🛇Y", "«»Y", "«»Y", "+2Y", "+2Y", "▄▀K", "▄▀K", "+4▄▀K"));
 
 	static ArrayList<String> cardsPlayed = new ArrayList<String>();
-	
+
 	static String[][] playerCards;
 
 	static int numOfPlayers;
 	static int numOfCards;
-	
+
 	static int play;
-	
+
 	static String cardOnTop;
 
 
 	public static void main(String[] args) 
 	{
-		numOfPlayers = 4;
+		numOfPlayers = 3;
 		numOfCards = 8;
 
 
 		playerCards = dealCards();
-		
+
 
 		cardsPlayed.add(cards.get(0));
 
-		
-		printGiantUnoCard();
+
+		//printGiantUnoCard();
 		gameLoop();
 		//debug();
 
@@ -47,75 +47,207 @@ public class UNO {
 		printTable();
 		playCard();
 	}
-	
+
 	public static void playCard()
 	{
-		System.out.print("\n\nPlay card: ");
-		String cardToPlay = Input.nextLine();
-		
-		String desiredCard = "";
 
-		if(cardToPlay.toLowerCase().contains("skip"))
-			desiredCard += "🛇";
-		else if(cardToPlay.toLowerCase().contains("reverse"))
-			desiredCard += "«»";
-		else if(cardToPlay.toLowerCase().contains("+2"))
-			desiredCard += "+2";
-		else if(cardToPlay.toLowerCase().contains("+4"))
-			desiredCard += "+4▄▀K";
-		else if(cardToPlay.toLowerCase().contains("change colour"))
-			desiredCard += "▄▀K";
-		else if(cardToPlay.toLowerCase().contains("0"))
-			desiredCard += "0";
-		else if(cardToPlay.toLowerCase().contains("1"))
-			desiredCard += "1";
-		else if(cardToPlay.toLowerCase().contains("2"))
-			desiredCard += "2";
-		else if(cardToPlay.toLowerCase().contains("3"))
-			desiredCard += "3";
-		else if(cardToPlay.toLowerCase().contains("4"))
-			desiredCard += "4";
-		else if(cardToPlay.toLowerCase().contains("5"))
-			desiredCard += "5";
-		else if(cardToPlay.toLowerCase().contains("6"))
-			desiredCard += "6";
-		else if(cardToPlay.toLowerCase().contains("7"))
-			desiredCard += "7";
-		else if(cardToPlay.toLowerCase().contains("8"))
-			desiredCard += "8";
-		else if(cardToPlay.toLowerCase().contains("9"))
-			desiredCard += "9";
-		
-		if(cardToPlay.toLowerCase().contains("red"))
-			desiredCard += "R";
-		if(cardToPlay.toLowerCase().contains("blue"))
-			desiredCard += "B";
-		if(cardToPlay.toLowerCase().contains("green"))
-			desiredCard += "G";
-		if(cardToPlay.toLowerCase().contains("yellow"))
-			desiredCard += "Y";
-		
-		
-		//System.out.println(desiredCard);
-		
-		boolean inHand = false;
-		for(int i = 0; i < playerCards[0].length; i++)
+		for(int k = 0; k < 2; k++)
 		{
-			if(playerCards[0][i].equals(desiredCard))
+			System.out.print("\n\nPlay card: ");
+			String cardToPlay = Input.nextLine();
+
+			if(cardToPlay.equalsIgnoreCase("pass"))
 			{
-				inHand = true;
-				break;
+				addCard(0, cards.get(0));
+				cards.remove(0);
+				printTable();
+				
 			}
+			else
+			{
+
+				String desiredCard = "";
+
+				if(cardToPlay.toLowerCase().contains("skip"))
+					desiredCard += "🛇";
+				else if(cardToPlay.toLowerCase().contains("reverse"))
+					desiredCard += "«»";
+				else if(cardToPlay.toLowerCase().contains("+2"))
+					desiredCard += "+2";
+				else if(cardToPlay.toLowerCase().contains("+4"))
+					desiredCard += "+4▄▀K";
+				else if(cardToPlay.toLowerCase().contains("change colour"))
+					desiredCard += "▄▀K";
+				else if(cardToPlay.toLowerCase().contains(" 0"))
+					desiredCard += "0";
+				else if(cardToPlay.toLowerCase().contains(" 1"))
+					desiredCard += "1";
+				else if(cardToPlay.toLowerCase().contains(" 2"))
+					desiredCard += "2";
+				else if(cardToPlay.toLowerCase().contains(" 3"))
+					desiredCard += "3";
+				else if(cardToPlay.toLowerCase().contains(" 4"))
+					desiredCard += "4";
+				else if(cardToPlay.toLowerCase().contains(" 5"))
+					desiredCard += "5";
+				else if(cardToPlay.toLowerCase().contains(" 6"))
+					desiredCard += "6";
+				else if(cardToPlay.toLowerCase().contains(" 7"))
+					desiredCard += "7";
+				else if(cardToPlay.toLowerCase().contains(" 8"))
+					desiredCard += "8";
+				else if(cardToPlay.toLowerCase().contains(" 9"))
+					desiredCard += "9";
+
+				if(cardToPlay.toLowerCase().contains("red"))
+					desiredCard += "R";
+				if(cardToPlay.toLowerCase().contains("blue"))
+					desiredCard += "B";
+				if(cardToPlay.toLowerCase().contains("green"))
+					desiredCard += "G";
+				if(cardToPlay.toLowerCase().contains("yellow"))
+					desiredCard += "Y";
+
+
+				//System.out.println(desiredCard);
+
+				boolean inHand = false;
+				int cardPos = 0;
+				for(cardPos = 0; cardPos < playerCards[0].length; cardPos++)
+				{
+					if(playerCards[0][cardPos].equals(desiredCard))
+					{
+						inHand = true;
+						break;
+					}
+				}
+
+				if(!inHand)
+				{
+					System.out.println("You do not have that card in your hand");
+				}
+				else
+				{
+					String deisredCard = playerCards[0][cardPos];
+
+					String desiredCardColour = "";
+					String topCardColour = "";
+
+					String desiredCardNum = "";
+					String topCardNum = "";
+
+					if(deisredCard.contains("R"))
+						desiredCardColour += "R";
+					else if(deisredCard.contains("B"))
+						desiredCardColour += "B";
+					else if(deisredCard.contains("G"))
+						desiredCardColour += "G";
+					else if(deisredCard.contains("Y"))
+						desiredCardColour += "Y";
+					else
+						desiredCardColour += "K";
+
+
+
+					if(cardOnTop.contains("R"))
+						topCardColour += "R";
+					else if(cardOnTop.contains("B"))
+						topCardColour += "B";
+					else if(cardOnTop.contains("G"))
+						topCardColour += "G";
+					else if(cardOnTop.contains("Y"))
+						topCardColour += "Y";
+					else
+						topCardColour += "K";
+
+
+					if(deisredCard.toLowerCase().contains("🛇"))
+						desiredCardNum += "🛇";
+					else if(deisredCard.toLowerCase().contains("«»"))
+						desiredCardNum += "«»";
+					else if(deisredCard.toLowerCase().contains("+2"))
+						desiredCardNum += "+2";
+					else if(deisredCard.toLowerCase().contains("+4▄▀K"))
+						desiredCardNum += "+4▄▀";
+					else if(deisredCard.toLowerCase().contains("▄▀"))
+						desiredCardNum += "▄▀";
+					else if(deisredCard.toLowerCase().contains("0"))
+						desiredCardNum += "0";
+					else if(deisredCard.toLowerCase().contains("1"))
+						desiredCardNum += "1";
+					else if(deisredCard.toLowerCase().contains("2"))
+						desiredCardNum += "2";
+					else if(deisredCard.toLowerCase().contains("3"))
+						desiredCardNum += "3";
+					else if(deisredCard.toLowerCase().contains("4"))
+						desiredCardNum += "4";
+					else if(deisredCard.toLowerCase().contains("5"))
+						desiredCardNum += "5";
+					else if(deisredCard.toLowerCase().contains("6"))
+						desiredCardNum += "6";
+					else if(deisredCard.toLowerCase().contains("7"))
+						desiredCardNum += "7";
+					else if(deisredCard.toLowerCase().contains("8"))
+						desiredCardNum += "8";
+					else if(deisredCard.toLowerCase().contains("9"))
+						desiredCardNum += "9";
+
+
+					if(cardOnTop.toLowerCase().contains("🛇"))
+						topCardNum += "🛇";
+					else if(cardOnTop.toLowerCase().contains("«»"))
+						topCardNum += "«»";
+					else if(cardOnTop.toLowerCase().contains("+2"))
+						topCardNum += "+2";
+					else if(cardOnTop.toLowerCase().contains("+4▄▀"))
+						topCardNum += "+4▄▀";
+					else if(cardOnTop.toLowerCase().contains("▄▀"))
+						topCardNum += "▄▀";
+					else if(cardOnTop.toLowerCase().contains("0"))
+						topCardNum += "0";
+					else if(cardOnTop.toLowerCase().contains("1"))
+						topCardNum += "1";
+					else if(cardOnTop.toLowerCase().contains("2"))
+						topCardNum += "2";
+					else if(cardOnTop.toLowerCase().contains("3"))
+						topCardNum += "3";
+					else if(cardOnTop.toLowerCase().contains("4"))
+						topCardNum += "4";
+					else if(cardOnTop.toLowerCase().contains("5"))
+						topCardNum += "5";
+					else if(cardOnTop.toLowerCase().contains("6"))
+						topCardNum += "6";
+					else if(cardOnTop.toLowerCase().contains("7"))
+						topCardNum += "7";
+					else if(cardOnTop.toLowerCase().contains("8"))
+						topCardNum += "8";
+					else if(cardOnTop.toLowerCase().contains("9"))
+						topCardNum += "9";
+
+
+					if(desiredCardColour.equals(topCardColour) || desiredCardNum.equals(topCardNum))
+					{
+						cardsPlayed.add(0, playerCards[0][cardPos]);
+
+						removeCard(0, cardPos);
+
+						printTable();
+						break;
+					}
+					else
+					{
+						System.out.println("You cannot play this card");
+					}
+				}
+			}
+
+
+
+
 		}
-		System.out.println(inHand);
-		
-		if(inHand)
-		{
-			
-		}
-		
+
 	}
-	
+
 	public static void printGiantUnoCard()
 	{
 		System.out.print(Colours.WHITE +   "█████████████████████████████████");
@@ -141,7 +273,7 @@ public class UNO {
 		System.out.print(Colours.WHITE + "\n██" + Colours.BLACK + "█████████████████████████████" + Colours.WHITE + "██");
 		System.out.print(Colours.WHITE + "\n█████████████████████████████████");
 	}
-	
+
 	public static void printCard(String card)
 	{
 		String colour = "";
@@ -237,7 +369,7 @@ public class UNO {
 
 		else if(colour.equalsIgnoreCase("yellow"))
 			cardToFind += "Y";
-		
+
 		for (int i = 0; i < cards.size(); i++)
 		{
 			if(cards.get(i).contains(cardToFind))
@@ -266,34 +398,47 @@ public class UNO {
 						break;
 				}
 
-				
+
 				Collections.swap(cards, randIndex1, randIndex2);
-				
+
 			}
 		}
 
 		//System.out.println(cards);
 	}
 
-	public static String[] addCard(String[] originalArray, String value)
+	public static void addCard(int player, String value)
 	{
 
-		String[] newArray = new String[originalArray.length + 1];
+		String[] array = new String[playerCards[player].length + 1];
 
-		int position = originalArray.length;
+		int position = playerCards[player].length;
 
-		for(int i = 0; i < position; i++)
+		for(int i = 0; i < playerCards[player].length; i++)
 		{
-			newArray[i] = originalArray[i];
+			array[i] = playerCards[player][i];
+		}
+		array[playerCards[player].length] = value;
+
+		playerCards[player] = array;
+	}
+
+	public static void removeCard(int player, int index)
+	{
+		String[] array = new String[(playerCards[player].length) - 1];
+
+		for(int i = 0; i < index; i++)
+		{
+			array[i] = playerCards[player][i];
 		}
 
-		for(int i = position; i < originalArray.length; i++)
+		for(int i = index + 1; i < playerCards[player].length; i++)
 		{
-			newArray[i + 1] = originalArray[i];
+			array[i - 1] = playerCards[player][i];			
 		}
-		newArray[position] = value;
 
-		return newArray;
+		playerCards[player] = array;
+
 	}
 
 	public static String[][] dealCards()
@@ -320,7 +465,7 @@ public class UNO {
 	public static void printTable()
 	{
 		cardOnTop = cardsPlayed.get(0);
-		
+
 		if(numOfPlayers == 3)
 		{
 			System.out.print("\n\nPlayer 2                         Player 3\n\n");
