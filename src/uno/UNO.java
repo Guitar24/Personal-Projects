@@ -318,7 +318,7 @@ public class UNO {
 						addCard(play, cards.get(0));
 						cards.remove(0);
 						
-					}
+					} 
 					else if(direction == "right")
 					{
 						
