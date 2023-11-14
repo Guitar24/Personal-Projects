@@ -13,7 +13,7 @@ public class UNO {
 
 	static String[][] playerCards;
 
-	static int numOfPlayers = 4;
+	static int numOfPlayers = 3;
 	static int numOfCards = 8;
 
 	static int play;
@@ -44,20 +44,31 @@ public class UNO {
 		}
 
 		cards.remove(0);
-		
+
 		playerCards = dealCards();
 		getCurrentColour();
-		printTable();
-		
-		play = 2;
-		
-		if(play == 1)
+
+		play = 1;
+
+		while(true)
 		{
-			playCard();
-		}
-		else
-		{
-			playComputerCard(play);
+			for(int i = 0; i < numOfPlayers; i++)
+			{
+				if(playerCards[i].length == 0)
+				{
+					System.out.println("Player " + (i+1) + " wins!");
+					break;
+				}
+			}
+
+			if(play == 1)
+			{
+				playCard();
+			}
+			else
+			{
+				playComputerCard(play);
+			}
 		}
 	}
 
@@ -146,8 +157,7 @@ public class UNO {
 				if(playable[i])
 					numOfPlayable ++;
 
-			System.out.println("NumOfPlayable: " + numOfPlayable);
-			
+
 			if(numOfPlayable == 0)
 			{
 				addCard(player - 1, cards.get(0));
@@ -157,73 +167,99 @@ public class UNO {
 
 			else
 			{
-				
+
 				String[] playableCards = new String[numOfPlayable];
 
-				int index = 0;
-				for(int i = 0; i < compCards.length; i++)
-				{
-					if(playable[i])
-					{
-						playableCards[index] = compCards[i];
-						index ++;
-					}
-				}
-				
-				int changeColourIndex = -1;
-				for(int i = 0; i < playableCards.length; i++)
-				{
-					if(playableCards[i].contains("▄▀"))
-					{
-						changeColourIndex = i;
-					}
-				}
-				
 				String cardToPlay;
-				
-				if(changeColourIndex == -1)
+
+				if(numOfPlayable == 1)
 				{
-					int randIndex = randInt(0, playableCards.length-1);
-					cardToPlay = playableCards[randIndex];
+					int index = 0;
+					for(int i = 0; i < compCards.length; i++)
+					{
+						if(playable[i])
+						{
+							playableCards[index] = compCards[i];
+							index ++;
+						}
+					}
+					cardToPlay = playableCards[0];
 				}
 				else
 				{
-					int randIndex = 0; 
-					int l = 0;
-					while(l < 100)
+					int index = 0;
+					for(int i = 0; i < compCards.length; i++)
 					{
-						randIndex = randInt(0, playableCards.length-1);
-						
-						if(randIndex != changeColourIndex) 
-							l = 101;
-						
-						l++;
+						if(playable[i])
+						{
+							playableCards[index] = compCards[i];
+							index ++;
+						}
 					}
-					
-					cardToPlay = playableCards[randIndex];
-				}
-				
-				
-				
-				int indexOf = 0;
-				
-				for(int d = 0; d < compCards.length; d++)
-				{
-					if(compCards[d].equals(cardToPlay))
+
+					int changeColourIndex = -1;
+					for(int i = 0; i < playableCards.length; i++)
 					{
-						indexOf = d;
-						break;
+						if(playableCards[i].contains("▄▀"))
+						{
+							changeColourIndex = i;
+						}
 					}
+
+
+					if(changeColourIndex == -1)
+					{
+						int randIndex = randInt(0, playableCards.length-1);
+						cardToPlay = playableCards[randIndex];
+					}
+					else
+					{
+						int randIndex = 0; 
+						int l = 0;
+						while(l < 100)
+						{
+							randIndex = randInt(0, playableCards.length-1);
+
+							if(randIndex != changeColourIndex) 
+								l = 101;
+
+							l++;
+						}
+
+						cardToPlay = playableCards[randIndex];
+					}
+
+
+
+					int indexOf = 0;
+
+					for(int d = 0; d < compCards.length; d++)
+					{
+						if(compCards[d].equals(cardToPlay))
+						{
+							indexOf = d;
+							break;
+						}
+					}
+
+					removeCard(player, indexOf);
 				}
-				
+
 				cardsPlayed.add(0, cardToPlay);
 				
+
 				if(cardToPlay.contains("🛇"))
 				{
+					printTable();
 
 					int playerSkipped = 0;
 					if(direction == "left")
 					{
+						if(play == numOfPlayers)
+						{
+							playerSkipped = 1;
+							play = 2;
+						}
 						if(play == numOfPlayers - 1)
 						{
 							playerSkipped = numOfPlayers;
@@ -234,7 +270,7 @@ public class UNO {
 							playerSkipped = play + 1;
 							play += 2;
 						}
-						
+
 					}
 					else if(direction == "right")
 					{
@@ -247,94 +283,107 @@ public class UNO {
 						{
 							play -= 2;
 						}
-						
+
 					}
-					System.out.println("Player " + player + " skips player " + playerSkipped);
+					Thread.sleep(4000);
+					System.out.println("\n\nPlayer " + player + " skips player " + playerSkipped);
 				}
-					
+
 				else if(cardToPlay.contains("«»"))
 				{
+					printTable();
+
 					if(direction == "left")
 					{
 						direction = "right";
-						
+
 						play --;
-						
+
 					}
 					else if(direction == "right")
 					{
 						direction = "left";
-						
+
 						if(play == numOfPlayers)
 							play = 1;
 						else
 							play ++;
-						
+
 					}
-					System.out.println("Player " + player + " changes direction");
+					Thread.sleep(4000);
+					System.out.println("\n\nPlayer " + player + " changes direction");
 				}
 				else if(cardToPlay.contains("+2"))
 				{
+					printTable();
+
 					if(direction == "left")
 					{
-						
+
 						if(play == numOfPlayers)
 							play = 1;
 						else
 							play ++;
-						
+
 						addCard(play, cards.get(0));
 						cards.remove(0);
 						addCard(play, cards.get(0));
 						cards.remove(0);
-						
+
 					}
 					else if(direction == "right")
 					{
-						
+
 						play --;
-						
+
 						addCard(play, cards.get(0));
 						cards.remove(0);
 						addCard(play, cards.get(0));
 						cards.remove(0);
-						
+
 					}
 
-					System.out.println("Player " + play + " picks up 2");
+					Thread.sleep(4000);
+					System.out.println("\n\nPlayer " + play + " picks up 2");
 				}
 				else if(cardToPlay.contains("+4▄▀"))
 				{
+					printTable();
+
 					if(direction == "left")
 					{
-						
+
 						if(play == numOfPlayers)
 							play = 1;
 						else
 							play ++;
-						
+
 						addCard(play, cards.get(0));
 						cards.remove(0);
 						addCard(play, cards.get(0));
 						cards.remove(0);
-						
+						addCard(play, cards.get(0));
+						cards.remove(0);
+						addCard(play, cards.get(0));
+						cards.remove(0);
+
 					} 
 					else if(direction == "right")
 					{
-						
+
 						play --;
-						
+
 						addCard(play, cards.get(0));
 						cards.remove(0);
 						addCard(play, cards.get(0));
 						cards.remove(0);
-						
+
 					}
-					
+
 					String newColour = "K";
-					
+
 					int[] numOfColour = {0, 0, 0, 0};
-					
+
 					for(int i = 0; i < compCards.length; i++)
 					{
 						if(compCards[i].contains("R"))
@@ -354,9 +403,9 @@ public class UNO {
 							numOfColour[1] ++;
 						}
 					}
-					
+
 					int maxColourIndex = 0;
-					
+
 					for(int i = 0; i < 4; i++)
 					{
 						if(numOfColour[i] > numOfColour[maxColourIndex])
@@ -364,7 +413,7 @@ public class UNO {
 							maxColourIndex = i;
 						}
 					}
-					
+
 					if(maxColourIndex == 0)
 					{
 						currentColour = "R";
@@ -385,20 +434,21 @@ public class UNO {
 						currentColour = "Y";
 						newColour = "YELLOW";
 					}
-					
-					
-					
-					
-					System.out.println("Player " + player + " changes the colour to: " + newColour);
+
+
+					Thread.sleep(4000);
+					System.out.println("\n\nPlayer " + player + " changes the colour to: " + newColour);
 					System.out.println("Player " + play + " picks up 4");
-					
+
 				}
 				else if(cardToPlay.contains("▄▀"))
 				{
+					printTable();
+
 					String newColour = "K";
-					
+
 					int[] numOfColour = {0, 0, 0, 0};
-					
+
 					for(int i = 0; i < compCards.length; i++)
 					{
 						if(compCards[i].contains("R"))
@@ -418,9 +468,9 @@ public class UNO {
 							numOfColour[1] ++;
 						}
 					}
-					
+
 					int maxColourIndex = 0;
-					
+
 					for(int i = 0; i < 4; i++)
 					{
 						if(numOfColour[i] > numOfColour[maxColourIndex])
@@ -428,7 +478,7 @@ public class UNO {
 							maxColourIndex = i;
 						}
 					}
-					
+
 					if(maxColourIndex == 0)
 					{
 						currentColour = "R";
@@ -449,24 +499,34 @@ public class UNO {
 						currentColour = "Y";
 						newColour = "YELLOW";
 					}
-					
-					
-					
-					
-					System.out.println("Player " + player + " changes the colour to: " + newColour);
-				}
-				
-				
-				System.out.println("Current colour: " + currentColour);
-				
-				System.out.println(Arrays.toString(playableCards));
 
-				System.out.println(Arrays.toString(compCards));
-				System.out.println(Arrays.toString(compSuit));
-				System.out.println(Arrays.toString(compColour));
-				System.out.println(Arrays.toString(playable));
-				
-				System.out.println(cardToPlay);
+					Thread.sleep(4000);
+					System.out.println("\n\nPlayer " + player + " changes the colour to: " + newColour);
+				}
+				else
+				{
+					printTable();
+
+					if(direction == "left")
+					{
+
+						if(play == numOfPlayers)
+							play = 1;
+						else
+							play ++;
+
+					} 
+					else if(direction == "right")
+					{
+
+						play --;
+					}
+					Thread.sleep(4000);
+
+				}
+
+				checkUno(player);
+
 				break;
 			}
 
@@ -474,9 +534,11 @@ public class UNO {
 		}
 	}
 
-	public static void playCard()
+	public static void playCard() throws InterruptedException
 	{
 
+		printTable();
+		
 		for(int k = 0; k < 2; k++)
 		{
 			System.out.print("\n\nPlay card: ");
@@ -484,7 +546,7 @@ public class UNO {
 
 			if(cardToPlay.equalsIgnoreCase("pass"))
 			{
-				addCard(0, cards.get(0));
+				addCard(1, cards.get(0));
 				cards.remove(0);
 				printTable();
 
@@ -505,7 +567,7 @@ public class UNO {
 				else if(cardToPlay.toLowerCase().contains("change colour"))
 					desiredCard += "▄▀K";
 				else if(cardToPlay.toLowerCase().contains(" 0"))
-					desiredCard += "0";
+					desiredCard += "O";
 				else if(cardToPlay.toLowerCase().contains(" 1"))
 					desiredCard += "1";
 				else if(cardToPlay.toLowerCase().contains(" 2"))
@@ -645,63 +707,94 @@ public class UNO {
 							else if(newColour.equalsIgnoreCase("yellow"))
 								currentColour = "Y";
 
+
 							System.out.println("\nThe colour is now: " + newColour);
+
+							printTable();
+							
+							if(direction == "left")
+							{
+								play = 2;
+							}
+							else if(direction == "right")
+							{
+								play = numOfPlayers;
+							}
 
 						}
 
 						if(desiredCardNum.equals("+2"))
 						{
+							printTable();
 							if(direction == "left")
 							{
-								System.out.println("Player 2 must draw 2 cards");
+								System.out.println("\n\nPlayer 2 must draw 2 cards");
+								play = 2;
 							}
 							else if(direction == "right")
 							{
 								System.out.println("Player " + numOfPlayers + " must draw 2 cards");
+								play = numOfPlayers;
 							}
 						}
 
 						if(desiredCardNum.equals("+4"))
 						{
+							printTable();
+							
 							if(direction == "left")
 							{
-								System.out.println("Player 2 must draw 4 cards");
+								System.out.println("\n\nPlayer 2 must draw 4 cards");
+								play = 2;
 							}
 							else if(direction == "right")
 							{
 								System.out.println("Player " + numOfPlayers + " must draw 4 cards");
+								play = numOfPlayers;
 							}
 						}
 
 						if(desiredCardNum.equals("«»"))
 						{
+							printTable();
+							
+							if(numOfPlayers == 2)
+							{
+								System.out.println("\n\nPlayer 2 is skipped");
+								playCard();
+							}
 							if(direction == "left")
 							{
 								direction = "right";
-								System.out.println("Reverse direction");
+								System.out.println("\n\nReverse direction");
+								play = numOfPlayers;
 							}
 							else if(direction == "right")
 							{
 								direction = "left";
-								System.out.println("Reverse direction");
+								System.out.println("\n\nReverse direction");
+								play = 2;
 							}
 						}
 
 						if(desiredCardNum.equals("🛇"))
 						{
+							printTable();
+							
 							if(numOfPlayers == 2)
 							{
-								System.out.println("Player 2 is skipped");
+								System.out.println("\n\nPlayer 2 is skipped");
+								play = 1;
 								playCard();
 							}
 							else if(direction == "left")
 							{
-								System.out.println("Player 2 is skipped");
+								System.out.println("\n\nPlayer 2 is skipped");
 								play = 3;
 							}
 							else if(direction == "right")
 							{
-								System.out.println("Player " + numOfPlayers + " is skipped");
+								System.out.println("\n\nPlayer " + numOfPlayers + " is skipped");
 								play = numOfPlayers - 1;
 							}
 						}
@@ -721,6 +814,7 @@ public class UNO {
 						}
 
 						printTable();
+						Thread.sleep(4000);
 						break;
 					}
 					else
@@ -953,13 +1047,35 @@ public class UNO {
 	{
 		cardOnTop = cardsPlayed.get(0);
 
+		String col = Colours.CYAN_BOLD_BRIGHT;
+		String reset = Colours.RESET;
+
 		if(numOfPlayers == 3)
 		{
-			System.out.print("\n\nPlayer 2                         Player 3\n\n");
-			System.out.print("                   ");
-			printCard(cardOnTop);
-			System.out.println("\n\n\n                Player 1");
-			System.out.print("\n           ");
+			if(play == 1)
+			{
+				System.out.print("\n\nPlayer 2                         Player 3\n\n");
+				System.out.print("                   ");
+				printCard(cardOnTop);
+				System.out.println("\n\n\n                " + col + "Player 1" + reset);
+				System.out.print("\n           ");
+			}
+			else if(play == 2)
+			{
+				System.out.print("\n\n" + col + "Player 2" + reset + "                         Player 3\n\n");
+				System.out.print("                   ");
+				printCard(cardOnTop);
+				System.out.println("\n\n\n                Player 1");
+				System.out.print("\n           ");
+			}
+			else if(play == 3)
+			{
+				System.out.print("\n\nPlayer 2                         " + col + "Player 3\n\n"  + reset);
+				System.out.print("                   ");
+				printCard(cardOnTop);
+				System.out.println("\n\n\n                Player 1");
+				System.out.print("\n           ");
+			}
 		}
 		if(numOfPlayers == 4)
 		{
@@ -1031,13 +1147,21 @@ public class UNO {
 			currentColour = "Y";
 	}
 
+	public static void checkUno(int player)
+	{
+		if(playerCards[player-1].length == 1)
+		{
+			System.out.println("Player " + player + ": UNO!");
+		}
+	}
+
 	public static int randInt(int min, int max) throws InterruptedException
 	{
 		int randomNumber = (int)Math.floor(Math.random() * (max - min + 1) + min);
 
 		return randomNumber;
 	}
-	
+
 	public static void debug()
 	{
 		System.out.println("\n");
