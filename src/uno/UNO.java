@@ -14,7 +14,7 @@ public class UNO {
 	static String[][] playerCards;
 
 	static int numOfPlayers = 3;
-	static int numOfCards = 8;
+	static int numOfCards = 2;
 
 	static int play;
 
@@ -27,6 +27,7 @@ public class UNO {
 
 	public static void main(String[] args) throws InterruptedException 
 	{
+		//printGiantUnoCard();
 		gameLoop();
 	}
 
@@ -50,6 +51,8 @@ public class UNO {
 
 		play = 1;
 
+		boolean winner = false;
+		
 		while(true)
 		{
 			for(int i = 0; i < numOfPlayers; i++)
@@ -57,9 +60,16 @@ public class UNO {
 				if(playerCards[i].length == 0)
 				{
 					System.out.println("Player " + (i+1) + " wins!");
-					break;
+					winner = true;
 				}
 			}
+			
+			if(winner)
+			{
+				break;
+			}
+			
+			debug();
 
 			if(play == 1)
 			{
@@ -69,11 +79,15 @@ public class UNO {
 			{
 				playComputerCard(play);
 			}
+			
+			
 		}
 	}
 
 	public static void playComputerCard(int player) throws InterruptedException
-	{
+	{	
+		System.out.println(Arrays.toString(playerCards[player-1]));
+		
 		for(int k = 0; k < 2; k++)
 		{
 			String[] compCards = playerCards[player-1];
@@ -160,9 +174,31 @@ public class UNO {
 
 			if(numOfPlayable == 0)
 			{
-				addCard(player - 1, cards.get(0));
-				cards.remove(0);
-				System.out.println("n\nPlayer " + player + " cannot play");
+				if(k == 1)
+				{
+					System.out.println("n\nPlayer " + player + " cannot play");
+					if(direction == "left")
+					{
+
+						if(play == numOfPlayers)
+							play = 1;
+						else
+							play ++;
+
+					} 
+					else if(direction == "right")
+					{
+
+						play --;
+					}
+					break;
+				}
+				else
+				{
+					System.out.println("n\nPlayer " + player + " cannot play");
+					addCard(player, cards.get(0));
+					cards.remove(0);
+				}
 			}
 
 			else
@@ -246,7 +282,7 @@ public class UNO {
 				}
 
 				cardsPlayed.add(0, cardToPlay);
-				
+
 
 				if(cardToPlay.contains("🛇"))
 				{
@@ -352,33 +388,25 @@ public class UNO {
 
 					if(direction == "left")
 					{
-
 						if(play == numOfPlayers)
 							play = 1;
 						else
 							play ++;
-
-						addCard(play, cards.get(0));
-						cards.remove(0);
-						addCard(play, cards.get(0));
-						cards.remove(0);
-						addCard(play, cards.get(0));
-						cards.remove(0);
-						addCard(play, cards.get(0));
-						cards.remove(0);
-
 					} 
 					else if(direction == "right")
 					{
-
 						play --;
-
-						addCard(play, cards.get(0));
-						cards.remove(0);
-						addCard(play, cards.get(0));
-						cards.remove(0);
-
 					}
+
+					addCard(play, cards.get(0));
+					cards.remove(0);
+					addCard(play, cards.get(0));
+					cards.remove(0);
+					addCard(play, cards.get(0));
+					cards.remove(0);
+					addCard(play, cards.get(0));
+					cards.remove(0);
+
 
 					String newColour = "K";
 
@@ -445,6 +473,18 @@ public class UNO {
 				{
 					printTable();
 
+					if(direction == "left")
+					{
+						if(play == numOfPlayers)
+							play = 1;
+						else
+							play ++;
+					} 
+					else if(direction == "right")
+					{
+						play --;
+					}
+
 					String newColour = "K";
 
 					int[] numOfColour = {0, 0, 0, 0};
@@ -500,8 +540,10 @@ public class UNO {
 						newColour = "YELLOW";
 					}
 
-					Thread.sleep(4000);
+					Thread.sleep(200);
 					System.out.println("\n\nPlayer " + player + " changes the colour to: " + newColour);
+					Thread.sleep(4000);
+					break;
 				}
 				else
 				{
@@ -526,7 +568,7 @@ public class UNO {
 				}
 
 				checkUno(player);
-
+				System.out.println("Player " + player + ": " + Arrays.toString(playableCards));
 				break;
 			}
 
@@ -538,7 +580,7 @@ public class UNO {
 	{
 
 		printTable();
-		
+
 		for(int k = 0; k < 2; k++)
 		{
 			System.out.print("\n\nPlay card: ");
@@ -546,10 +588,18 @@ public class UNO {
 
 			if(cardToPlay.equalsIgnoreCase("pass"))
 			{
-				addCard(1, cards.get(0));
-				cards.remove(0);
-				printTable();
 
+				if(k == 1)
+				{
+					play = 2;
+					break;
+				}
+				else
+				{
+					addCard(1, cards.get(0));
+					cards.remove(0);
+				}
+				printTable();
 			}
 			else
 			{
@@ -687,7 +737,7 @@ public class UNO {
 					{
 						cardsPlayed.add(0, playerCards[0][cardPos]);
 
-						removeCard(0, cardPos);
+						removeCard(1, cardPos);
 
 						if(desiredCardColour.equals("K"))
 						{
@@ -711,7 +761,7 @@ public class UNO {
 							System.out.println("\nThe colour is now: " + newColour);
 
 							printTable();
-							
+
 							if(direction == "left")
 							{
 								play = 2;
@@ -736,12 +786,17 @@ public class UNO {
 								System.out.println("Player " + numOfPlayers + " must draw 2 cards");
 								play = numOfPlayers;
 							}
+
+							addCard(play, cards.get(0));
+							cards.remove(0);
+							addCard(play, cards.get(0));
+							cards.remove(0);
 						}
 
 						if(desiredCardNum.equals("+4"))
 						{
 							printTable();
-							
+
 							if(direction == "left")
 							{
 								System.out.println("\n\nPlayer 2 must draw 4 cards");
@@ -752,12 +807,21 @@ public class UNO {
 								System.out.println("Player " + numOfPlayers + " must draw 4 cards");
 								play = numOfPlayers;
 							}
+							addCard(play, cards.get(0));
+							cards.remove(0);
+							addCard(play, cards.get(0));
+							cards.remove(0);
+							addCard(play, cards.get(0));
+							cards.remove(0);
+							addCard(play, cards.get(0));
+							cards.remove(0);
+
 						}
 
 						if(desiredCardNum.equals("«»"))
 						{
 							printTable();
-							
+
 							if(numOfPlayers == 2)
 							{
 								System.out.println("\n\nPlayer 2 is skipped");
@@ -780,7 +844,7 @@ public class UNO {
 						if(desiredCardNum.equals("🛇"))
 						{
 							printTable();
-							
+
 							if(numOfPlayers == 2)
 							{
 								System.out.println("\n\nPlayer 2 is skipped");
@@ -1006,19 +1070,22 @@ public class UNO {
 
 	public static void removeCard(int player, int index)
 	{
-		String[] array = new String[(playerCards[player].length) - 1];
+		String[] array = new String[(playerCards[player-1].length) - 1];
 
 		for(int i = 0; i < index; i++)
 		{
-			array[i] = playerCards[player][i];
+			array[i] = playerCards[player-1][i];
 		}
 
-		for(int i = index + 1; i < playerCards[player].length; i++)
+		for(int i = index + 1; i < playerCards[player-1].length; i++)
 		{
-			array[i - 1] = playerCards[player][i];			
+			array[i - 1] = playerCards[player-1][i];			
 		}
 
-		playerCards[player] = array;
+		playerCards[player-1] = array;
+		
+		System.out.println("Array: " + Arrays.toString(array));
+		System.out.println("PlayerCards: " + Arrays.toString(playerCards[player-1]));
 
 	}
 
@@ -1151,7 +1218,7 @@ public class UNO {
 	{
 		if(playerCards[player-1].length == 1)
 		{
-			System.out.println("Player " + player + ": UNO!");
+			System.out.println("\n\n00Player " + player + ": UNO!");
 		}
 	}
 

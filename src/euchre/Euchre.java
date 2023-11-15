@@ -3244,7 +3244,7 @@ public class Euchre
 		}
 		else if(dealer == 3)
 		{
-			System.out.println("\n                Player 3\n" + "             " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
+			System.out.println("\n                Player 3\n" + "                " + GREEN_BOLD_BRIGHT + "DEALER" + RESET
 					+ "\n                  "
 					+ "\n"
 					+ " Player 2       " + kittyCard +  "        Player 4\n"
