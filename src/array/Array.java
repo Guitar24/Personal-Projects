@@ -155,20 +155,18 @@ public class Array
 	 * @param pos2 The position of the second element
 	 * @author D. Polach
 	 */
-	public static void swapElements(int[] array, int pos1, int pos2)
+	public static void swapElements(int[] array, int pos1, int pos2) throws ArrayIndexOutOfBoundsException 
 	{
-		int[] array2 = new int[array.length];
-
-		for(int i = 0; i < array.length; i++)
+		try 
+		{	
+			int holder = array[pos1];
+			array[pos1]=array[pos2];
+			array[pos2] = holder;
+		} 
+		catch (Exception e) 
 		{
-			array2[i] = array[i];
+			throw new ArrayIndexOutOfBoundsException();
 		}
-
-		int element1 = array[pos1];
-		int element2 = array[pos2];
-
-		array[pos1] = element2;
-		array[pos2] = element1;
 
 	}
 
@@ -839,7 +837,7 @@ public class Array
 		for(int i = 0; i < size; i++)//Loops through array
 		{
 			Random rand = new Random();
-			newArray[i] = rand.nextDouble((max - min) + 1) + min;//Generates random number for each slot in array
+			newArray[i] = min + (max - min) * rand.nextDouble();//Generates random number for each slot in array
 
 		}//end loop
 

@@ -27,7 +27,7 @@ public class UNO {
 
 	public static void main(String[] args) throws InterruptedException 
 	{
-		//printGiantUnoCard();
+		printGiantUnoCard();
 		gameLoop();
 	}
 
@@ -176,7 +176,8 @@ public class UNO {
 			{
 				if(k == 1)
 				{
-					System.out.println("n\nPlayer " + player + " cannot play");
+					System.out.println("n\nPlayer " + player + " cannot play again");
+					Thread.sleep(5000);
 					if(direction == "left")
 					{
 
@@ -196,6 +197,7 @@ public class UNO {
 				else
 				{
 					System.out.println("n\nPlayer " + player + " cannot play");
+					Thread.sleep(5000);
 					addCard(player, cards.get(0));
 					cards.remove(0);
 				}
@@ -267,18 +269,7 @@ public class UNO {
 
 
 
-					int indexOf = 0;
 
-					for(int d = 0; d < compCards.length; d++)
-					{
-						if(compCards[d].equals(cardToPlay))
-						{
-							indexOf = d;
-							break;
-						}
-					}
-
-					removeCard(player, indexOf);
 				}
 
 				cardsPlayed.add(0, cardToPlay);
@@ -566,6 +557,22 @@ public class UNO {
 					Thread.sleep(4000);
 
 				}
+				
+
+				int indexOf = 0;
+
+				for(int d = 0; d < compCards.length; d++)
+				{
+					if(compCards[d].equals(cardToPlay))
+					{
+						indexOf = d;
+						break;
+					}
+				}
+				
+
+				System.out.println("Remove Card");
+				removeCard(player, indexOf);
 
 				checkUno(player);
 				System.out.println("Player " + player + ": " + Arrays.toString(playableCards));

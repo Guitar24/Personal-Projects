@@ -1,7 +1,5 @@
 package euchre;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.*;
 import java.io.File;
 import java.io.IOException;
@@ -78,7 +76,7 @@ public class Euchre
 	public static boolean choosingTrump1 = true;
 	public static boolean choosingTrump2 = false;
 
-	public static boolean darkMode;
+	public static boolean darkMode = true;
 
 	public static boolean debugLog;
 
@@ -107,34 +105,7 @@ public class Euchre
 	public static void main(String[] args) throws InterruptedException, IOException 
 	{
 
-		while(true)
-		{
-			System.out.println("\nSETUP            **WARNING THIS PROGRAM WILL ONLY WORK IF YOU ARE USING ECLIPSE v4.25 OR LATER**");
-			System.out.println("\nAre you using dark mode or light mode in Eclipse?");
-			System.out.print("Type \"D\" for dark of \"L\" for light: ");
-
-			String userInput = Input.next();
-
-			if(userInput.equalsIgnoreCase("d"))
-			{
-				darkMode = true;
-				break;
-			}
-			else if(userInput.equalsIgnoreCase("l"))
-			{
-				darkMode = false;
-				break;
-			}
-			else
-			{
-				Thread.sleep(750);
-				System.out.println("\nError code: ID-10-T");
-				Thread.sleep(750);
-			}
-
-
-		}
-
+		
 		player1Cards = new ArrayList<String>();
 		player2Cards = new ArrayList<String>();
 		player3Cards = new ArrayList<String>();
@@ -148,7 +119,6 @@ public class Euchre
 		System.out.println("             -------------------------------------------------------------------\n\n\n\n\n\n\n     Resize the console so that you these lines are on the top and bottom of the window\n\n\n\n\n\n\n\n");
 		System.out.print("             -------------------------------------------------------------------");
 
-		sleep(5000);
 
 		System.out.println("\n\n\nWelcome to Euchre!");
 		menu();
@@ -267,8 +237,6 @@ public class Euchre
 			{
 				//Prints out goodbye message
 				System.out.println("Come again soon!");
-				//Turns off caps lock
-				Toolkit.getDefaultToolkit().setLockingKeyState(KeyEvent.VK_CAPS_LOCK, true);
 				//closes program
 				System.exit(0);
 			}
